@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{95AAC0C3-623E-4637-9841-837119B30F7B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EZV.Factory</RootNamespace>
+    <AssemblyName>EZV.Factory</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IDotace_EUFactory.cs" />
+    <Compile Include="IHistorie_stavbyFactory.cs" />
+    <Compile Include="IHistorie_vysledku_kontrolyFactory.cs" />
+    <Compile Include="IKontrola_kvality_spalovaniFactory.cs" />
+    <Compile Include="IStavbaFactory.cs" />
+    <Compile Include="IStavbaVlastnikFactory.cs" />
+    <Compile Include="IVlastnikFactory.cs" />
+    <Compile Include="IVysledek_kontrolyFactory.cs" />
+    <Compile Include="IZpusob_vytapeniFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlFactory.cs" />
+    <Compile Include="XmlFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EZV.DAOFactory\EZV.DAOFactory.csproj">
+      <Project>{B884D122-72AD-4D44-A7AD-DD95C6A607D3}</Project>
+      <Name>EZV.DAOFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EZV.DataMapper\EZV.DataMapper.csproj">
+      <Project>{826F3A72-626F-4BDF-985A-0A56150D0DBA}</Project>
+      <Name>EZV.DataMapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EZV.XML.Gateway\EZV.XML.Gateway.csproj">
+      <Project>{91CC3409-C216-48BF-8F4E-D0F7213CAB45}</Project>
+      <Name>EZV.XML.Gateway</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
