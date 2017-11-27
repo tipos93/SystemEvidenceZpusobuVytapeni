@@ -1,6 +1,10 @@
-﻿using EZV.DTO;
+﻿using EZV.DAOFactory;
+using EZV.DataDecisionMaker;
+using EZV.DTO;
+using EZV.Factory;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,15 +14,32 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 {
     public partial class Seznam : System.Web.UI.Page
     {
+        IStavba stavba;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             /*
-            List<Stavba> stavby = .Select(connection).Where(c => c.PociatocnaStanica.ID == stanicaZ
-                && c.CielovaStanica.ID == stanicaDo && c.Odchod > cas).ToList();
-
-            gridNalezeneListky.DataSource = cesty;
-            gridNalezeneListky.DataBind();
+            IStavbaFactory stavbaFactory = new SqlFactory();
+            IStavba stavba = stavbaFactory.CreateStavba();
+            Collection<Stavba> stavby = stavba.Select();
             */
+
+            //IStavbaFactory stavbaFactory = null;
+            //IStavba stavba = (IStavba) DecisionMaker.DecideSQL(stavbaFactory);
+            //Collection<Stavba> stavby = stavba.Select();
+
+            IStavbaFactory stavbafactory = DecisionMaker.DecideSQL();
+            stavba = stavbafactory.CreateStavba();
+            Collection<Stavba> stavby = stavba.Select();
+
+            GridViewStavby.DataSource = stavby;
+            GridViewStavby.DataBind();
+        }
+
+        protected void OnPaging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewStavby.PageIndex = e.NewPageIndex;
+            GridViewStavby.DataBind();
         }
 
         protected void DetailsViewStavby_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
@@ -45,6 +66,10 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             {
                 stavbaId = -1;
             }
+
+            Stavba konkretniStavba = stavba.Select_id(stavbaId);
+            DetailsViewStavby.DataSource = konkretniStavba;
+            DetailsViewStavby.DataBind();
         }
     }
 }

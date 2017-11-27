@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="GridViewStavby" runat="server" AllowPaging="True" AutoGenerateColumns="False">
+    <asp:GridView ID="GridViewStavby" runat="server" AllowPaging="True" OnPageIndexChanging="OnPaging" PageSize="10" AutoGenerateColumns="False">
         <Columns>
             <asp:TemplateField HeaderText="Výběr" HeaderStyle-HorizontalAlign="Center">
                 <ItemTemplate>
@@ -28,8 +28,7 @@
         </Columns>
     </asp:GridView>
     <br />
-    
-    <asp:DetailsView ID="DetailsViewStavby" runat="server" AutoGenerateRows="False" Height="50px" Width="125px" DataKeyNames="Id_stavby" OnItemUpdated="DetailsViewStavby_ItemUpdated">
+        <asp:DetailsView ID="DetailsViewStavby" runat="server" AutoGenerateRows="False" Height="50px" Width="125px" DataKeyNames="Id_stavby" OnItemUpdated="DetailsViewStavby_ItemUpdated">
         <Fields>
             
             <asp:BoundField DataField="Id_stavby" HeaderText="Id_stavby" ReadOnly="True" SortExpression="Id_stavby" />
@@ -98,7 +97,6 @@
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="TextDatum" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
-            
             <asp:CommandField ShowEditButton="True" />
         </Fields>
     </asp:DetailsView>
