@@ -15,6 +15,7 @@ namespace SystemEvidenceZpusobuVytapeni.Form
     public partial class Seznam : System.Web.UI.Page
     {
         IStavba stavba;
+        Collection<Stavba> stavby;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,11 +31,22 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
             IStavbaFactory stavbafactory = DecisionMaker.DecideSQL();
             stavba = stavbafactory.CreateStavba();
-            Collection<Stavba> stavby = stavba.Select();
+            stavby = stavba.Select();
 
             GridViewStavby.DataSource = stavby;
             GridViewStavby.DataBind();
         }
+        /*
+        protected override void Render(HtmlTextWriter writer)
+        {
+
+            foreach (GridViewRow row in GridViewStavby.Rows)
+
+                ClientScript.RegisterForEventValidation(row.UniqueID.ToString());
+
+            base.Render(writer);
+
+        }*/
 
         protected void OnPaging(object sender, GridViewPageEventArgs e)
         {
@@ -47,18 +59,32 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             GridViewStavby.DataBind();
             GridViewStavby.SelectRow(-1);
         }
+        /*
+        protected void gv_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            Int32 iID = Convert.ToInt32((GridViewStavby.DataKeys[e.NewEditIndex].Value));
+            EditMethod(iID);         // now you can send ID and retrieve data.
+        }
 
+        private void EditMethod(int iID)
+        {
+            Stavba konkretniStavba = stavba.Select_id(iID);
+            DetailsViewStavby.DataSource = konkretniStavba;
+            DetailsViewStavby.DataBind();
+        }
+        */
+        
         protected void btnVybrat_Click(object sender, EventArgs e)
         {
             Literal stavbaLiteral = (sender as Button).NamingContainer.FindControl("ltrId") as Literal;
 
             int stavbaId;
 
-            if(stavbaLiteral == null)
+            if (stavbaLiteral == null)
             {
                 stavbaId = -1;
             }
-            else if (int.TryParse(stavbaLiteral.ToString(), out stavbaId))
+            else if (int.TryParse(stavbaLiteral.Text.ToString(), out stavbaId))
             {
 
             }
@@ -68,8 +94,15 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             }
 
             Stavba konkretniStavba = stavba.Select_id(stavbaId);
-            DetailsViewStavby.DataSource = konkretniStavba;
+            stavby.Clear();
+            stavby.Add(konkretniStavba);
+            DetailsViewStavby.DataSource = stavby;
             DetailsViewStavby.DataBind();
+        }
+        
+        protected void btnAktualizovat_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
