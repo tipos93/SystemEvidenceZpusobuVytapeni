@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Serialization;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -14,29 +12,6 @@ namespace EZV.XML.Gateway
 {
     public class Historie_vysledku_kontroly_Gateway : IHistorie_vysledku_kontroly
     {
-        /*
-        public static XElement Insert(int Id_zmeny, string Vysledek_kontroly, string Prijata_opatreni, DateTime Casovy_okamzik_zmeny, int Id_vysledku)
-        {
-            XElement result = new XElement("Historie vysledku kontroly",
-                new XAttribute("Id zmeny", Id_zmeny),
-                new XAttribute("Vysledek kontroly", Vysledek_kontroly),
-                new XAttribute("Prijata opatreni", Prijata_opatreni),
-                new XAttribute("Casovy okamzik zmeny", Casovy_okamzik_zmeny),
-                new XAttribute("Id vysledku", Id_vysledku));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
-        {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
-
-            List<XElement> elementy = xDoc.Descendants("Historie vysledku kontrol").Descendants("Historie vysledku kontroly").ToList();
-
-            return elementy;
-        }*/
-
         private int hodnotaId = 0;
 
         public int Sequence()
@@ -74,18 +49,6 @@ namespace EZV.XML.Gateway
 
         public Collection<Historie_vysledku_kontroly> Select()
         {
-            /*
-            Collection<Historie_vysledku_kontroly> vsechnyHistorie;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<Historie_vysledku_kontroly>));
-                vsechnyHistorie = (Collection<Historie_vysledku_kontroly>)xser.Deserialize(reader);
-            }
-
-            return vsechnyHistorie;
-            */
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Historie_vysledku_kontrol").Descendants("Historie_vysledku_kontroly").ToList();

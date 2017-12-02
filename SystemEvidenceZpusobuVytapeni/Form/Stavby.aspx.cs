@@ -23,13 +23,15 @@ namespace SystemEvidenceZpusobuVytapeni.Form
         StavbaVlastnik konkretniStavbaVlastnik = new StavbaVlastnik();
 
         Zpusob_vytapeni konkretniZpusobVytapeni = new Zpusob_vytapeni();
- 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //stavba = (IStavba)DecisionMaker.DecideSQL(DecisionMaker.Items.Stavba);
             stavba = (IStavba)DecisionMaker.DecideXML(DecisionMaker.Items.Stavba);
-            vlastnik = (IVlastnik)DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
-            stavbaVlastnik = (IStavbaVlastnik)DecisionMaker.DecideSQL(DecisionMaker.Items.StavbaVlastnik);
+            //vlastnik = (IVlastnik)DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
+            vlastnik = (IVlastnik)DecisionMaker.DecideXML(DecisionMaker.Items.Vlastnik);
+            //stavbaVlastnik = (IStavbaVlastnik)DecisionMaker.DecideSQL(DecisionMaker.Items.StavbaVlastnik);
+            stavbaVlastnik = (IStavbaVlastnik)DecisionMaker.DecideXML(DecisionMaker.Items.StavbaVlastnik);
             zpusobVytapeni = (IZpusob_vytapeni)DecisionMaker.DecideSQL(DecisionMaker.Items.Zpusob);
 
             /*
@@ -46,7 +48,10 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             zpusobVytapeni = zpusobVytapeniFactory.CreateZpusob();
             */
 
-            NacitaniDropDownListu();
+            if (!IsPostBack)
+            {
+                NacitaniDropDownListu();
+            }
         }
 
         public void NacitaniDropDownListu()
@@ -63,18 +68,20 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             foreach (var jednaStavba in stavby)
             {
                 ListStavbaV.Items.Add(new ListItem(jednaStavba.Typ_stavby + ", " + jednaStavba.Ulice + ", " + jednaStavba.Cislo_popisne.ToString(), jednaStavba.Id_stavby.ToString()));
+                ListStavbaZ.Items.Add(new ListItem(jednaStavba.Typ_stavby + ", " + jednaStavba.Ulice + ", " + jednaStavba.Cislo_popisne.ToString(), jednaStavba.Id_stavby.ToString()));
             }
             foreach (var jedenVlastnik in vlastnici)
             {
                 ListVlastnikV.Items.Add(new ListItem(jedenVlastnik.Jmeno + ", " + jedenVlastnik.Prijmeni + ", " + jedenVlastnik.Rodne_cislo, jedenVlastnik.Id_vlastnika.ToString()));
+                ListVlastnikZ.Items.Add(new ListItem(jedenVlastnik.Jmeno + ", " + jedenVlastnik.Prijmeni + ", " + jedenVlastnik.Rodne_cislo, jedenVlastnik.Id_vlastnika.ToString()));
             }
 
-            ListStavbaZ.DataSource = ListStavbaV.Items;
-            ListStavbaZ.DataBind();
+            //ListStavbaZ.DataSource = ListStavbaV.Items;
+            //ListStavbaZ.DataBind();
             Stavba_zpusob.DataSource = ListStavbaV.Items;
             Stavba_zpusob.DataBind();
-            ListVlastnikZ.DataSource = ListVlastnikV.Items;
-            ListVlastnikZ.DataBind();
+            //ListVlastnikZ.DataSource = ListVlastnikV.Items;
+            //ListVlastnikZ.DataBind();
         }
 
         #region Stavba

@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.Xml;
-using System.IO;
-using System.Xml.Serialization;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -15,50 +12,32 @@ namespace EZV.XML.Gateway
 {
     public class Zpusob_vytapeni_Gateway : IZpusob_vytapeni
     {
-        /*
-        public static XElement Insert(string Typ_vytapeni, DateTime Platnost_od, DateTime? Platnost_do, int Id_stavby)
-        {
-            XElement result = new XElement("Zpusob vytapeni",
-                new XAttribute("Typ vytapeni", Typ_vytapeni),
-                new XAttribute("Platnost od", Platnost_od),
-                new XAttribute("Platnost do", Platnost_do == null ? DBNull.Value : (object)Platnost_do),
-                new XAttribute("Id stavby", Id_stavby));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
+        public void Delete(Zpusob_vytapeni zpusob_vytapeni)
         {
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("Zpusoby vytapeni").Descendants("Zpusob vytapeni").ToList();
+            var q = from node in xDoc.Descendants("Zpusoby_vytapeni").Descendants("Zpusob_vytapeni")
+                    let attr = node.Attribute("Typ_vytapeni")
+                    let attr1 = node.Attribute("Id_stavby")
+                    where (attr != null && attr.Value == zpusob_vytapeni.Typ_vytapeni) && (attr1 != null && attr1.Value == zpusob_vytapeni.Id_stavby.ToString())
+                    select node;
+            q.ToList().ForEach(x => x.Attribute("Platnost_do").Value = zpusob_vytapeni.Platnost_do.ToString());
 
-            return elementy;
-        }*/
-
-        public void Delete(Zpusob_vytapeni zpusob_vytapeni)
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.Load(Constants.FilePath);
-
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Zpusoby_vytapeni/Zpusob_vytapeni");
-            if (node.Attributes[0].Value.Equals(zpusob_vytapeni.Typ_vytapeni) && node.Attributes[3].Value.Equals(zpusob_vytapeni.Id_stavby))
-            {
-                node.Attributes[2].Value = zpusob_vytapeni.Platnost_do.ToString();
-            }
-
-            xmlDoc.Save(Constants.FilePath);
+            xDoc.Save(Constants.FilePath);
         }
 
         public void Insert(Zpusob_vytapeni zpusob_vytapeni)
         {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
             XElement result = new XElement("Zpusob_vytapeni",
                 new XAttribute("Typ_vytapeni", zpusob_vytapeni.Typ_vytapeni),
                 new XAttribute("Platnost_od", zpusob_vytapeni.Platnost_od),
                 new XAttribute("Platnost_do", zpusob_vytapeni.Platnost_do == null ? DBNull.Value : (object)zpusob_vytapeni.Platnost_do),
                 new XAttribute("Id_stavby", zpusob_vytapeni.Id_stavby));
+
+            xDoc.Root.Element("Zpusoby_vytapeni").Add(result);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Zpusob_vytapeni Select_id(int idStavba, string zpusobVytapeni)
@@ -79,34 +58,23 @@ namespace EZV.XML.Gateway
 
         public void Update(Zpusob_vytapeni zpusob_vytapeni)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            xmlDoc.Load(Constants.FilePath);
-        
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Zpusoby_vytapeni/Zpusob_vytapeni");
-            if (node.Attributes[0].Value.Equals(zpusob_vytapeni.Typ_vytapeni) && node.Attributes[3].Value.Equals(zpusob_vytapeni.Id_stavby))
-            {
-                node.Attributes[1].Value = zpusob_vytapeni.Platnost_od.ToString();
-                node.Attributes[2].Value = zpusob_vytapeni.Platnost_do.ToString();
-            }
+            var q = from node in xDoc.Descendants("Zpusoby_vytapeni").Descendants("Zpusob_vytapeni")
+                    let attr = node.Attribute("Typ_vytapeni")
+                    let attr1 = node.Attribute("Id_stavby")
+                    where (attr != null && attr.Value == zpusob_vytapeni.Typ_vytapeni) && (attr1 != null && attr1.Value == zpusob_vytapeni.Id_stavby.ToString())
+                    select node;
+            q.ToList().ForEach(x => {
+                x.Attribute("Platnost_od").Value = zpusob_vytapeni.Platnost_od.ToString();
+                x.Attribute("Platnost_do").Value = zpusob_vytapeni.Platnost_do.ToString();
+            });
 
-            xmlDoc.Save(Constants.FilePath);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Collection<Zpusob_vytapeni> Select()
         {
-            /*
-            Collection<Zpusob_vytapeni> vsechnyZpusoby;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<Zpusob_vytapeni>));
-                vsechnyZpusoby = (Collection<Zpusob_vytapeni>)xser.Deserialize(reader);
-            }
-
-            return vsechnyZpusoby;
-            */
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Zpusoby_vytapeni").Descendants("Zpusob_vytapeni").ToList();

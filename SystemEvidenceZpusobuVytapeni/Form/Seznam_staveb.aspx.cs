@@ -23,7 +23,8 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            stavba = (IStavba)DecisionMaker.DecideSQL(DecisionMaker.Items.Stavba);
+            //stavba = (IStavba)DecisionMaker.DecideSQL(DecisionMaker.Items.Stavba);
+            stavba = (IStavba)DecisionMaker.DecideXML(DecisionMaker.Items.Stavba);
             stavby = stavba.Select();
 
             /*

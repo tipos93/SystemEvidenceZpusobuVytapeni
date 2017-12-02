@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Serialization;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -14,34 +12,6 @@ namespace EZV.XML.Gateway
 {
     public class Historie_stavby_Gateway : IHistorie_stavby
     {
-        /*
-        public static XElement Insert(int Id_zmeny, string Typ_stavby, string Ulice, int Cislo_popisne, int Cislo_stavby_na_KU, string Nazev_KU, DateTime Datum_kolaudace, DateTime Casovy_okamzik_zmeny, int Id_vlastnika, int Id_stavby)
-        {
-            XElement result = new XElement("Historie stavby",
-                new XAttribute("Id zmeny", Id_zmeny),
-                new XAttribute("Typ stavby", Typ_stavby),
-                new XAttribute("Ulice", Ulice),
-                new XAttribute("Cislo popisne", Cislo_popisne),
-                new XAttribute("Cislo stavby na KU", Cislo_stavby_na_KU),
-                new XAttribute("Nazev KU", Nazev_KU),
-                new XAttribute("Datum kolaudace", Datum_kolaudace),
-                new XAttribute("Casovy okamzik zmeny", Casovy_okamzik_zmeny),
-                new XAttribute("Id vlastnika", Id_vlastnika),
-                new XAttribute("Id stavby", Id_stavby));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
-        {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
-
-            List<XElement> elementy = xDoc.Descendants("Historie staveb").Descendants("Historie stavby").ToList();
-
-            return elementy;
-        }*/
-
         private int hodnotaId = 0;
 
         public int Sequence()
@@ -63,6 +33,8 @@ namespace EZV.XML.Gateway
 
         public void Insert(Historie_stavby historie_stavby)
         {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
             XElement result = new XElement("Historie_stavby",
             new XAttribute("Id_zmeny", historie_stavby.Id_zmeny),
             new XAttribute("Typ_stavby", historie_stavby.Typ_stavby),
@@ -74,11 +46,13 @@ namespace EZV.XML.Gateway
             new XAttribute("Casovy_okamzik_zmeny", historie_stavby.Casovy_okamzik_zmeny),
             new XAttribute("Id_vlastnika", historie_stavby.Id_vlastnika),
             new XAttribute("Id_stavby", historie_stavby.Id_stavby));
+
+            xDoc.Root.Element("Historie_staveb").Add(result);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Historie_stavby Select_id(int idZmeny)
         {
-
             Collection<Historie_stavby> vsechnyHistorie = this.Select();
             Historie_stavby vybranaHistorie = null;
 
@@ -91,23 +65,10 @@ namespace EZV.XML.Gateway
             }
 
             return vybranaHistorie;
-
         }
 
         public Collection<Historie_stavby> Select()
         {
-            /*
-            Collection<Historie_stavby> vsechnyHistorie;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<Historie_stavby>));
-                vsechnyHistorie = (Collection<Historie_stavby>)xser.Deserialize(reader);
-            }
-
-            return vsechnyHistorie;
-            */
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Historie_staveb").Descendants("Historie_stavby").ToList();

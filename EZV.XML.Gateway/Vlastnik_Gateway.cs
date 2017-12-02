@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.Xml;
-using System.IO;
-using System.Xml.Serialization;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -15,37 +12,6 @@ namespace EZV.XML.Gateway
 {
     public class Vlastnik_Gateway : IVlastnik
     {
-        /*
-        public static XElement Insert(int Id_vlastnika, string Jmeno, string Prijmeni, DateTime Datum_narozeni, DateTime? Datum_umrti, string Rodne_cislo, string Pohlavi, string Trvale_bydliste_ulice, int Trvale_bydliste_cislo_popisne, string Trvale_bydliste_mesto, string Trvale_bydliste_PSC, string Aktualni_vlastnik, string Vypis)
-        {
-            XElement result = new XElement("Vlastnik",
-                new XAttribute("Id vlastnika", Id_vlastnika),
-                new XAttribute("Jmeno", Jmeno),
-                new XAttribute("Prijmeni", Prijmeni),
-                new XAttribute("Datum narozeni", Datum_narozeni),
-                new XAttribute("Datum umrti", Datum_umrti == null ? DBNull.Value : (object)Datum_umrti),
-                new XAttribute("Rodne cislo", Rodne_cislo),
-                new XAttribute("Pohlavi", Pohlavi),
-                new XAttribute("Trvale bydliste ulice", Trvale_bydliste_ulice),
-                new XAttribute("Trvale bydliste cislo popisne", Trvale_bydliste_cislo_popisne),
-                new XAttribute("Trvale bydliste mesto", Trvale_bydliste_mesto),
-                new XAttribute("Trvale bydliste PSC", Trvale_bydliste_PSC),
-                new XAttribute("Aktualni vlastnik", Aktualni_vlastnik),
-                new XAttribute("Vypis", Vypis));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
-        {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
-
-            List<XElement> elementy = xDoc.Descendants("Vlastnici").Descendants("Vlastnik").ToList();
-
-            return elementy;
-        }*/
-
         private int hodnotaId = 0;
 
         public int Sequence()
@@ -67,21 +33,21 @@ namespace EZV.XML.Gateway
 
         public void Delete(Vlastnik vlastnik)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            xmlDoc.Load(Constants.FilePath);
+            var q = from node in xDoc.Descendants("Vlastnici").Descendants("Vlastnik")
+                    let attr = node.Attribute("Id_vlastnika")
+                    where (attr != null && attr.Value == vlastnik.Id_vlastnika.ToString())
+                    select node;
+            q.ToList().ForEach(x => x.Attribute("Aktualni_vlastnik").Value = vlastnik.Aktualni_vlastnik);
 
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Vlastnici/Vlastnik");
-            if (node.Attributes[0].Value.Equals(vlastnik.Id_vlastnika))
-            {
-                node.Attributes[11].Value = vlastnik.Aktualni_vlastnik;
-            }
-
-            xmlDoc.Save(Constants.FilePath);
+            xDoc.Save(Constants.FilePath);
         }
 
         public void Insert(Vlastnik vlastnik)
         {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
             XElement result = new XElement("Vlastnik",
                 new XAttribute("Id_vlastnika", vlastnik.Id_vlastnika),
                 new XAttribute("Jmeno", vlastnik.Jmeno),
@@ -95,6 +61,9 @@ namespace EZV.XML.Gateway
                 new XAttribute("Trvale_bydliste_mesto", vlastnik.Trvale_bydliste_mesto),
                 new XAttribute("Trvale_bydliste_PSC", vlastnik.Trvale_bydliste_PSC),
                 new XAttribute("Aktualni_vlastnik", vlastnik.Aktualni_vlastnik));
+
+            xDoc.Root.Element("Vlastnici").Add(result);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Vlastnik Select_id(int idVlastnik)
@@ -115,43 +84,31 @@ namespace EZV.XML.Gateway
 
         public void Update(Vlastnik vlastnik)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            xmlDoc.Load(Constants.FilePath);
+            var q = from node in xDoc.Descendants("Vlastnici").Descendants("Vlastnik")
+                    let attr = node.Attribute("Id_vlastnika")
+                    where (attr != null && attr.Value == vlastnik.Id_vlastnika.ToString())
+                    select node;
+            q.ToList().ForEach(x => {
+                x.Attribute("Jmeno").Value = vlastnik.Jmeno;
+                x.Attribute("Prijmeni").Value = vlastnik.Prijmeni;
+                x.Attribute("Datum_narozeni").Value = vlastnik.Datum_narozeni.ToString();
+                x.Attribute("Datum_umrti").Value = vlastnik.Datum_umrti.ToString();
+                x.Attribute("Rodne_cislo").Value = vlastnik.Rodne_cislo;
+                x.Attribute("Pohlavi").Value = vlastnik.Pohlavi;
+                x.Attribute("Trvale_bydliste_ulice").Value = vlastnik.Trvale_bydliste_ulice;
+                x.Attribute("Trvale_bydliste_cislo_popisne").Value = vlastnik.Trvale_bydliste_cislo_popisne.ToString();
+                x.Attribute("Trvale_bydliste_mesto").Value = vlastnik.Trvale_bydliste_mesto;
+                x.Attribute("Trvale_bydliste_PSC").Value = vlastnik.Trvale_bydliste_PSC;
+                x.Attribute("Aktualni_vlastnik").Value = vlastnik.Aktualni_vlastnik;
+            });
 
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Vlastnici/Vlastnik");
-            if (node.Attributes[0].Value.Equals(vlastnik.Id_vlastnika))
-            {
-                node.Attributes[1].Value = vlastnik.Jmeno;
-                node.Attributes[2].Value = vlastnik.Prijmeni;
-                node.Attributes[3].Value = vlastnik.Datum_narozeni.ToString();
-                node.Attributes[4].Value = vlastnik.Datum_umrti.ToString();
-                node.Attributes[5].Value = vlastnik.Rodne_cislo;
-                node.Attributes[6].Value = vlastnik.Pohlavi;
-                node.Attributes[7].Value = vlastnik.Trvale_bydliste_ulice;
-                node.Attributes[8].Value = vlastnik.Trvale_bydliste_cislo_popisne.ToString();
-                node.Attributes[9].Value = vlastnik.Trvale_bydliste_mesto;
-                node.Attributes[10].Value = vlastnik.Trvale_bydliste_PSC;
-                node.Attributes[11].Value = vlastnik.Aktualni_vlastnik;
-            }
-
-            xmlDoc.Save(Constants.FilePath);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Collection<Vlastnik> Select()
         {
-            /*
-            Collection<Vlastnik> vsichniVlastnici;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<Vlastnik>));
-                vsichniVlastnici = (Collection<Vlastnik>)xser.Deserialize(reader);
-            }
-
-            return vsichniVlastnici;
-            */
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Vlastnici").Descendants("Vlastnik").ToList();

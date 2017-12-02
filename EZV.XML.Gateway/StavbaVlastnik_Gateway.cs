@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -15,38 +12,23 @@ namespace EZV.XML.Gateway
 {
     public class StavbaVlastnik_Gateway : IStavbaVlastnik
     {
-        /*
-        public static XElement Insert(int Id_stavby, int Id_vlastnika)
-        {
-            XElement result = new XElement("StavbaVlastnik",
-                new XAttribute("Id stavby", Id_stavby),
-                new XAttribute("Id vlastnika", Id_vlastnika));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
+        public void Insert(StavbaVlastnik stavbaVlastnik)
         {
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("StavbyVlastnici").Descendants("StavbaVlastnik").ToList();
-
-            return elementy;
-        }*/
-
-        public void Insert(StavbaVlastnik stavbaVlastnik)
-        {
             XElement result = new XElement("StavbaVlastnik",
                 new XAttribute("Id_stavby", stavbaVlastnik.Id_stavby),
                 new XAttribute("Id_vlastnika", stavbaVlastnik.Id_vlastnika));
+
+            xDoc.Root.Element("StavbyVlastnici").Add(result);
+            xDoc.Save(Constants.FilePath);
         }
 
         public void Update(StavbaVlastnik stavbaVlastnik)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            //XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("StavbyVlastnici").Descendants("StavbaVlastnik").ToList();
+            //List<XElement> elementy = xDoc.Descendants("StavbyVlastnici").Descendants("StavbaVlastnik").ToList();
 
             //vytvoreni DTO pro praci s daty
             Stavba vybranaStavba = new Stavba();
@@ -67,15 +49,15 @@ namespace EZV.XML.Gateway
                 //vyber vlastniku, kteri vlastni upravovanou stavbu
                 if(vlastnik.Id_stavby == stavbaVlastnik.Id_stavby)
                 {
-                    foreach (XElement element in elementy)
-                    {
-                        //odstraneni vsech vlastniku upravovane stavby
-                        if(int.Parse(element.Attribute("Id_stavby").Value) == stavbaVlastnik.Id_stavby 
-                            && int.Parse(element.Attribute("Id_vlastnika").Value) == vlastnik.Id_vlastnika)
-                        {
-                            element.Remove();
-                        }
-                    }
+                    //nacitani z xml a hledani polozky s id upravovane stavby a id vlastniku, kteri ji vlastni, pro mozne smazani
+                    XDocument xDoc = XDocument.Load(Constants.FilePath);
+                    var q = from node in xDoc.Descendants("StavbyVlastnici").Descendants("StavbaVlastnik")
+                            let attr = node.Attribute("Id_stavby")
+                            let attr1 = node.Attribute("Id_vlastnika")
+                            where (attr != null && attr.Value == stavbaVlastnik.Id_stavby.ToString()) && (attr1 != null && attr1.Value == vlastnik.Id_vlastnika.ToString())
+                            select node;
+                    q.ToList().ForEach(x => x.Remove());
+                    xDoc.Save(Constants.FilePath);
 
                     Historie_stavby historieStavby = new Historie_stavby();
 
@@ -111,8 +93,7 @@ namespace EZV.XML.Gateway
                         vlastnikProUpravu.Id_vlastnika = vlastnik.Id_vlastnika;
                         vlastnikProUpravu.Aktualni_vlastnik = "N";
 
-                        vlastnikGateway = new Vlastnik_Gateway();
-                        vlastnikGateway.Update(vlastnikProUpravu);
+                        vlastnikGateway.Delete(vlastnikProUpravu);
                     }
                 }
             }
@@ -123,38 +104,11 @@ namespace EZV.XML.Gateway
             //nastaveni aktualniho vlastnika
             vlastnikProUpravu.Id_vlastnika = stavbaVlastnik.Id_vlastnika;
             vlastnikProUpravu.Aktualni_vlastnik = "A";
-            vlastnikGateway.Update(vlastnikProUpravu);
-
-            /*
-            XmlDocument xmlDoc = new XmlDocument();
-
-            xmlDoc.Load(Constants.FilePath);
-
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/StavbyVlastnici/StavbaVlastnik");
-
-            if (node.Attributes[0].Value.Equals(stavbaVlastnik.Id_stavby))
-            {
-                node.Attributes[1].Value = stavbaVlastnik.Id_vlastnika.ToString();
-            }
-
-            xmlDoc.Save(Constants.FilePath);
-            */
+            vlastnikGateway.Delete(vlastnikProUpravu);
         }
 
         public Collection<StavbaVlastnik> Select()
         {
-            /*
-            Collection<StavbaVlastnik> vsichniStavbyVlastnici;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<StavbaVlastnik>));
-                vsichniStavbyVlastnici = (Collection<StavbaVlastnik>)xser.Deserialize(reader);
-            }
-
-            return vsichniStavbyVlastnici;
-            */
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("StavbyVlastnici").Descendants("StavbaVlastnik").ToList();

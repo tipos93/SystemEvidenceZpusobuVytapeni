@@ -145,7 +145,7 @@
         <tr>
             <td class="auto-style8" align="right">Stavba:</td>
             <td class="auto-style18">
-                <asp:DropDownList ID="ListStavbaV" runat="server">
+                <asp:DropDownList ID="ListStavbaV" runat="server" CssClass="dropDown">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -159,7 +159,7 @@
         <tr>
             <td align="right" class="auto-style8">Vlastník:</td>
             <td class="auto-style18">
-                <asp:DropDownList ID="ListVlastnikV" runat="server">
+                <asp:DropDownList ID="ListVlastnikV" runat="server" CssClass="dropDown2">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -190,7 +190,7 @@
         <tr>
             <td class="auto-style8" align="right">Stavba:</td>
             <td class="auto-style14">
-                <asp:DropDownList ID="ListStavbaZ" runat="server">
+                <asp:DropDownList ID="ListStavbaZ" runat="server" CssClass="dropDown3">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -204,7 +204,7 @@
         <tr>
             <td align="right" class="auto-style8">Vlastník:</td>
             <td class="auto-style14">
-                <asp:DropDownList ID="ListVlastnikZ" runat="server">
+                <asp:DropDownList ID="ListVlastnikZ" runat="server" CssClass="dropDown4">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -243,7 +243,7 @@
             <td class="auto-style1" align="right">
                 Stavba:</td>
             <td class="auto-style1">
-                <asp:DropDownList ID="Stavba_zpusob" runat="server">
+                <asp:DropDownList ID="Stavba_zpusob" runat="server" CssClass="dropDown5">
                 </asp:DropDownList>
             </td>
         </tr>

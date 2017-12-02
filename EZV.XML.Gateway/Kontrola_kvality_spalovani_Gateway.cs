@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -15,28 +12,6 @@ namespace EZV.XML.Gateway
 {
     public class Kontrola_kvality_spalovani_Gateway : IKontrola_kvality_spalovani
     {
-        /*
-        public static XElement Insert(int Id_kontroly, DateTime Datum_kontroly, string Duvod_kontroly, int Id_stavby)
-        {
-            XElement result = new XElement("Kontrola kvality spalovani",
-                new XAttribute("Id kontroly", Id_kontroly),
-                new XAttribute("Datum kontroly", Datum_kontroly),
-                new XAttribute("Duvod kontroly", Duvod_kontroly),
-                new XAttribute("Id stavby", Id_stavby));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
-        {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
-
-            List<XElement> elementy = xDoc.Descendants("Kontroly kvality spalovani").Descendants("Kontrola kvality spalovani").ToList();
-
-            return elementy;
-        }*/
-
         private int hodnotaId = 0;
 
         public int Sequence()
@@ -58,11 +33,16 @@ namespace EZV.XML.Gateway
 
         public void Insert(Kontrola_kvality_spalovani kontrola)
         {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
             XElement result = new XElement("Kontrola_kvality_spalovani",
             new XAttribute("Id_kontroly", kontrola.Id_kontroly),
             new XAttribute("Datum_kontroly", kontrola.Datum_kontroly),
             new XAttribute("Duvod_kontroly", kontrola.Duvod_kontroly),
             new XAttribute("Id_stavby", kontrola.Id_stavby));
+
+            xDoc.Root.Element("Kontroly_kvality_spalovani").Add(result);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Kontrola_kvality_spalovani Select_id(int idKontroly)
@@ -83,35 +63,23 @@ namespace EZV.XML.Gateway
 
         public void Update(Kontrola_kvality_spalovani kontrola)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            xmlDoc.Load(Constants.FilePath);
+            var q = from node in xDoc.Descendants("Kontroly_kvality_spalovani").Descendants("Kontrola_kvality_spalovani")
+                    let attr = node.Attribute("Id_kontroly")
+                    where (attr != null && attr.Value == kontrola.Id_kontroly.ToString())
+                    select node;
+            q.ToList().ForEach(x => {
+                x.Attribute("Datum_kontroly").Value = kontrola.Datum_kontroly.ToString();
+                x.Attribute("Duvod_kontroly").Value = kontrola.Duvod_kontroly;
+                x.Attribute("Id_stavby").Value = kontrola.Id_stavby.ToString();
+            });
 
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Kontroly_kvality_spalovani/Kontrola_kvality_spalovani");
-            if (node.Attributes[0].Value.Equals(kontrola.Id_kontroly))
-            {
-                node.Attributes[1].Value = kontrola.Datum_kontroly.ToString();
-                node.Attributes[2].Value = kontrola.Duvod_kontroly;
-                node.Attributes[4].Value = kontrola.Id_stavby.ToString();
-            }
-
-            xmlDoc.Save(Constants.FilePath);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Collection<Kontrola_kvality_spalovani> Select()
         {
-            /*
-            Collection<Kontrola_kvality_spalovani> vsechnyKontroly;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<Kontrola_kvality_spalovani>));
-                vsechnyKontroly = (Collection<Kontrola_kvality_spalovani>)xser.Deserialize(reader);
-            }
-
-            return vsechnyKontroly;
-            */
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Kontroly_kvality_spalovani").Descendants("Kontrola_kvality_spalovani").ToList();

@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -15,29 +12,6 @@ namespace EZV.XML.Gateway
 {
     public class Vysledek_kontroly_Gateway : IVysledek_kontroly
     {
-        /*
-        public static XElement Insert(int Id_vysledku, string Ohodnoceni_kontroly, string Prijata_opatreni, int Id_kontroly, DateTime Datum_kontroly)
-        {
-           XElement result = new XElement("Vysledek kontroly",
-                new XAttribute("Id vysledku", Id_vysledku),
-                new XAttribute("Ohodnoceni kontroly", Ohodnoceni_kontroly),
-                new XAttribute("Prijata opatreni", Prijata_opatreni),
-                new XAttribute("Id kontroly", Id_kontroly),
-                new XAttribute("Datum kontroly", Datum_kontroly));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
-        {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
-
-            List<XElement> elementy = xDoc.Descendants("Vysledky kontrol").Descendants("Vysledek kontroly").ToList();
-
-            return elementy;
-        }*/
-
         private int hodnotaId = 0;
 
         public int Sequence()
@@ -59,12 +33,17 @@ namespace EZV.XML.Gateway
 
         public void Insert(Vysledek_kontroly vysledek)
         {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
             XElement result = new XElement("Vysledek_kontroly",
                 new XAttribute("Id_vysledku", vysledek.Id_vysledku),
                 new XAttribute("Ohodnoceni_kontroly", vysledek.Ohodnoceni_kontroly),
                 new XAttribute("Prijata_opatreni", vysledek.Prijata_opatreni),
                 new XAttribute("Id_kontroly", vysledek.Id_kontroly),
                 new XAttribute("Datum_kontroly", vysledek.Datum_kontroly));
+
+            xDoc.Root.Element("Vysledky_kontrol").Add(result);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Vysledek_kontroly Select_id(int idVysledku)
@@ -85,36 +64,24 @@ namespace EZV.XML.Gateway
 
         public void Update(Vysledek_kontroly vysledek)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            xmlDoc.Load(Constants.FilePath);
+            var q = from node in xDoc.Descendants("Vysledky_kontrol").Descendants("Vysledek_kontroly")
+                    let attr = node.Attribute("Id_vysledku")
+                    where (attr != null && attr.Value == vysledek.Id_vysledku.ToString())
+                    select node;
+            q.ToList().ForEach(x => {
+                x.Attribute("Ohodnoceni_kontroly").Value = vysledek.Ohodnoceni_kontroly;
+                x.Attribute("Prijata_opatreni").Value = vysledek.Prijata_opatreni;
+                x.Attribute("Id_kontroly").Value = vysledek.Id_kontroly.ToString();
+                x.Attribute("Datum_kontroly").Value = vysledek.Datum_kontroly.ToString();
+            });
 
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Vysledky_kontrol/Vysledek_kontroly");
-            if (node.Attributes[0].Value.Equals(vysledek.Id_vysledku))
-            {
-                node.Attributes[1].Value = vysledek.Ohodnoceni_kontroly;
-                node.Attributes[2].Value = vysledek.Prijata_opatreni;
-                node.Attributes[3].Value = vysledek.Id_kontroly.ToString();
-                node.Attributes[4].Value = vysledek.Datum_kontroly.ToString();
-            }
-
-            xmlDoc.Save(Constants.FilePath);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Collection<Vysledek_kontroly> Select()
         {
-            /*
-            Collection<Vysledek_kontroly> vsechnyVysledky;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<Vysledek_kontroly>));
-                vsechnyVysledky = (Collection<Vysledek_kontroly>)xser.Deserialize(reader);
-            }
-
-            return vsechnyVysledky;
-            */
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Vysledky_kontrol").Descendants("Vysledek_kontroly").ToList();

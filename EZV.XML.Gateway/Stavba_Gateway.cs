@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.Xml;
-using System.IO;
-using System.Xml.Serialization;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -15,32 +12,6 @@ namespace EZV.XML.Gateway
 {
     public class Stavba_Gateway : IStavba
     {
-        /*
-        public static XElement Insert(int Id_stavby, string Typ_stavby, string Ulice, int Cislo_popisne, int Cislo_stavby_na_KU, string Nazev_KU, DateTime Datum_kolaudace, string Vypis)
-        {
-            XElement result = new XElement("Stavba",
-                new XAttribute("Id stavby", Id_stavby),
-                new XAttribute("Typ stavby", Typ_stavby),
-                new XAttribute("Ulice", Ulice),
-                new XAttribute("Cislo popisne", Cislo_popisne),
-                new XAttribute("Cislo stavby na KU", Cislo_stavby_na_KU),
-                new XAttribute("Nazev KU", Nazev_KU),
-                new XAttribute("Datum kolaudace", Datum_kolaudace),
-                new XAttribute("Vypis", Vypis));
-
-            return result;
-        }*/
-
-        /*
-        public static List<XElement> Select()
-        {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
-
-            List<XElement> elementy = xDoc.Descendants("Stavby").Descendants("Stavba").ToList();
-
-            return elementy;
-        }*/
-
         private int hodnotaId = 0;
 
         public int Sequence()
@@ -62,6 +33,8 @@ namespace EZV.XML.Gateway
 
         public void Insert(Stavba stavba)
         {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
             XElement result = new XElement("Stavba",
                 new XAttribute("Id_stavby", stavba.Id_stavby),
                 new XAttribute("Typ_stavby", stavba.Typ_stavby),
@@ -70,6 +43,9 @@ namespace EZV.XML.Gateway
                 new XAttribute("Cislo_stavby_na_KU", stavba.Cislo_stavby_na_KU),
                 new XAttribute("Nazev_KU", stavba.Nazev_KU),
                 new XAttribute("Datum_kolaudace", stavba.Datum_kolaudace));
+
+            xDoc.Root.Element("Stavby").Add(result);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Stavba Select_id(int idStavba)
@@ -114,37 +90,26 @@ namespace EZV.XML.Gateway
 
         public void Update(Stavba stavba)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            xmlDoc.Load(Constants.FilePath);
+            var q = from node in xDoc.Descendants("Stavby").Descendants("Stavba")
+                    let attr = node.Attribute("Id_stavby")
+                    where (attr != null && attr.Value == stavba.Id_stavby.ToString())
+                    select node;
+            q.ToList().ForEach(x => {
+                x.Attribute("Typ_stavby").Value = stavba.Typ_stavby;
+                x.Attribute("Ulice").Value = stavba.Ulice;
+                x.Attribute("Cislo_popisne").Value = stavba.Cislo_popisne.ToString();
+                x.Attribute("Cislo_stavby_na_KU").Value = stavba.Cislo_stavby_na_KU.ToString();
+                x.Attribute("Nazev_KU").Value = stavba.Nazev_KU;
+                x.Attribute("Datum_kolaudace").Value = stavba.Datum_kolaudace.ToString();
+            });
 
-            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Stavby/Stavba");
-            if (node.Attributes[0].Value.Equals(stavba.Id_stavby))
-            {
-                node.Attributes[1].Value = stavba.Typ_stavby;
-                node.Attributes[2].Value = stavba.Ulice;
-                node.Attributes[3].Value = stavba.Cislo_popisne.ToString();
-                node.Attributes[4].Value = stavba.Cislo_stavby_na_KU.ToString();
-                node.Attributes[5].Value = stavba.Nazev_KU;
-                node.Attributes[6].Value = stavba.Datum_kolaudace.ToString();
-            }
-
-            xmlDoc.Save(Constants.FilePath);
+            xDoc.Save(Constants.FilePath);
         }
 
         public Collection<Stavba> Select()
         {
-            /*
-            Collection<Stavba> vsechnyStavby;
-
-            using (StreamReader reader = File.OpenText(Constants.FilePath))
-            {
-                XmlSerializer xser = new XmlSerializer(typeof(Collection<Stavba>));
-                vsechnyStavby = (Collection<Stavba>)xser.Deserialize(reader);
-            }
-
-            return vsechnyStavby;*/
-
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Stavby").Descendants("Stavba").ToList();
