@@ -8,10 +8,10 @@
         <tr>
             <td align="right" class="auto-style1">Id:</td>
             <td class="auto-style1">
-                <asp:TextBox ID="Id" runat="server" OnTextChanged="Id_TextChanged"></asp:TextBox>
+                <asp:TextBox ID="Id" runat="server"></asp:TextBox>
             </td>
             <td align="right" class="auto-style1">Číslo stavby na KU:</td>
-            <td class="auto-style1"><asp:TextBox ID="Cislo_stavby_na_KU" runat="server" OnTextChanged="Cislo_stavby_na_KU_TextChanged"></asp:TextBox>
+            <td class="auto-style1"><asp:TextBox ID="Cislo_stavby_na_KU" runat="server" ></asp:TextBox>
                 <br />
             </td>
         </tr>
@@ -30,7 +30,7 @@
         <tr>
             <td align="right">Typ:</td>
             <td>
-                <asp:ListBox ID="Typ" runat="server" EnableViewState="False" OnSelectedIndexChanged="Typ_SelectedIndexChanged" Rows="1" Width="165px">
+                <asp:ListBox ID="Typ" runat="server" EnableViewState="False" Rows="1" Width="165px">
                     <asp:ListItem></asp:ListItem>
                     <asp:ListItem>RD</asp:ListItem>
                     <asp:ListItem>byt</asp:ListItem>
@@ -42,7 +42,7 @@
             </td>
             <td align="right">Název KU:</td>
             <td>
-    <asp:TextBox ID="Nazev_KU" runat="server" OnTextChanged="Nazev_KU_TextChanged"></asp:TextBox>
+    <asp:TextBox ID="Nazev_KU" runat="server" ></asp:TextBox>
                 <br />
             </td>
         </tr>
@@ -60,13 +60,13 @@
         <tr>
             <td align="right" class="auto-style2">Ulice:</td>
             <td class="auto-style2">
-    <asp:TextBox ID="Ulice" runat="server" OnTextChanged="Ulice_TextChanged"></asp:TextBox>
+    <asp:TextBox ID="Ulice" runat="server"></asp:TextBox>
         
                 <br />
         
             </td>
             <td align="right" class="auto-style2">Datum kolaudace:</td>
-            <td class="auto-style2"><asp:TextBox ID="Datum_kolaudace" runat="server" OnTextChanged="Datum_kolaudace_TextChanged"></asp:TextBox>
+            <td class="auto-style2"><asp:TextBox ID="Datum_kolaudace" runat="server" ></asp:TextBox>
             </td>
         </tr>
 
@@ -84,7 +84,7 @@
 
         <tr>
             <td align="right" class="auto-style2">Číslo popisné:</td>
-            <td class="auto-style13"><asp:TextBox ID="Cislo_popisne" runat="server" OnTextChanged="Cislo_popisne_TextChanged"></asp:TextBox>
+            <td class="auto-style13"><asp:TextBox ID="Cislo_popisne" runat="server"></asp:TextBox>
                 <br />
             </td>
             <td align="right" class="auto-style13"></td>
@@ -111,7 +111,7 @@
     <asp:Button ID="Vložení" runat="server" OnClick="Vložení_Click" Text="Vložit stavbu" Height="30px" Width="108px" style="margin-bottom: 0px" /> 
             </td>
             <td align="center">
-    <asp:Button ID="Změna" runat="server" OnClick="Změna_Click" Text="Změnit stavbu" Height="30px" Width="108px" />
+    <asp:Button ID="Změna" runat="server" OnClick="Zmenit_Click" Text="Změnit stavbu" Height="30px" Width="108px" />
         
             </td>
                         <td align="center">
@@ -259,7 +259,7 @@
             <td class="auto-style1" align="right">
                 Způsob vytápění:</td>
             <td class="auto-style1">
-                <asp:ListBox ID="Zpusob_vytapeni_vlozeni" runat="server" EnableViewState="False" Rows="1" Width="171px" OnSelectedIndexChanged="Zpusob_vytapeni_vlozeni_SelectedIndexChanged">
+                <asp:ListBox ID="Zpusob_vytapeni_vlozeni" runat="server" EnableViewState="False" Rows="1" Width="171px">
                     <asp:ListItem></asp:ListItem>
                     <asp:ListItem>elektrika</asp:ListItem>
                     <asp:ListItem>plyn</asp:ListItem>
@@ -280,7 +280,7 @@
             <td class="auto-style1" align="right">
                 Platnost od:</td>
             <td class="auto-style1">
-                <asp:TextBox ID="Platnost_od_v" runat="server" OnTextChanged="Platnost_od_v_TextChanged" ></asp:TextBox>
+                <asp:TextBox ID="Platnost_od_v" runat="server"></asp:TextBox>
             </td>
         </tr>
 

@@ -42,19 +42,38 @@ namespace EZV.XML.Gateway
             return elementy;
         }*/
 
+        private int hodnotaId = 0;
+
+        public int Sequence()
+        {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
+            List<XElement> elementy = xDoc.Descendants("Historie_staveb").Descendants("Historie_stavby").ToList();
+
+            foreach (XElement element in elementy)
+            {
+                int id = int.Parse(element.Attribute("Id_zmeny").Value);
+                if (id > this.hodnotaId)
+                {
+                    this.hodnotaId = id;
+                }
+            }
+            return ++this.hodnotaId;
+        }
+
         public void Insert(Historie_stavby historie_stavby)
         {
-            XElement result = new XElement("Historie stavby",
-            new XAttribute("Id zmeny", historie_stavby.Id_zmeny),
-            new XAttribute("Typ stavby", historie_stavby.Typ_stavby),
+            XElement result = new XElement("Historie_stavby",
+            new XAttribute("Id_zmeny", historie_stavby.Id_zmeny),
+            new XAttribute("Typ_stavby", historie_stavby.Typ_stavby),
             new XAttribute("Ulice", historie_stavby.Ulice),
-            new XAttribute("Cislo popisne", historie_stavby.Cislo_popisne),
-            new XAttribute("Cislo stavby na KU", historie_stavby.Cislo_stavby_na_KU),
-            new XAttribute("Nazev KU", historie_stavby.Nazev_KU),
-            new XAttribute("Datum kolaudace", historie_stavby.Datum_kolaudace),
-            new XAttribute("Casovy okamzik zmeny", historie_stavby.Casovy_okamzik_zmeny),
-            new XAttribute("Id vlastnika", historie_stavby.Id_vlastnika),
-            new XAttribute("Id stavby", historie_stavby.Id_stavby));
+            new XAttribute("Cislo_popisne", historie_stavby.Cislo_popisne),
+            new XAttribute("Cislo_stavby_na_KU", historie_stavby.Cislo_stavby_na_KU),
+            new XAttribute("Nazev_KU", historie_stavby.Nazev_KU),
+            new XAttribute("Datum_kolaudace", historie_stavby.Datum_kolaudace),
+            new XAttribute("Casovy_okamzik_zmeny", historie_stavby.Casovy_okamzik_zmeny),
+            new XAttribute("Id_vlastnika", historie_stavby.Id_vlastnika),
+            new XAttribute("Id_stavby", historie_stavby.Id_stavby));
         }
 
         public Historie_stavby Select_id(int idZmeny)
@@ -91,7 +110,7 @@ namespace EZV.XML.Gateway
 
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("Historie staveb").Descendants("Historie stavby").ToList();
+            List<XElement> elementy = xDoc.Descendants("Historie_staveb").Descendants("Historie_stavby").ToList();
 
             Collection<Historie_stavby> vsechnyHistorieStaveb = new Collection<Historie_stavby>();
             int id;
@@ -106,16 +125,16 @@ namespace EZV.XML.Gateway
             {
                 Historie_stavby historieStavby = new Historie_stavby();
 
-                int.TryParse(element.Attribute("Id zmeny").Value, out id);
-                historieStavby.Typ_stavby = element.Attribute("Typ stavby").Value;
+                int.TryParse(element.Attribute("Id_zmeny").Value, out id);
+                historieStavby.Typ_stavby = element.Attribute("Typ_stavby").Value;
                 historieStavby.Ulice = element.Attribute("Ulice").Value;
-                int.TryParse(element.Attribute("Cislo popisne").Value, out cislo_popisne);
-                int.TryParse(element.Attribute("Cislo stavby na KU").Value, out cislo_stavby);
-                historieStavby.Nazev_KU = element.Attribute("Nazev KU").Value;
-                DateTime.TryParse(element.Attribute("Datum kolaudace").Value, out datum);
-                DateTime.TryParse(element.Attribute("Casovy okamzik zmeny").Value, out okamzikZmeny);
-                int.TryParse(element.Attribute("Id vlastnika").Value, out idVlastnika);
-                int.TryParse(element.Attribute("Id stavby").Value, out idStavby);
+                int.TryParse(element.Attribute("Cislo_popisne").Value, out cislo_popisne);
+                int.TryParse(element.Attribute("Cislo_stavby_na_KU").Value, out cislo_stavby);
+                historieStavby.Nazev_KU = element.Attribute("Nazev_KU").Value;
+                DateTime.TryParse(element.Attribute("Datum_kolaudace").Value, out datum);
+                DateTime.TryParse(element.Attribute("Casovy_okamzik_zmeny").Value, out okamzikZmeny);
+                int.TryParse(element.Attribute("Id_vlastnika").Value, out idVlastnika);
+                int.TryParse(element.Attribute("Id_stavby").Value, out idStavby);
 
                 historieStavby.Id_zmeny = id;
                 historieStavby.Cislo_popisne = cislo_popisne;

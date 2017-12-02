@@ -16,7 +16,6 @@ namespace EZV.DTO
         public int Cislo_stavby_na_KU { get; set; }
         public string Nazev_KU { get; set; }
         public DateTime Datum_kolaudace { get; set; }
-        public string Vypis { get; set; }
 
         public override string ToString()
         {

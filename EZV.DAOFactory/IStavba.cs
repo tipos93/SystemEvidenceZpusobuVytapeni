@@ -10,6 +10,7 @@ namespace EZV.DAOFactory
 {
     public interface IStavba
     {
+        int Sequence();
         void Insert(Stavba stavba);
         void Update(Stavba stavba);
         Collection<Stavba> Select();

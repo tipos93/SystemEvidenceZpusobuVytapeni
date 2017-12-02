@@ -10,7 +10,7 @@ namespace EZV.DataMapper
     public class Stavba_DataMapper : IStavba
     {
 
-        public static String SQL_SELECT = "SELECT id_stavby, typ_stavby, ulice, cislo_popisne, typ_stavby || ', ' || ulice || ', ' || cislo_popisne AS vypis FROM Stavba";
+        public static String SQL_SELECT = "SELECT id_stavby, typ_stavby, ulice, cislo_popisne FROM Stavba";
         public static String SQL_SELECT_ID = "SELECT * FROM Stavba WHERE id_stavby=:id";
         public static String SQL_INSERT = "INSERT INTO Stavba (id_stavby, typ_stavby, ulice, cislo_popisne, cislo_stavby_na_KU, nazev_KU, datum_kolaudace) "
             + " VALUES (:id, :typ, :ulice, :cislo_popisne, :cislo_stavby, :nazev_KU, :datum_kolaudace)";
@@ -19,18 +19,12 @@ namespace EZV.DataMapper
             "WHERE id_stavby=:id";
         public static String SQL_SEQUENCE = "SELECT Stavba_seq.NEXTVAL FROM DUAL";
 
-        public static int Sequence(Database Db = null)
+
+        public int Sequence()
         {
             Database db;
-            if (Db == null)
-            {
-                db = new Database();
-                db.Connect();
-            }
-            else
-            {
-                db = (Database)Db;
-            }
+            db = new Database();
+            db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
             OracleDataReader reader = db.Select(command);
@@ -43,11 +37,8 @@ namespace EZV.DataMapper
 
             reader.Close();
 
-            if (Db == null)
-            {
-                db.Close();
-            }
-            
+            db.Close();
+
             return hodnota;
         }
 
@@ -110,6 +101,39 @@ namespace EZV.DataMapper
 
             return stavba;
         }
+
+        /*
+        public static int Sequence(Database Db = null)
+        {
+            Database db;
+            if (Db == null)
+            {
+                db = new Database();
+                db.Connect();
+            }
+            else
+            {
+                db = (Database)Db;
+            }
+
+            OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
+            OracleDataReader reader = db.Select(command);
+
+            int hodnota = 0;
+            while (reader.Read() != false)
+            {
+                hodnota = reader.GetInt32(0);
+            }
+
+            reader.Close();
+
+            if (Db == null)
+            {
+                db.Close();
+            }
+
+            return hodnota;
+        }*/
 
         /*
         public static int Insert(Stavba stavba)
@@ -208,11 +232,6 @@ namespace EZV.DataMapper
                 Stavba.Typ_stavby = reader.GetString(++i);
                 Stavba.Ulice = reader.GetString(++i);
                 Stavba.Cislo_popisne = reader.GetInt32(++i);
-
-                if (!complete)
-                {
-                    Stavba.Vypis = reader.GetString(++i);
-                }
                 
                 if (complete)
                 {

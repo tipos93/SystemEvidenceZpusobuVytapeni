@@ -18,18 +18,12 @@ namespace EZV.DataMapper
             "datum_kontroly=:datum_kontroly WHERE id_vysledku=:id";
         public static String SQL_SEQUENCE = "SELECT Vysledek_kontroly_seq.NEXTVAL FROM DUAL";
 
-        public static int Sequence(Database Db = null)
+
+        public int Sequence()
         {
             Database db;
-            if (Db == null)
-            {
-                db = new Database();
-                db.Connect();
-            }
-            else
-            {
-                db = (Database)Db;
-            }
+            db = new Database();
+            db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
             OracleDataReader reader = db.Select(command);
@@ -42,10 +36,7 @@ namespace EZV.DataMapper
 
             reader.Close();
 
-            if (Db == null)
-            {
-                db.Close();
-            }
+            db.Close();
 
             return hodnota;
         }
@@ -109,6 +100,39 @@ namespace EZV.DataMapper
 
             return vysledek;
         }
+
+        /*
+        public static int Sequence(Database Db = null)
+        {
+            Database db;
+            if (Db == null)
+            {
+                db = new Database();
+                db.Connect();
+            }
+            else
+            {
+                db = (Database)Db;
+            }
+
+            OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
+            OracleDataReader reader = db.Select(command);
+
+            int hodnota = 0;
+            while (reader.Read() != false)
+            {
+                hodnota = reader.GetInt32(0);
+            }
+
+            reader.Close();
+
+            if (Db == null)
+            {
+                db.Close();
+            }
+
+            return hodnota;
+        }*/
 
         /*
         public static int Insert(Vysledek_kontroly vysledek)

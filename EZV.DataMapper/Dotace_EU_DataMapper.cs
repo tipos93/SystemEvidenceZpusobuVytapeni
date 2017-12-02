@@ -19,18 +19,11 @@ namespace EZV.DataMapper
         public static String SQL_SEQUENCE = "SELECT Dotace_EU_seq.NEXTVAL FROM DUAL";
 
 
-        public static int Sequence(Database Db = null)
+        public int Sequence()
         {
             Database db;
-            if (Db == null)
-            {
-                db = new Database();
-                db.Connect();
-            }
-            else
-            {
-                db = (Database)Db;
-            }
+            db = new Database();
+            db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
             OracleDataReader reader = db.Select(command);
@@ -43,10 +36,7 @@ namespace EZV.DataMapper
 
             reader.Close();
 
-            if (Db == null)
-            {
-                db.Close();
-            }
+            db.Close();
 
             return hodnota;
         }
@@ -109,6 +99,39 @@ namespace EZV.DataMapper
             db.Close();
             return dotace_EU;
         }
+
+        /*
+        public static int Sequence(Database Db = null)
+        {
+            Database db;
+            if (Db == null)
+            {
+                db = new Database();
+                db.Connect();
+            }
+            else
+            {
+                db = (Database)Db;
+            }
+
+            OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
+            OracleDataReader reader = db.Select(command);
+
+            int hodnota = 0;
+            while (reader.Read() != false)
+            {
+                hodnota = reader.GetInt32(0);
+            }
+
+            reader.Close();
+
+            if (Db == null)
+            {
+                db.Close();
+            }
+
+            return hodnota;
+        }*/
 
         /*
         public static int Insert(Dotace_EU dotace_EU)

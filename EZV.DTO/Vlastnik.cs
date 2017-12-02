@@ -21,7 +21,6 @@ namespace EZV.DTO
         public string Trvale_bydliste_mesto { get; set; }
         public string Trvale_bydliste_PSC { get; set; }
         public string Aktualni_vlastnik { get; set; }
-        public string Vypis { get; set; }
 
         public override string ToString()
         {

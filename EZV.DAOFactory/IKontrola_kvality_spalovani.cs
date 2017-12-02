@@ -10,6 +10,7 @@ namespace EZV.DAOFactory
 {
     public interface IKontrola_kvality_spalovani
     {
+        int Sequence();
         void Insert(Kontrola_kvality_spalovani kontrola);
         void Update(Kontrola_kvality_spalovani kontrola);
         Collection<Kontrola_kvality_spalovani> Select();

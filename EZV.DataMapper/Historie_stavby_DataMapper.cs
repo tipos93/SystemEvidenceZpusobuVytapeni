@@ -16,19 +16,11 @@ namespace EZV.DataMapper
             + " VALUES (:id, :typ, :ulice, :cislo_popisne, :cislo_stavby, :nazev_KU, :datum_kolaudace, :okamzik_zmeny, :id_vlastnika, :id_stavby)";
         public static String SQL_SEQUENCE = "SELECT Historie_stavby_seq.NEXTVAL FROM DUAL";
 
-
-        public static int Sequence(Database Db = null)
+        public int Sequence()
         {
             Database db;
-            if (Db == null)
-            {
-                db = new Database();
-                db.Connect();
-            }
-            else
-            {
-                db = (Database)Db;
-            }
+            db = new Database();
+            db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
             OracleDataReader reader = db.Select(command);
@@ -41,10 +33,7 @@ namespace EZV.DataMapper
 
             reader.Close();
 
-            if (Db == null)
-            {
-                db.Close();
-            }
+            db.Close();
 
             return hodnota;
         }
@@ -98,6 +87,39 @@ namespace EZV.DataMapper
 
             return historie_stavby;
         }
+
+        /*
+        public static int Sequence(Database Db = null)
+        {
+            Database db;
+            if (Db == null)
+            {
+                db = new Database();
+                db.Connect();
+            }
+            else
+            {
+                db = (Database)Db;
+            }
+
+            OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
+            OracleDataReader reader = db.Select(command);
+
+            int hodnota = 0;
+            while (reader.Read() != false)
+            {
+                hodnota = reader.GetInt32(0);
+            }
+
+            reader.Close();
+
+            if (Db == null)
+            {
+                db.Close();
+            }
+
+            return hodnota;
+        }*/
 
         /*
         public static int Insert(Historie_stavby historie_stavby)
@@ -159,7 +181,7 @@ namespace EZV.DataMapper
             db.Close();
             return historie_stavby;
         }*/
-        
+
         private static void PrepareCommand(OracleCommand command, Historie_stavby Historie_stavby)
         {
             command.BindByName = true;

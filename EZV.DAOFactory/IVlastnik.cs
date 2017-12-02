@@ -10,6 +10,7 @@ namespace EZV.DAOFactory
 {
     public interface IVlastnik
     {
+        int Sequence();
         void Insert(Vlastnik vlastnik);
         void Update(Vlastnik vlastnik);
         void Delete(Vlastnik vlastnik);

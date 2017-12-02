@@ -10,6 +10,7 @@ namespace EZV.DAOFactory
 {
     public interface IHistorie_vysledku_kontroly
     {
+        int Sequence();
         Collection<Historie_vysledku_kontroly> Select();
         Historie_vysledku_kontroly Select_id(int idZmeny);
     }

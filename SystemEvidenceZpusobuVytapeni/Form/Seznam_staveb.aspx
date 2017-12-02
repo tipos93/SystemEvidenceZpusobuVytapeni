@@ -29,22 +29,21 @@
     </asp:GridView>
     <br />
 
-
-
-        <asp:DetailsView ID="DetailsViewStavby" runat="server" DataKeyNames="Id_stavby" AutoGenerateRows="False" Height="50px" Width="125px">
+        <asp:DetailsView ID="DetailsViewStavby" runat="server" AutoGenerateRows="False" Height="50px" Width="125px" DataKeyNames="Id_stavby" OnItemUpdating="DetailsViewStavby_ItemUpdating">
         <Fields>
-            <asp:TemplateField HeaderText="Id_stavby" SortExpression="Id_stavby">
+            
+            <asp:TemplateField HeaderText="id_stavby" SortExpression="id_stavby">
                 <ItemTemplate>
-                    <asp:Literal runat="server" ID="idStavby" Text='<%# Bind("Id_stavby") %>'></asp:Literal>
+                    <asp:Label runat="server" ID="idStavby" Text='<%# Eval("Id_stavby") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             
-            <asp:TemplateField HeaderText="Typ_stavby" SortExpression="Typ_stavby">
+            <asp:TemplateField HeaderText="typ_stavby" SortExpression="typ_stavby">
                 <ItemTemplate>
-                    <asp:Label ID="labelTypStavby" runat="server" Text='<%# Bind("Typ_stavby") %>' />
+                    <asp:Label runat="server" Text='<%# Eval("Typ_stavby") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:DropDownList ID="ListTyp" runat="server" SelectedValue='<%# Bind("Typ_stavby") %>'>
+                    <asp:DropDownList ID="ListTyp" runat="server" SelectedValue='<%# Bind("typ_stavby") %>'>
                         <asp:ListItem Text="RD" Value="RD"  />
                         <asp:ListItem Text="byt" Value="byt" />
                         <asp:ListItem Text="hospodářská budova" Value="hospodářská budova" />
@@ -54,61 +53,75 @@
                 </EditItemTemplate>
             </asp:TemplateField>
             
-            <asp:TemplateField HeaderText="Ulice" SortExpression="Ulice">
+            <asp:TemplateField HeaderText="ulice" SortExpression="ulice">
                 <ItemTemplate>
-                    <asp:Label ID="labelUlice" runat="server" Text='<%# Bind("Ulice") %>' />
+                    <asp:Label runat="server" Text='<%# Eval("Ulice") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="TextUlice" runat="server" Text='<%# Bind("Ulice") %>' />
-                    <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="TextUlice" CssClass="error">*</asp:RequiredFieldValidator>--%>
+                    <asp:TextBox ID="TextUlice" runat="server" Text='<%# Bind("ulice") %>' />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TextUlice" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
             
-            <asp:TemplateField HeaderText="Cislo_popisne" SortExpression="Cislo_popisne">
+            <asp:TemplateField HeaderText="cislo_popisne" SortExpression="cislo_popisne">
                 <ItemTemplate>
-                    <asp:Label ID="labelCisloPopisne" runat="server" Text='<%# Bind("Cislo_popisne") %>' />
+                    <asp:Label runat="server" Text='<%# Eval("Cislo_popisne") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="TextCislo_popisne" runat="server" Text='<%# Bind("Cislo_popisne") %>' />
-                    <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="TextCislo_popisne" CssClass="error">*</asp:RequiredFieldValidator>--%>
+                    <asp:TextBox ID="TextCislo_popisne" runat="server" Text='<%# Bind("cislo_popisne") %>' />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TextCislo_popisne" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Cislo_stavby_na_KU" SortExpression="Cislo_stavby_na_KU">
+            <asp:TemplateField HeaderText="cislo_stavby_na_KU" SortExpression="cislo_stavby_na_KU">
                 <ItemTemplate>
-                    <asp:Label ID="labelCisloStavbyNaKU" runat="server" Text='<%# Bind("Cislo_stavby_na_KU") %>' />
+                    <asp:Label runat="server" Text='<%# Eval("Cislo_stavby_na_KU") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="TextCislo_stavby" runat="server" Text='<%# Bind("Cislo_stavby_na_KU") %>' />
-                    <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="TextCislo_stavby" CssClass="error">*</asp:RequiredFieldValidator>--%>
+                    <asp:TextBox ID="TextCislo_stavby" runat="server" Text='<%# Bind("cislo_stavby_na_KU") %>' />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TextCislo_stavby" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Nazev_KU" SortExpression="Nazev_KU">
+            <asp:TemplateField HeaderText="nazev_KU" SortExpression="nazev_KU">
                 <ItemTemplate>
-                    <asp:Label ID="labelNazevKU" runat="server" Text='<%# Bind("Nazev_KU") %>' />
+                    <asp:Label runat="server" Text='<%# Eval("Nazev_KU") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="TextNazev" runat="server" Text='<%# Bind("Nazev_KU") %>' />
-                    <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="TextNazev" CssClass="error">*</asp:RequiredFieldValidator>--%>
+                    <asp:TextBox ID="TextNazev" runat="server" Text='<%# Bind("nazev_KU") %>' />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TextNazev" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Datum_kolaudace" SortExpression="Datum_kolaudace">
+            <asp:TemplateField HeaderText="datum_kolaudace" SortExpression="datum_kolaudace">
                 <ItemTemplate>
-                    <asp:Label ID="labelDatumKolaudace" runat="server" Text='<%# Bind("Datum_kolaudace", "{0:MM/dd/yyyy}") %>' />
+                    <asp:Label runat="server" Text='<%# Eval("Datum_kolaudace ", "{0:MM/dd/yyyy}") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="TextDatum" runat="server" Text='<%# Bind("Datum_kolaudace", "{0:MM/dd/yyyy}") %>' />
-                    <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="TextDatum" CssClass="error">*</asp:RequiredFieldValidator>--%>
+                    <asp:TextBox ID="TextDatum" runat="server" Text='<%# Bind("datum_kolaudace", "{0:MM/dd/yyyy}") %>' />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TextDatum" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Aktualizace" HeaderStyle-HorizontalAlign="Center">
-                <ItemTemplate>
-                    <asp:Button ID="btnAktualizovat" runat="server" Text="Aktualizuj" OnClick="btnAktualizovat_Click" />
-                </ItemTemplate>
-            </asp:TemplateField>
+
+             <asp:TemplateField ShowHeader="False">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="btnUpravit" runat="server" CausesValidation="False" 
+                            CommandName="Upravit" Text="Upravit" OnClick="btnUpravit_Click"></asp:LinkButton>
+                    </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:LinkButton ID="btnUpravit" runat="server" CausesValidation="True" 
+                            CommandName="Aktualizovat" Text="Aktualizovat" OnClick="btnAktualizovat_Click"></asp:LinkButton>
+                        &nbsp;<asp:LinkButton ID="btnStorno" runat="server" CausesValidation="False" 
+                            CommandName="Storno" Text="Storno" OnClick="btnStorno_Click"></asp:LinkButton>
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
+
         </Fields>
+
+
     </asp:DetailsView>
+
+        
     <br />
     </asp:Content>

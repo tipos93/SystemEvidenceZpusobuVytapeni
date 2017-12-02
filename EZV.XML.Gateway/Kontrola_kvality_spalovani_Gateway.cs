@@ -37,13 +37,32 @@ namespace EZV.XML.Gateway
             return elementy;
         }*/
 
+        private int hodnotaId = 0;
+
+        public int Sequence()
+        {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
+            List<XElement> elementy = xDoc.Descendants("Kontroly_kvality_spalovani").Descendants("Kontrola_kvality_spalovani").ToList();
+
+            foreach (XElement element in elementy)
+            {
+                int id = int.Parse(element.Attribute("Id_kontroly").Value);
+                if (id > this.hodnotaId)
+                {
+                    this.hodnotaId = id;
+                }
+            }
+            return ++this.hodnotaId;
+        }
+
         public void Insert(Kontrola_kvality_spalovani kontrola)
         {
-            XElement result = new XElement("Kontrola kvality spalovani",
-            new XAttribute("Id kontroly", kontrola.Id_kontroly),
-            new XAttribute("Datum kontroly", kontrola.Datum_kontroly),
-            new XAttribute("Duvod kontroly", kontrola.Duvod_kontroly),
-            new XAttribute("Id stavby", kontrola.Id_stavby));
+            XElement result = new XElement("Kontrola_kvality_spalovani",
+            new XAttribute("Id_kontroly", kontrola.Id_kontroly),
+            new XAttribute("Datum_kontroly", kontrola.Datum_kontroly),
+            new XAttribute("Duvod_kontroly", kontrola.Duvod_kontroly),
+            new XAttribute("Id_stavby", kontrola.Id_stavby));
         }
 
         public Kontrola_kvality_spalovani Select_id(int idKontroly)
@@ -68,7 +87,7 @@ namespace EZV.XML.Gateway
 
             xmlDoc.Load(Constants.FilePath);
 
-            XmlNode node = xmlDoc.SelectSingleNode("Database/Kontroly kvality spalovani/Kontrola kvality spalovani");
+            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Kontroly_kvality_spalovani/Kontrola_kvality_spalovani");
             if (node.Attributes[0].Value.Equals(kontrola.Id_kontroly))
             {
                 node.Attributes[1].Value = kontrola.Datum_kontroly.ToString();
@@ -95,7 +114,7 @@ namespace EZV.XML.Gateway
 
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("Kontroly kvality spalovani").Descendants("Kontrola kvality spalovani").ToList();
+            List<XElement> elementy = xDoc.Descendants("Kontroly_kvality_spalovani").Descendants("Kontrola_kvality_spalovani").ToList();
 
             Collection<Kontrola_kvality_spalovani> vsechnyKontroly = new Collection<Kontrola_kvality_spalovani>();
             int id;
@@ -106,10 +125,10 @@ namespace EZV.XML.Gateway
             {
                 Kontrola_kvality_spalovani kontrola = new Kontrola_kvality_spalovani();
 
-                int.TryParse(element.Attribute("Id kontroly").Value, out id);
-                DateTime.TryParse(element.Attribute("Datum kontroly").Value, out datum);
-                kontrola.Duvod_kontroly = element.Attribute("Duvod kontroly").Value;
-                int.TryParse(element.Attribute("Id stavby").Value, out idStavby);
+                int.TryParse(element.Attribute("Id_kontroly").Value, out id);
+                DateTime.TryParse(element.Attribute("Datum_kontroly").Value, out datum);
+                kontrola.Duvod_kontroly = element.Attribute("Duvod_kontroly").Value;
+                int.TryParse(element.Attribute("Id_stavby").Value, out idStavby);
                 
                 kontrola.Id_kontroly = id;
                 kontrola.Datum_kontroly = datum;

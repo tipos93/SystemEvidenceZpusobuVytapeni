@@ -38,14 +38,33 @@ namespace EZV.XML.Gateway
             return elementy;
         }*/
 
+        private int hodnotaId = 0;
+
+        public int Sequence()
+        {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
+            List<XElement> elementy = xDoc.Descendants("Vysledky_kontrol").Descendants("Vysledek_kontroly").ToList();
+
+            foreach (XElement element in elementy)
+            {
+                int id = int.Parse(element.Attribute("Id_vysledku").Value);
+                if (id > this.hodnotaId)
+                {
+                    this.hodnotaId = id;
+                }
+            }
+            return ++this.hodnotaId;
+        }
+
         public void Insert(Vysledek_kontroly vysledek)
         {
-            XElement result = new XElement("Vysledek kontroly",
-                new XAttribute("Id vysledku", vysledek.Id_vysledku),
-                new XAttribute("Ohodnoceni kontroly", vysledek.Ohodnoceni_kontroly),
-                new XAttribute("Prijata opatreni", vysledek.Prijata_opatreni),
-                new XAttribute("Id kontroly", vysledek.Id_kontroly),
-                new XAttribute("Datum kontroly", vysledek.Datum_kontroly));
+            XElement result = new XElement("Vysledek_kontroly",
+                new XAttribute("Id_vysledku", vysledek.Id_vysledku),
+                new XAttribute("Ohodnoceni_kontroly", vysledek.Ohodnoceni_kontroly),
+                new XAttribute("Prijata_opatreni", vysledek.Prijata_opatreni),
+                new XAttribute("Id_kontroly", vysledek.Id_kontroly),
+                new XAttribute("Datum_kontroly", vysledek.Datum_kontroly));
         }
 
         public Vysledek_kontroly Select_id(int idVysledku)
@@ -70,7 +89,7 @@ namespace EZV.XML.Gateway
 
             xmlDoc.Load(Constants.FilePath);
 
-            XmlNode node = xmlDoc.SelectSingleNode("Database/Vysledky kontrol/Vysledek kontroly");
+            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Vysledky_kontrol/Vysledek_kontroly");
             if (node.Attributes[0].Value.Equals(vysledek.Id_vysledku))
             {
                 node.Attributes[1].Value = vysledek.Ohodnoceni_kontroly;
@@ -98,7 +117,7 @@ namespace EZV.XML.Gateway
 
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("Vysledky kontrol").Descendants("Vysledek kontroly").ToList();
+            List<XElement> elementy = xDoc.Descendants("Vysledky_kontrol").Descendants("Vysledek_kontroly").ToList();
 
             Collection<Vysledek_kontroly> vsechnyVysledkyKontrol = new Collection<Vysledek_kontroly>();
             int id;
@@ -109,11 +128,11 @@ namespace EZV.XML.Gateway
             {
                 Vysledek_kontroly vysledek = new Vysledek_kontroly();
 
-                int.TryParse(element.Attribute("Id vysledku").Value, out id);
-                vysledek.Ohodnoceni_kontroly = element.Attribute("Ohodnoceni kontroly").Value;
-                vysledek.Prijata_opatreni = element.Attribute("Prijata opatreni").Value;
-                int.TryParse(element.Attribute("Id kontroly").Value, out idKontroly);
-                DateTime.TryParse(element.Attribute("Datum kontroly").Value, out datum);
+                int.TryParse(element.Attribute("Id_vysledku").Value, out id);
+                vysledek.Ohodnoceni_kontroly = element.Attribute("Ohodnoceni_kontroly").Value;
+                vysledek.Prijata_opatreni = element.Attribute("Prijata_opatreni").Value;
+                int.TryParse(element.Attribute("Id_kontroly").Value, out idKontroly);
+                DateTime.TryParse(element.Attribute("Datum_kontroly").Value, out datum);
 
                 vysledek.Id_vysledku = id;
                 vysledek.Id_kontroly = idKontroly;

@@ -10,7 +10,7 @@ namespace EZV.DataMapper
     public class Vlastnik_DataMapper : IVlastnik
     {
 
-        public static String SQL_SELECT = "SELECT id_vlastnika, jmeno, prijmeni, datum_narozeni, datum_umrti, pohlavi, aktualni_vlastnik, jmeno || ', ' || prijmeni || ', ' || rodne_cislo AS vypis FROM Vlastnik";
+        public static String SQL_SELECT = "SELECT id_vlastnika, jmeno, prijmeni, datum_narozeni, datum_umrti, rodne_cislo, pohlavi, aktualni_vlastnik FROM Vlastnik";
         public static String SQL_SELECT_ID = "SELECT * FROM Vlastnik WHERE id_vlastnika=:id";
         public static String SQL_INSERT = "INSERT INTO Vlastnik (id_vlastnika, jmeno, prijmeni, datum_narozeni, datum_umrti, rodne_cislo, pohlavi, trvale_bydliste_ulice, trvale_bydliste_cislo_popisne, trvale_bydliste_mesto, trvale_bydliste_PSC, aktualni_vlastnik) "
             + " VALUES (:id, :jmeno, :prijmeni, :datum_narozeni, :datum_umrti, :rodne_cislo, :pohlavi, :ulice, :cislo_popisne, :mesto, :PSC, :aktualni_vlastnik)";
@@ -21,18 +21,11 @@ namespace EZV.DataMapper
         public static String SQL_SEQUENCE = "SELECT Vlastnik_seq.NEXTVAL FROM DUAL";
 
 
-        public static int Sequence(Database Db = null)
+        public int Sequence()
         {
             Database db;
-            if (Db == null)
-            {
-                db = new Database();
-                db.Connect();
-            }
-            else
-            {
-                db = (Database)Db;
-            }
+            db = new Database();
+            db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
             OracleDataReader reader = db.Select(command);
@@ -45,10 +38,7 @@ namespace EZV.DataMapper
 
             reader.Close();
 
-            if (Db == null)
-            {
-                db.Close();
-            }
+            db.Close();
 
             return hodnota;
         }
@@ -122,6 +112,39 @@ namespace EZV.DataMapper
 
             return vlastnik;
         }
+
+        /*
+        public static int Sequence(Database Db = null)
+        {
+            Database db;
+            if (Db == null)
+            {
+                db = new Database();
+                db.Connect();
+            }
+            else
+            {
+                db = (Database)Db;
+            }
+
+            OracleCommand command = db.CreateCommand(SQL_SEQUENCE);
+            OracleDataReader reader = db.Select(command);
+
+            int hodnota = 0;
+            while (reader.Read() != false)
+            {
+                hodnota = reader.GetInt32(0);
+            }
+
+            reader.Close();
+
+            if (Db == null)
+            {
+                db.Close();
+            }
+
+            return hodnota;
+        }*/
 
         /*
         public static int Insert(Vlastnik vlastnik)
@@ -241,7 +264,7 @@ namespace EZV.DataMapper
                 {
                     Vlastnik.Datum_umrti = reader.GetDateTime(i);
                 }
-                if (complete)
+                if (!complete)
                 {
                     Vlastnik.Rodne_cislo = reader.GetString(++i);
                 }
@@ -254,10 +277,6 @@ namespace EZV.DataMapper
                     Vlastnik.Trvale_bydliste_PSC = reader.GetString(++i);
                 }
                 Vlastnik.Aktualni_vlastnik = reader.GetString(++i);
-                if (!complete)
-                {
-                    Vlastnik.Vypis = reader.GetString(++i);
-                }
 
                 Vlastnici.Add(Vlastnik);
             }

@@ -16,7 +16,7 @@ namespace EZV.Factory
             return dotace;
         }
 
-        public IHistorie_stavby CreateHistoriiStavby()
+        public IHistorie_stavby CreateHistorieStavby()
         {
             IHistorie_stavby historieStavby = new Historie_stavby_Gateway();
             return historieStavby;

@@ -4,90 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using EZV.DataMapper;
 using EZV.DTO;
+using EZV.DataDecisionMaker;
+using EZV.DAOFactory;
 
 namespace SystemEvidenceZpusobuVytapeni.Form
 {
     public partial class Vlastnici : System.Web.UI.Page
     {
-
-        Vlastnik vlastnik = new Vlastnik();
+        IVlastnik vlastnik;
+        Vlastnik konkretniVlastnik = new Vlastnik();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            vlastnik = (IVlastnik) DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
 
-        }
-
-        protected void Id_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Jmeno_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Jmeno = Convert.ToString(Jmeno.Text);
-        }
-
-        protected void Prijmeni_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Prijmeni = Convert.ToString(Prijmeni.Text);
-        }
-
-        protected void Datum_narozeni_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Datum_narozeni = DateTime.Parse(Datum_narozeni.Text);
-        }
-
-        protected void Datum_umrti_TextChanged(object sender, EventArgs e)
-        {
-            if (Datum_umrti.Text != string.Empty)
-                vlastnik.Datum_umrti = DateTime.Parse(Datum_umrti.Text);
-        }
-
-        protected void Rodne_cislo_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Rodne_cislo = Convert.ToString(Rodne_cislo.Text);
-        }
-
-        protected void Pohlavi_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(Pohlavi.Text == "muž")
-                vlastnik.Pohlavi = "M";
-            else
-            {
-                vlastnik.Pohlavi = "Z";
-            }
-        }
-
-        protected void Ulice_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Trvale_bydliste_ulice = Convert.ToString(Ulice.Text);
-        }
-
-        protected void Cislo_popisne_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Trvale_bydliste_cislo_popisne = int.Parse(Cislo_popisne.Text);
-        }
-
-        protected void Mesto_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Trvale_bydliste_mesto = Convert.ToString(Mesto.Text);
-        }
-
-        protected void PSC_TextChanged(object sender, EventArgs e)
-        {
-            vlastnik.Trvale_bydliste_PSC = Convert.ToString(PSC.Text);
-        }
-
-        protected void AktualniVlastnik_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (AktualniVlastnik.Text == "ano")
-                vlastnik.Aktualni_vlastnik = "A";
-            else
-            {
-                vlastnik.Aktualni_vlastnik = "N";
-            }
+            //IVlastnikFactory vlastnikFactory = DecisionMaker.NewSQLFactory();
+            //vlastnik = vlastnikFactory.CreateVlastnik();
         }
 
         protected void Vložení_Click(object sender, EventArgs e)
@@ -106,8 +39,8 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             AktualniVlastnik.Text = string.Empty;
 
             Uložení.Visible = true;
-            vlastnik.Id_vlastnika = Vlastnik_DataMapper.Sequence();
-            Id.Text = Convert.ToString(vlastnik.Id_vlastnika);
+            konkretniVlastnik.Id_vlastnika = vlastnik.Sequence();
+            Id.Text = konkretniVlastnik.Id_vlastnika.ToString();
             Id.ReadOnly = true;
             Datum_umrti.ReadOnly = true;
         }
@@ -121,8 +54,31 @@ namespace SystemEvidenceZpusobuVytapeni.Form
         {
             try
             {
-                vlastnik.Id_vlastnika = int.Parse(Id.Text);
-                //Vlastnik_DataMapper.Insert(vlastnik); ;
+                konkretniVlastnik.Id_vlastnika = int.Parse(Id.Text);
+                konkretniVlastnik.Jmeno = Jmeno.Text.ToString();
+                konkretniVlastnik.Prijmeni = Prijmeni.Text.ToString();
+                konkretniVlastnik.Datum_narozeni = DateTime.Parse(Datum_narozeni.Text);
+                if (Datum_umrti.Text != string.Empty)
+                    konkretniVlastnik.Datum_umrti = DateTime.Parse(Datum_umrti.Text);
+                konkretniVlastnik.Rodne_cislo = Rodne_cislo.Text.ToString();
+                if (Pohlavi.Text == "muž")
+                    konkretniVlastnik.Pohlavi = "M";
+                else
+                {
+                    konkretniVlastnik.Pohlavi = "Z";
+                }
+                konkretniVlastnik.Trvale_bydliste_ulice = Ulice.Text.ToString();
+                konkretniVlastnik.Trvale_bydliste_cislo_popisne = int.Parse(Cislo_popisne.Text);
+                konkretniVlastnik.Trvale_bydliste_mesto = Mesto.Text.ToString();
+                konkretniVlastnik.Trvale_bydliste_PSC = PSC.Text.ToString();
+                if (AktualniVlastnik.Text == "ano")
+                    konkretniVlastnik.Aktualni_vlastnik = "A";
+                else
+                {
+                    konkretniVlastnik.Aktualni_vlastnik = "N";
+                }
+
+                vlastnik.Insert(konkretniVlastnik); ;
                 Uspesnost.Text = "Úspěšné vložení vlastníka!";
             }
             catch

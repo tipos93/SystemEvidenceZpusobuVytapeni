@@ -9,6 +9,6 @@ namespace EZV.Factory
 {
     public interface IHistorie_stavbyFactory
     {
-        IHistorie_stavby CreateHistoriiStavby();
+        IHistorie_stavby CreateHistorieStavby();
     }
 }

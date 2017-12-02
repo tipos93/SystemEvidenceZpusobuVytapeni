@@ -10,6 +10,7 @@ namespace EZV.DAOFactory
 {
     public interface IVysledek_kontroly
     {
+        int Sequence();
         void Insert(Vysledek_kontroly vysledek);
         void Update(Vysledek_kontroly vysledek);
         Collection<Vysledek_kontroly> Select();

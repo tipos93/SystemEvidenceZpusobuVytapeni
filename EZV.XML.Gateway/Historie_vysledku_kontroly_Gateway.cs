@@ -37,6 +37,25 @@ namespace EZV.XML.Gateway
             return elementy;
         }*/
 
+        private int hodnotaId = 0;
+
+        public int Sequence()
+        {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
+            List<XElement> elementy = xDoc.Descendants("Historie_vysledku_kontrol").Descendants("Historie_vysledku_kontroly").ToList();
+
+            foreach (XElement element in elementy)
+            {
+                int id = int.Parse(element.Attribute("Id_vysledku").Value);
+                if (id > this.hodnotaId)
+                {
+                    this.hodnotaId = id;
+                }
+            }
+            return ++this.hodnotaId;
+        }
+
         public Historie_vysledku_kontroly Select_id(int idZmeny)
         {
             Collection<Historie_vysledku_kontroly> vsechnyHistorie = this.Select();
@@ -69,7 +88,7 @@ namespace EZV.XML.Gateway
 
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("Historie vysledku kontrol").Descendants("Historie vysledku kontroly").ToList();
+            List<XElement> elementy = xDoc.Descendants("Historie_vysledku_kontrol").Descendants("Historie_vysledku_kontroly").ToList();
 
             Collection<Historie_vysledku_kontroly> vsechnyHistorieVysledku = new Collection<Historie_vysledku_kontroly>();
             int id;
@@ -80,11 +99,11 @@ namespace EZV.XML.Gateway
             {
                 Historie_vysledku_kontroly historieVysledku = new Historie_vysledku_kontroly();
 
-                int.TryParse(element.Attribute("Id vysledku").Value, out id);
-                historieVysledku.Vysledek_kontroly = element.Attribute("Vysledek kontroly").Value;
-                historieVysledku.Prijata_opatreni = element.Attribute("Prijata opatreni").Value;
-                DateTime.TryParse(element.Attribute("Casovy okamzik zmeny").Value, out okamzikZmeny);
-                int.TryParse(element.Attribute("Id vysledku").Value, out idVysledku);
+                int.TryParse(element.Attribute("Id_vysledku").Value, out id);
+                historieVysledku.Vysledek_kontroly = element.Attribute("Vysledek_kontroly").Value;
+                historieVysledku.Prijata_opatreni = element.Attribute("Prijata_opatreni").Value;
+                DateTime.TryParse(element.Attribute("Casovy_okamzik_zmeny").Value, out okamzikZmeny);
+                int.TryParse(element.Attribute("Id_vysledku").Value, out idVysledku);
                 
                 historieVysledku.Id_zmeny = id;
                 historieVysledku.Casovy_okamzik_zmeny = okamzikZmeny;

@@ -43,7 +43,7 @@ namespace EZV.XML.Gateway
 
             xmlDoc.Load(Constants.FilePath);
 
-            XmlNode node = xmlDoc.SelectSingleNode("Database/Vlastnici/Vlastnik");
+            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Zpusoby_vytapeni/Zpusob_vytapeni");
             if (node.Attributes[0].Value.Equals(zpusob_vytapeni.Typ_vytapeni) && node.Attributes[3].Value.Equals(zpusob_vytapeni.Id_stavby))
             {
                 node.Attributes[2].Value = zpusob_vytapeni.Platnost_do.ToString();
@@ -54,11 +54,11 @@ namespace EZV.XML.Gateway
 
         public void Insert(Zpusob_vytapeni zpusob_vytapeni)
         {
-            XElement result = new XElement("Zpusob vytapeni",
-                new XAttribute("Typ vytapeni", zpusob_vytapeni.Typ_vytapeni),
-                new XAttribute("Platnost od", zpusob_vytapeni.Platnost_od),
-                new XAttribute("Platnost do", zpusob_vytapeni.Platnost_do == null ? DBNull.Value : (object)zpusob_vytapeni.Platnost_do),
-                new XAttribute("Id stavby", zpusob_vytapeni.Id_stavby));
+            XElement result = new XElement("Zpusob_vytapeni",
+                new XAttribute("Typ_vytapeni", zpusob_vytapeni.Typ_vytapeni),
+                new XAttribute("Platnost_od", zpusob_vytapeni.Platnost_od),
+                new XAttribute("Platnost_do", zpusob_vytapeni.Platnost_do == null ? DBNull.Value : (object)zpusob_vytapeni.Platnost_do),
+                new XAttribute("Id_stavby", zpusob_vytapeni.Id_stavby));
         }
 
         public Zpusob_vytapeni Select_id(int idStavba, string zpusobVytapeni)
@@ -82,8 +82,8 @@ namespace EZV.XML.Gateway
             XmlDocument xmlDoc = new XmlDocument();
 
             xmlDoc.Load(Constants.FilePath);
-
-            XmlNode node = xmlDoc.SelectSingleNode("Database/Vlastnici/Vlastnik");
+        
+            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Zpusoby_vytapeni/Zpusob_vytapeni");
             if (node.Attributes[0].Value.Equals(zpusob_vytapeni.Typ_vytapeni) && node.Attributes[3].Value.Equals(zpusob_vytapeni.Id_stavby))
             {
                 node.Attributes[1].Value = zpusob_vytapeni.Platnost_od.ToString();
@@ -109,7 +109,7 @@ namespace EZV.XML.Gateway
 
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
-            List<XElement> elementy = xDoc.Descendants("Zpusoby vytapeni").Descendants("Zpusob vytapeni").ToList();
+            List<XElement> elementy = xDoc.Descendants("Zpusoby_vytapeni").Descendants("Zpusob_vytapeni").ToList();
 
             Collection<Zpusob_vytapeni> vsechnyZpusoby = new Collection<Zpusob_vytapeni>();
             DateTime platnostOd;
@@ -120,18 +120,18 @@ namespace EZV.XML.Gateway
             {
                 Zpusob_vytapeni zpusob = new Zpusob_vytapeni();
 
-                zpusob.Typ_vytapeni = element.Attribute("Typ vytapeni").Value;
-                DateTime.TryParse(element.Attribute("Platnost od").Value, out platnostOd);
+                zpusob.Typ_vytapeni = element.Attribute("Typ_vytapeni").Value;
+                DateTime.TryParse(element.Attribute("Platnost_od").Value, out platnostOd);
                 try
                 {
-                    DateTime.TryParse(element.Attribute("Platnost do").Value, out platnostDo);
+                    DateTime.TryParse(element.Attribute("Platnost_do").Value, out platnostDo);
                     zpusob.Platnost_do = platnostDo;
                 }
                 catch (Exception e)
                 {
                     zpusob.Platnost_do = null;
                 }
-                int.TryParse(element.Attribute("Id stavby").Value, out idStavby);
+                int.TryParse(element.Attribute("Id_stavby").Value, out idStavby);
 
                 zpusob.Platnost_od = platnostOd;
                 zpusob.Id_stavby = idStavby;

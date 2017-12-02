@@ -18,20 +18,19 @@ namespace SystemEvidenceZpusobuVytapeni.Account
         {
             //SiteMaster siteMaster = new SiteMaster();
             //siteMaster.FindControl("NavigationMenu").Visible = true;
-            /*
+            
             Menu mn = (Menu)Master.FindControl("NavigationMenu");
             mn.Visible = true;
-            */
+            
             /*
             foreach (MenuItem item in mn.Items)
             {
                 string navigate = item.NavigateUrl;
                 /// Other stuffs you want to do
             }
-
+            */
             //Menu MasterMenu = (Menu) SiteMaster.FindControl("NavigationMenu");
             //MasterMenu.Visible = true;
-            */
         }
     }
 }

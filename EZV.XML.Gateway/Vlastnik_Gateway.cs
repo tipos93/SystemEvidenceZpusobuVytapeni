@@ -46,13 +46,32 @@ namespace EZV.XML.Gateway
             return elementy;
         }*/
 
+        private int hodnotaId = 0;
+
+        public int Sequence()
+        {
+            XDocument xDoc = XDocument.Load(Constants.FilePath);
+
+            List<XElement> elementy = xDoc.Descendants("Vlastnici").Descendants("Vlastnik").ToList();
+
+            foreach (XElement element in elementy)
+            {
+                int id = int.Parse(element.Attribute("Id_vlastnika").Value);
+                if (id > this.hodnotaId)
+                {
+                    this.hodnotaId = id;
+                }
+            }
+            return ++this.hodnotaId;
+        }
+
         public void Delete(Vlastnik vlastnik)
         {
             XmlDocument xmlDoc = new XmlDocument();
 
             xmlDoc.Load(Constants.FilePath);
 
-            XmlNode node = xmlDoc.SelectSingleNode("Database/Vlastnici/Vlastnik");
+            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Vlastnici/Vlastnik");
             if (node.Attributes[0].Value.Equals(vlastnik.Id_vlastnika))
             {
                 node.Attributes[11].Value = vlastnik.Aktualni_vlastnik;
@@ -64,18 +83,18 @@ namespace EZV.XML.Gateway
         public void Insert(Vlastnik vlastnik)
         {
             XElement result = new XElement("Vlastnik",
-                new XAttribute("Id vlastnika", vlastnik.Id_vlastnika),
+                new XAttribute("Id_vlastnika", vlastnik.Id_vlastnika),
                 new XAttribute("Jmeno", vlastnik.Jmeno),
                 new XAttribute("Prijmeni", vlastnik.Prijmeni),
-                new XAttribute("Datum narozeni", vlastnik.Datum_narozeni),
-                new XAttribute("Datum umrti", vlastnik.Datum_umrti == null ? DBNull.Value : (object)vlastnik.Datum_umrti),
-                new XAttribute("Rodne cislo", vlastnik.Rodne_cislo),
+                new XAttribute("Datum_narozeni", vlastnik.Datum_narozeni),
+                new XAttribute("Datum_umrti", vlastnik.Datum_umrti == null ? DBNull.Value : (object)vlastnik.Datum_umrti),
+                new XAttribute("Rodne_cislo", vlastnik.Rodne_cislo),
                 new XAttribute("Pohlavi", vlastnik.Pohlavi),
-                new XAttribute("Trvale bydliste ulice", vlastnik.Trvale_bydliste_ulice),
-                new XAttribute("Trvale bydliste cislo popisne", vlastnik.Trvale_bydliste_cislo_popisne),
-                new XAttribute("Trvale bydliste mesto", vlastnik.Trvale_bydliste_mesto),
-                new XAttribute("Trvale bydliste PSC", vlastnik.Trvale_bydliste_PSC),
-                new XAttribute("Aktualni vlastnik", vlastnik.Aktualni_vlastnik));
+                new XAttribute("Trvale_bydliste_ulice", vlastnik.Trvale_bydliste_ulice),
+                new XAttribute("Trvale_bydliste_cislo_popisne", vlastnik.Trvale_bydliste_cislo_popisne),
+                new XAttribute("Trvale_bydliste_mesto", vlastnik.Trvale_bydliste_mesto),
+                new XAttribute("Trvale_bydliste_PSC", vlastnik.Trvale_bydliste_PSC),
+                new XAttribute("Aktualni_vlastnik", vlastnik.Aktualni_vlastnik));
         }
 
         public Vlastnik Select_id(int idVlastnik)
@@ -100,7 +119,7 @@ namespace EZV.XML.Gateway
 
             xmlDoc.Load(Constants.FilePath);
 
-            XmlNode node = xmlDoc.SelectSingleNode("Database/Vlastnici/Vlastnik");
+            XmlNode node = xmlDoc.SelectSingleNode("Databaze/Vlastnici/Vlastnik");
             if (node.Attributes[0].Value.Equals(vlastnik.Id_vlastnika))
             {
                 node.Attributes[1].Value = vlastnik.Jmeno;
@@ -147,26 +166,26 @@ namespace EZV.XML.Gateway
             {
                 Vlastnik vlastnik = new Vlastnik();
 
-                int.TryParse(element.Attribute("Id vlastnika").Value, out id);
+                int.TryParse(element.Attribute("Id_vlastnika").Value, out id);
                 vlastnik.Jmeno = element.Attribute("Jmeno").Value;
                 vlastnik.Prijmeni = element.Attribute("Prijmeni").Value;
-                DateTime.TryParse(element.Attribute("Datum narozeni").Value, out datumNarozeni);
+                DateTime.TryParse(element.Attribute("Datum_narozeni").Value, out datumNarozeni);
                 try
                 {
-                    DateTime.TryParse(element.Attribute("Datum umrti").Value, out datumUmrti);
+                    DateTime.TryParse(element.Attribute("Datum_umrti").Value, out datumUmrti);
                     vlastnik.Datum_umrti = datumUmrti;
                 }
                 catch(Exception e)
                 {
                     vlastnik.Datum_umrti = null;
                 }
-                vlastnik.Rodne_cislo = element.Attribute("Rodne cislo").Value;
+                vlastnik.Rodne_cislo = element.Attribute("Rodne_cislo").Value;
                 vlastnik.Pohlavi = element.Attribute("Pohlavi").Value;
-                vlastnik.Trvale_bydliste_ulice = element.Attribute("Trvale bydliste ulice").Value;
-                int.TryParse(element.Attribute("Trvale bydliste cislo popisne").Value, out cisloPopisne);
-                vlastnik.Trvale_bydliste_mesto = element.Attribute("Trvale bydliste mesto").Value;
-                vlastnik.Trvale_bydliste_PSC = element.Attribute("Trvale bydliste PSC").Value;
-                vlastnik.Aktualni_vlastnik = element.Attribute("Aktualni vlastnik").Value;
+                vlastnik.Trvale_bydliste_ulice = element.Attribute("Trvale_bydliste_ulice").Value;
+                int.TryParse(element.Attribute("Trvale_bydliste_cislo_popisne").Value, out cisloPopisne);
+                vlastnik.Trvale_bydliste_mesto = element.Attribute("Trvale_bydliste_mesto").Value;
+                vlastnik.Trvale_bydliste_PSC = element.Attribute("Trvale_bydliste_PSC").Value;
+                vlastnik.Aktualni_vlastnik = element.Attribute("Aktualni_vlastnik").Value;
                 
                 vlastnik.Id_vlastnika = id;
                 vlastnik.Datum_narozeni = datumNarozeni;
