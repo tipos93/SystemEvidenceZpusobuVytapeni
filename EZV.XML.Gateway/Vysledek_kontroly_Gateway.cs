@@ -40,7 +40,7 @@ namespace EZV.XML.Gateway
                 new XAttribute("Ohodnoceni_kontroly", vysledek.Ohodnoceni_kontroly),
                 new XAttribute("Prijata_opatreni", vysledek.Prijata_opatreni),
                 new XAttribute("Id_kontroly", vysledek.Id_kontroly),
-                new XAttribute("Datum_kontroly", vysledek.Datum_kontroly));
+                new XAttribute("Datum_kontroly", vysledek.Datum_kontroly.ToShortDateString()));
 
             xDoc.Root.Element("Vysledky_kontrol").Add(result);
             xDoc.Save(Constants.FilePath);
@@ -74,7 +74,7 @@ namespace EZV.XML.Gateway
                 x.Attribute("Ohodnoceni_kontroly").Value = vysledek.Ohodnoceni_kontroly;
                 x.Attribute("Prijata_opatreni").Value = vysledek.Prijata_opatreni;
                 x.Attribute("Id_kontroly").Value = vysledek.Id_kontroly.ToString();
-                x.Attribute("Datum_kontroly").Value = vysledek.Datum_kontroly.ToString();
+                x.Attribute("Datum_kontroly").Value = vysledek.Datum_kontroly.ToShortDateString();
             });
 
             xDoc.Save(Constants.FilePath);

@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace SystemEvidenceZpusobuVytapeni.Form
 {
-    public partial class Stavby : System.Web.UI.Page
+    public partial class Stavby : BasePage
     {
         IStavba stavba;
         IVlastnik vlastnik;
@@ -26,27 +26,22 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //stavba = (IStavba)DecisionMaker.DecideSQL(DecisionMaker.Items.Stavba);
-            stavba = (IStavba)DecisionMaker.DecideXML(DecisionMaker.Items.Stavba);
-            //vlastnik = (IVlastnik)DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
-            vlastnik = (IVlastnik)DecisionMaker.DecideXML(DecisionMaker.Items.Vlastnik);
-            //stavbaVlastnik = (IStavbaVlastnik)DecisionMaker.DecideSQL(DecisionMaker.Items.StavbaVlastnik);
-            stavbaVlastnik = (IStavbaVlastnik)DecisionMaker.DecideXML(DecisionMaker.Items.StavbaVlastnik);
-            zpusobVytapeni = (IZpusob_vytapeni)DecisionMaker.DecideSQL(DecisionMaker.Items.Zpusob);
+            //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
+            this.GetFactory();
+            stavba = DecisionMaker.Stavba.CreateStavba();
+            stavby = stavba.Select();
 
-            /*
-            IStavbaFactory stavbaFactory = DecisionMaker.DecideSQL();
-            stavba = stavbaFactory.CreateStavba();
+            //vlastnik = (IVlastnik) this.GetFactory(DecisionMaker.Items.Vlastnik);
+            vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
+            vlastnici = vlastnik.Select();
 
-            IVlastnikFactory vlastnikFactory = DecisionMaker.DecideSQL();
-            vlastnik = vlastnikFactory.CreateVlastnik();
+            //stavbaVlastnik = (IStavbaVlastnik) this.GetFactory(DecisionMaker.Items.StavbaVlastnik);
+            //zpusobVytapeni = (IZpusob_vytapeni)this.GetFactory(DecisionMaker.Items.Zpusob);
+            stavbaVlastnik = DecisionMaker.StavbaVlastnik.CreateStavbaVlastnik();
+            zpusobVytapeni = DecisionMaker.Zpusob.CreateZpusob();
 
-            IStavbaVlastnikFactory stavbaVlastnikFactory = DecisionMaker.DecideSQL();
-            stavbaVlastnik = stavbaVlastnikFactory.CreateStavbaVlastnik();
-
-            IZpusob_vytapeniFactory zpusobVytapeniFactory = DecisionMaker.DecideSQL();
-            zpusobVytapeni = zpusobVytapeniFactory.CreateZpusob();
-            */
+            CalendarDatumKolaudace.SelectedDate = CalendarDatumKolaudace.TodaysDate;
+            CalendarPlatnostOd.SelectedDate = CalendarPlatnostOd.TodaysDate;
 
             if (!IsPostBack)
             {
@@ -54,39 +49,34 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             }
         }
 
-        public void NacitaniDropDownListu()
+        private void NacitaniDropDownListu()
         {
-            stavby = stavba.Select();
-            vlastnici = vlastnik.Select();
-
             ListStavbaV.Items.Add(new ListItem("", "-9999"));
-            ListStavbaZ.Items.Add(new ListItem("", "-9999"));
-            Stavba_zpusob.Items.Add(new ListItem("", "-9999"));
             ListVlastnikV.Items.Add(new ListItem("", "-9999"));
-            ListVlastnikZ.Items.Add(new ListItem("", "-9999"));
 
             foreach (var jednaStavba in stavby)
             {
                 ListStavbaV.Items.Add(new ListItem(jednaStavba.Typ_stavby + ", " + jednaStavba.Ulice + ", " + jednaStavba.Cislo_popisne.ToString(), jednaStavba.Id_stavby.ToString()));
-                ListStavbaZ.Items.Add(new ListItem(jednaStavba.Typ_stavby + ", " + jednaStavba.Ulice + ", " + jednaStavba.Cislo_popisne.ToString(), jednaStavba.Id_stavby.ToString()));
             }
             foreach (var jedenVlastnik in vlastnici)
             {
                 ListVlastnikV.Items.Add(new ListItem(jedenVlastnik.Jmeno + ", " + jedenVlastnik.Prijmeni + ", " + jedenVlastnik.Rodne_cislo, jedenVlastnik.Id_vlastnika.ToString()));
-                ListVlastnikZ.Items.Add(new ListItem(jedenVlastnik.Jmeno + ", " + jedenVlastnik.Prijmeni + ", " + jedenVlastnik.Rodne_cislo, jedenVlastnik.Id_vlastnika.ToString()));
             }
 
-            //ListStavbaZ.DataSource = ListStavbaV.Items;
-            //ListStavbaZ.DataBind();
-            Stavba_zpusob.DataSource = ListStavbaV.Items;
-            Stavba_zpusob.DataBind();
-            //ListVlastnikZ.DataSource = ListVlastnikV.Items;
-            //ListVlastnikZ.DataBind();
+            ListItem[] itemStavbaV = new ListItem[ListStavbaV.Items.Count];
+            ListItem[] itemVlastnikV = new ListItem[ListVlastnikV.Items.Count];
+
+            ListStavbaV.Items.CopyTo(itemStavbaV, 0);
+            ListStavbaZ.Items.AddRange(itemStavbaV);
+            Stavba_zpusob.Items.AddRange(itemStavbaV);
+
+            ListVlastnikV.Items.CopyTo(itemVlastnikV, 0);
+            ListVlastnikZ.Items.AddRange(itemVlastnikV);
         }
 
         #region Stavba
 
-        protected void Vložení_Click(object sender, EventArgs e)
+        private void MazaniPolicekStavby()
         {
             Id.Text = string.Empty;
             Typ.Text = string.Empty;
@@ -94,7 +84,12 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             Cislo_popisne.Text = string.Empty;
             Cislo_stavby_na_KU.Text = string.Empty;
             Nazev_KU.Text = string.Empty;
-            Datum_kolaudace.Text = string.Empty;
+            CalendarDatumKolaudace.SelectedDate = CalendarDatumKolaudace.TodaysDate;
+        }
+
+        protected void Vložení_Click(object sender, EventArgs e)
+        {
+            this.MazaniPolicekStavby();
 
             Uložit.Visible = true;
             konkretniStavba.Id_stavby = stavba.Sequence();
@@ -104,7 +99,7 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Zmenit_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Form/Seznam_staveb.aspx");
+            Response.Redirect("~/Form/Zmena_stavby.aspx");
         }
 
         protected void Ulozit_Click(object sender, EventArgs e)
@@ -117,7 +112,7 @@ namespace SystemEvidenceZpusobuVytapeni.Form
                 konkretniStavba.Cislo_popisne = int.Parse(Cislo_popisne.Text);
                 konkretniStavba.Cislo_stavby_na_KU = int.Parse(Cislo_stavby_na_KU.Text);
                 konkretniStavba.Nazev_KU = Nazev_KU.Text.ToString();
-                konkretniStavba.Datum_kolaudace = DateTime.Parse(Datum_kolaudace.Text);
+                konkretniStavba.Datum_kolaudace = CalendarDatumKolaudace.SelectedDate;
 
                 stavba.Insert(konkretniStavba);
                 Uspesnost.Text = "Úspěšné vložení stavby!";
@@ -127,14 +122,7 @@ namespace SystemEvidenceZpusobuVytapeni.Form
                 Uspesnost.Text = "Nepovedlo se úspěšně vložit stavbu!";
             }
 
-            Id.Text = string.Empty;
-            Typ.Text = string.Empty;
-            Ulice.Text = string.Empty;
-            Cislo_popisne.Text = string.Empty;
-            Cislo_stavby_na_KU.Text = string.Empty;
-            Nazev_KU.Text = string.Empty;
-            Datum_kolaudace.Text = string.Empty;
-            konkretniStavba = null;
+            this.MazaniPolicekStavby();
         }
 
         #endregion
@@ -170,6 +158,9 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             {
                 Uspesne_vlozeni_vlastnika.Text = "Nepovedlo se úspěšně vložit vlastníka stavby! Stavbu již daný vlastník vlastní!";
             }
+
+            ListStavbaV.SelectedValue = "-9999";
+            ListVlastnikV.SelectedValue = "-9999";
         }
 
         protected void Potvrzeni_zmeny_Click(object sender, EventArgs e)
@@ -186,6 +177,9 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             {
                 Uspesna_zmena_vlastnika.Text = "Nepovedlo se změnit vlastníka stavby!";
             }
+
+            ListStavbaZ.SelectedValue = "-9999";
+            ListVlastnikZ.SelectedValue = "-9999";
         }
 
         #endregion
@@ -198,7 +192,7 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             {
                 konkretniZpusobVytapeni.Id_stavby = int.Parse(Stavba_zpusob.SelectedValue);
                 konkretniZpusobVytapeni.Typ_vytapeni = Zpusob_vytapeni_vlozeni.Text.ToString();
-                konkretniZpusobVytapeni.Platnost_od = DateTime.Parse(Platnost_od_v.Text);
+                konkretniZpusobVytapeni.Platnost_od = CalendarPlatnostOd.SelectedDate;
 
                 zpusobVytapeni.Insert(konkretniZpusobVytapeni);
                 Uspesne_vlozeni_zpusobu.Text = "Úspěšné vložení způsobu vytápění stavby!";
@@ -207,8 +201,10 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             {
                 Uspesne_vlozeni_zpusobu.Text = "Nepovedlo se úspěšně vložit způsob vytápění stavby!";
             }
+
+            Stavba_zpusob.SelectedValue = "-9999";
             Zpusob_vytapeni_vlozeni.Text = string.Empty;
-            Platnost_od_v.Text = string.Empty;
+            CalendarPlatnostOd.SelectedDate = CalendarPlatnostOd.TodaysDate;
         }
 
         protected void Zmena_zpusobu_Click(object sender, EventArgs e)
@@ -217,16 +213,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form
         }
 
         #endregion
-
-        protected void Stavby_kontroly_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Form/Stavby_kontroly.aspx");
-        }
-
-        protected void Stavby_topi_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Form/Stavby_topi.aspx");
-        }
 
         protected void seznam_zpusobu_Click(object sender, EventArgs e)
         {

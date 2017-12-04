@@ -103,13 +103,13 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.CompareValidator CompareCisloPopisne;
         
         /// <summary>
-        /// Datum_narozeni control.
+        /// CalendarDatumNarozeni control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Datum_narozeni;
+        protected global::System.Web.UI.WebControls.Calendar CalendarDatumNarozeni;
         
         /// <summary>
         /// Mesto control.
@@ -121,15 +121,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.TextBox Mesto;
         
         /// <summary>
-        /// CompareDatumNarozeni control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareDatumNarozeni;
-        
-        /// <summary>
         /// CompareMesto control.
         /// </summary>
         /// <remarks>
@@ -137,15 +128,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CompareValidator CompareMesto;
-        
-        /// <summary>
-        /// Datum_umrti control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Datum_umrti;
         
         /// <summary>
         /// PSC control.
@@ -157,15 +139,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.TextBox PSC;
         
         /// <summary>
-        /// CompareDatumUmrti control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareDatumUmrti;
-        
-        /// <summary>
         /// ComparePSC control.
         /// </summary>
         /// <remarks>
@@ -175,15 +148,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.CompareValidator ComparePSC;
         
         /// <summary>
-        /// Rodne_cislo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Rodne_cislo;
-        
-        /// <summary>
         /// AktualniVlastnik control.
         /// </summary>
         /// <remarks>
@@ -191,6 +155,15 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox AktualniVlastnik;
+        
+        /// <summary>
+        /// Rodne_cislo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Rodne_cislo;
         
         /// <summary>
         /// CompareRodneCislo control.

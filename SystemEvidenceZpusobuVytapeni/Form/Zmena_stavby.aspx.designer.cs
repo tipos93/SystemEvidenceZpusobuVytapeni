@@ -10,24 +10,24 @@
 namespace SystemEvidenceZpusobuVytapeni.Form {
     
     
-    public partial class Stavby_kontroly {
+    public partial class Zmena_stavby {
         
         /// <summary>
-        /// GridViewStavbyKontroly control.
+        /// GridViewStavby control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewStavbyKontroly;
+        protected global::System.Web.UI.WebControls.GridView GridViewStavby;
         
         /// <summary>
-        /// ObjectDataSource1 control.
+        /// DetailsViewStavby control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSource1;
+        protected global::System.Web.UI.WebControls.DetailsView DetailsViewStavby;
     }
 }

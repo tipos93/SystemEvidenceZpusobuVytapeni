@@ -46,6 +46,7 @@
     <Compile Include="IKontrola_kvality_spalovani.cs" />
     <Compile Include="IStavba.cs" />
     <Compile Include="IStavbaVlastnik.cs" />
+    <Compile Include="IUzivatele.cs" />
     <Compile Include="IVlastnik.cs" />
     <Compile Include="IVysledek_kontroly.cs" />
     <Compile Include="IZpusob_vytapeni.cs" />

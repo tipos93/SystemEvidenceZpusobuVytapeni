@@ -42,7 +42,7 @@ namespace EZV.XML.Gateway
                 new XAttribute("Cislo_popisne", stavba.Cislo_popisne),
                 new XAttribute("Cislo_stavby_na_KU", stavba.Cislo_stavby_na_KU),
                 new XAttribute("Nazev_KU", stavba.Nazev_KU),
-                new XAttribute("Datum_kolaudace", stavba.Datum_kolaudace));
+                new XAttribute("Datum_kolaudace", stavba.Datum_kolaudace.ToShortDateString()));
 
             xDoc.Root.Element("Stavby").Add(result);
             xDoc.Save(Constants.FilePath);
@@ -102,7 +102,7 @@ namespace EZV.XML.Gateway
                 x.Attribute("Cislo_popisne").Value = stavba.Cislo_popisne.ToString();
                 x.Attribute("Cislo_stavby_na_KU").Value = stavba.Cislo_stavby_na_KU.ToString();
                 x.Attribute("Nazev_KU").Value = stavba.Nazev_KU;
-                x.Attribute("Datum_kolaudace").Value = stavba.Datum_kolaudace.ToString();
+                x.Attribute("Datum_kolaudace").Value = stavba.Datum_kolaudace.ToShortDateString();
             });
 
             xDoc.Save(Constants.FilePath);

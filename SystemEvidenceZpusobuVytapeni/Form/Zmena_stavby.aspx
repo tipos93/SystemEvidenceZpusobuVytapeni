@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Seznam_staveb.aspx.cs" Inherits="SystemEvidenceZpusobuVytapeni.Form.Seznam" EnableEventValidation = "false"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Zmena_stavby.aspx.cs" Inherits="SystemEvidenceZpusobuVytapeni.Form.Zmena_stavby" EnableEventValidation = "false"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -29,7 +29,7 @@
     </asp:GridView>
     <br />
 
-        <asp:DetailsView ID="DetailsViewStavby" runat="server" AutoGenerateRows="False" Height="50px" Width="125px">
+        <asp:DetailsView ID="DetailsViewStavby" runat="server" AutoGenerateRows="False" Height="50px" Width="125px" OnItemUpdating="DetailsViewStavby_ItemUpdating">
         <Fields>
             
             <asp:TemplateField HeaderText="id_stavby" SortExpression="id_stavby">
@@ -102,9 +102,20 @@
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="TextDatum" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
+
+             <asp:TemplateField ShowHeader="False">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="btnUpravit" runat="server" CausesValidation="False" 
+                            CommandName="Upravit" Text="Upravit" OnClick="btnUpravit_Click"></asp:LinkButton>
+                    </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:LinkButton ID="btnUpravit" runat="server" CausesValidation="True" 
+                            CommandName="Aktualizovat" Text="Aktualizovat" OnClick="btnAktualizovat_Click"></asp:LinkButton>
+                        &nbsp;<asp:LinkButton ID="btnStorno" runat="server" CausesValidation="False" 
+                            CommandName="Storno" Text="Storno" OnClick="btnStorno_Click"></asp:LinkButton>
+                    </EditItemTemplate>
+                </asp:TemplateField>
         </Fields>
     </asp:DetailsView>
-
-        
     <br />
     </asp:Content>

@@ -8,8 +8,53 @@ using System.Threading.Tasks;
 
 namespace EZV.DataDecisionMaker
 {
-    public static class DecisionMaker
+    public class DecisionMaker
     {
+        private static DecisionMaker instance = null;
+
+        public static void getInstances()
+        {
+            if (instance == null) { instance = new DecisionMaker("sql"); }
+        }
+
+        public static IDotace_EUFactory Dotace { get; set; }
+        public static IHistorie_stavbyFactory HistorieStavby { get; set; }
+        public static IHistorie_vysledku_kontrolyFactory HistorieKontroly { get; set; }
+        public static IKontrola_kvality_spalovaniFactory Kontrola { get; set; }
+        public static IStavbaFactory Stavba { get; set; }
+        public static IStavbaVlastnikFactory StavbaVlastnik { get; set; }
+        public static IVlastnikFactory Vlastnik { get; set; }
+        public static IVysledek_kontrolyFactory VysledekKontroly { get; set; }
+        public static IZpusob_vytapeniFactory Zpusob { get; set; }
+
+        public DecisionMaker(string typ)
+        {
+            if(typ == "sql")
+            {
+                Dotace = NewSQLFactory();
+                HistorieStavby = NewSQLFactory();
+                HistorieKontroly = NewSQLFactory();
+                Kontrola = NewSQLFactory();
+                Stavba = NewSQLFactory();
+                StavbaVlastnik = NewSQLFactory();
+                Vlastnik = NewSQLFactory();
+                VysledekKontroly = NewSQLFactory();
+                Zpusob = NewSQLFactory();
+            }
+            if(typ == "xml")
+            {
+                Dotace = NewXMLFactory();
+                HistorieStavby = NewXMLFactory();
+                HistorieKontroly = NewXMLFactory();
+                Kontrola = NewXMLFactory();
+                Stavba = NewXMLFactory();
+                StavbaVlastnik = NewXMLFactory();
+                Vlastnik = NewXMLFactory();
+                VysledekKontroly = NewXMLFactory();
+                Zpusob = NewXMLFactory();
+            }
+        }
+
         public enum Items
         {
             Dotace, HistorieStavby, HistorieVysledku, Kontrola, Stavba, StavbaVlastnik, Vlastnik, Vysledek, Zpusob
@@ -25,6 +70,11 @@ namespace EZV.DataDecisionMaker
             return (new XmlFactory());
         }
 
+        /*
+        public static IHistorie_stavby getHi() {
+
+        }*/
+         
         public static object DecideSQL(Items items)
         {
             if (items == Items.Dotace)

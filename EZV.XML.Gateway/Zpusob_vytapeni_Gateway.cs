@@ -32,8 +32,8 @@ namespace EZV.XML.Gateway
 
             XElement result = new XElement("Zpusob_vytapeni",
                 new XAttribute("Typ_vytapeni", zpusob_vytapeni.Typ_vytapeni),
-                new XAttribute("Platnost_od", zpusob_vytapeni.Platnost_od),
-                new XAttribute("Platnost_do", zpusob_vytapeni.Platnost_do == null ? DBNull.Value : (object)zpusob_vytapeni.Platnost_do),
+                new XAttribute("Platnost_od", zpusob_vytapeni.Platnost_od.ToShortDateString()),
+                new XAttribute("Platnost_do", zpusob_vytapeni.Platnost_do == null ? DBNull.Value : (object)zpusob_vytapeni.Platnost_do.ToString()),
                 new XAttribute("Id_stavby", zpusob_vytapeni.Id_stavby));
 
             xDoc.Root.Element("Zpusoby_vytapeni").Add(result);
@@ -66,7 +66,7 @@ namespace EZV.XML.Gateway
                     where (attr != null && attr.Value == zpusob_vytapeni.Typ_vytapeni) && (attr1 != null && attr1.Value == zpusob_vytapeni.Id_stavby.ToString())
                     select node;
             q.ToList().ForEach(x => {
-                x.Attribute("Platnost_od").Value = zpusob_vytapeni.Platnost_od.ToString();
+                x.Attribute("Platnost_od").Value = zpusob_vytapeni.Platnost_od.ToShortDateString();
                 x.Attribute("Platnost_do").Value = zpusob_vytapeni.Platnost_do.ToString();
             });
 

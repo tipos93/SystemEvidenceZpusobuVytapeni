@@ -165,14 +165,15 @@
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
+    <Content Include="Form\BasePage.aspx" />
     <Content Include="Form\Seznam_stavby_vlastnici.aspx" />
     <Content Include="Form\Seznam_staveb.aspx" />
     <Content Include="Form\Seznam_vlastniku.aspx" />
     <Content Include="Form\Seznam_vytapeni.aspx" />
     <Content Include="Form\Stavby.aspx" />
-    <Content Include="Form\Stavby_kontroly.aspx" />
-    <Content Include="Form\Stavby_topi.aspx" />
     <Content Include="Form\Vlastnici.aspx" />
+    <Content Include="Form\Zmena_stavby.aspx" />
+    <Content Include="Form\Zmena_vlastnika.aspx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Account\Web.config">
       <SubType>Designer</SubType>
@@ -230,6 +231,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Form\BasePage.aspx.cs">
+      <DependentUpon>BasePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Form\BasePage.aspx.designer.cs">
+      <DependentUpon>BasePage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Form\Seznam_stavby_vlastnici.aspx.cs">
       <DependentUpon>Seznam_stavby_vlastnici.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -265,26 +273,26 @@
     <Compile Include="Form\Stavby.aspx.designer.cs">
       <DependentUpon>Stavby.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Form\Stavby_kontroly.aspx.cs">
-      <DependentUpon>Stavby_kontroly.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Form\Stavby_kontroly.aspx.designer.cs">
-      <DependentUpon>Stavby_kontroly.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Form\Stavby_topi.aspx.cs">
-      <DependentUpon>Stavby_topi.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Form\Stavby_topi.aspx.designer.cs">
-      <DependentUpon>Stavby_topi.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Form\Vlastnici.aspx.cs">
       <DependentUpon>Vlastnici.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Form\Vlastnici.aspx.designer.cs">
       <DependentUpon>Vlastnici.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Zmena_stavby.aspx.cs">
+      <DependentUpon>Zmena_stavby.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Form\Zmena_stavby.aspx.designer.cs">
+      <DependentUpon>Zmena_stavby.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Zmena_vlastnika.aspx.cs">
+      <DependentUpon>Zmena_vlastnika.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Form\Zmena_vlastnika.aspx.designer.cs">
+      <DependentUpon>Zmena_vlastnika.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -16,6 +16,7 @@ namespace SystemEvidenceZpusobuVytapeni.Account
 
         protected void Prihlaseni_Click(object sender, EventArgs e)
         {
+            
             //SiteMaster siteMaster = new SiteMaster();
             //siteMaster.FindControl("NavigationMenu").Visible = true;
             

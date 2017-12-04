@@ -8,7 +8,7 @@ using EZV.XML.Gateway;
 
 namespace EZV.Factory
 {
-    public class XmlFactory : IDotace_EUFactory, IHistorie_stavbyFactory, IHistorie_vysledku_kontrolyFactory, IKontrola_kvality_spalovaniFactory, IStavbaFactory, IStavbaVlastnikFactory, IVlastnikFactory, IVysledek_kontrolyFactory, IZpusob_vytapeniFactory
+    public class XmlFactory : IDotace_EUFactory, IHistorie_stavbyFactory, IHistorie_vysledku_kontrolyFactory, IKontrola_kvality_spalovaniFactory, IStavbaFactory, IStavbaVlastnikFactory, IVlastnikFactory, IVysledek_kontrolyFactory, IZpusob_vytapeniFactory, IUzivateleFactory
     {
         public IDotace_EU CreateDotace()
         {
@@ -44,6 +44,12 @@ namespace EZV.Factory
         {
             IStavbaVlastnik stavbaVlastnik = new StavbaVlastnik_Gateway();
             return stavbaVlastnik;
+        }
+
+        public IUzivatele CreateUzivatele()
+        {
+            IUzivatele uzivatele = new Uzivatele_Gateway();
+            return uzivatele;
         }
 
         public IVlastnik CreateVlastnik()

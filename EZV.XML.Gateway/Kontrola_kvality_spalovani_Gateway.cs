@@ -37,7 +37,7 @@ namespace EZV.XML.Gateway
 
             XElement result = new XElement("Kontrola_kvality_spalovani",
             new XAttribute("Id_kontroly", kontrola.Id_kontroly),
-            new XAttribute("Datum_kontroly", kontrola.Datum_kontroly),
+            new XAttribute("Datum_kontroly", kontrola.Datum_kontroly.ToShortDateString()),
             new XAttribute("Duvod_kontroly", kontrola.Duvod_kontroly),
             new XAttribute("Id_stavby", kontrola.Id_stavby));
 
@@ -70,7 +70,7 @@ namespace EZV.XML.Gateway
                     where (attr != null && attr.Value == kontrola.Id_kontroly.ToString())
                     select node;
             q.ToList().ForEach(x => {
-                x.Attribute("Datum_kontroly").Value = kontrola.Datum_kontroly.ToString();
+                x.Attribute("Datum_kontroly").Value = kontrola.Datum_kontroly.ToShortDateString();
                 x.Attribute("Duvod_kontroly").Value = kontrola.Duvod_kontroly;
                 x.Attribute("Id_stavby").Value = kontrola.Id_stavby.ToString();
             });

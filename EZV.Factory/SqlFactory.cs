@@ -8,7 +8,7 @@ using EZV.DataMapper;
 
 namespace EZV.Factory
 {
-    public class SqlFactory : IDotace_EUFactory, IHistorie_stavbyFactory, IHistorie_vysledku_kontrolyFactory, IKontrola_kvality_spalovaniFactory, IStavbaFactory, IStavbaVlastnikFactory, IVlastnikFactory, IVysledek_kontrolyFactory, IZpusob_vytapeniFactory
+    public class SqlFactory : IDotace_EUFactory, IHistorie_stavbyFactory, IHistorie_vysledku_kontrolyFactory, IKontrola_kvality_spalovaniFactory, IStavbaFactory, IStavbaVlastnikFactory, IVlastnikFactory, IVysledek_kontrolyFactory, IZpusob_vytapeniFactory, IUzivateleFactory
     {
         public IDotace_EU CreateDotace()
         {
@@ -44,6 +44,12 @@ namespace EZV.Factory
         {
             IStavbaVlastnik stavbaVlastnik = new StavbaVlastnik_DataMapper();
             return stavbaVlastnik;
+        }
+
+        public IUzivatele CreateUzivatele()
+        {
+            IUzivatele uzivatele = new Uzivatele_DataMapper();
+            return uzivatele;
         }
 
         public IVlastnik CreateVlastnik()

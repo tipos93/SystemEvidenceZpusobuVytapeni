@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Seznam_vlastniku.aspx.cs" Inherits="SystemEvidenceZpusobuVytapeni.Form.Seznam_vlastniku" EnableEventValidation = "false"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Zmena_vlastnika.aspx.cs" Inherits="SystemEvidenceZpusobuVytapeni.Form.Zmena_vlastnika" EnableEventValidation = "false"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -22,12 +22,12 @@
             </asp:TemplateField>
             <asp:TemplateField SortExpression="Name" HeaderText="Datum narození" HeaderStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                    <asp:Literal runat="server" ID="ltrDatumNarozeni" Text='<%# Bind("Datum_narozeni") %>'></asp:Literal>
+                    <asp:Literal runat="server" ID="ltrDatumNarozeni" Text='<%# Bind("Datum_narozeni", "{0:MM/dd/yyyy}") %>'></asp:Literal>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField SortExpression="Name" HeaderText="Datum úmrtí" HeaderStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                    <asp:Literal runat="server" ID="ltrDatumUmrti" Text='<%# Bind("Datum_umrti") %>'></asp:Literal>
+                    <asp:Literal runat="server" ID="ltrDatumUmrti" Text='<%# Bind("Datum_umrti", "{0:MM/dd/yyyy}") %>'></asp:Literal>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField SortExpression="Name" HeaderText="Pohlaví" HeaderStyle-HorizontalAlign="Center">
@@ -43,14 +43,13 @@
         </Columns>
     </asp:GridView>
     <br />
-    <asp:DetailsView ID="DetailsViewVlastnici" runat="server" AutoGenerateRows="False" Height="50px" Width="125px">
+    <asp:DetailsView ID="DetailsViewVlastnici" runat="server" AutoGenerateRows="False" Height="50px" Width="125px" OnItemUpdating="DetailsViewVlastnici_ItemUpdating">
         <Fields>
-            <asp:TemplateField HeaderText="id_vlastnika" SortExpression="id_vlastnika">
+            <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
-                    <asp:Label runat="server" ID="idVlastnika" Text='<%# Eval("Id_vlastnika") %>'></asp:Label>
+                    <asp:Label runat="server" ID="IdVlastnika" Text='<%# Eval("Id_vlastnika") %>' Visible="false"/>
                 </ItemTemplate>
             </asp:TemplateField>
-            
             <asp:TemplateField HeaderText="jmeno" SortExpression="jmeno">
                 <ItemTemplate>
                     <asp:Label runat="server" Text='<%# Eval("Jmeno") %>' />
@@ -83,10 +82,11 @@
 
             <asp:TemplateField HeaderText="datum_umrti" SortExpression="datum_umrti">
                 <ItemTemplate>
-                    <asp:Label runat="server" Text='<%# Eval("Datum_umrti", "{0:MM/dd/yyyy}") %>' />
+                    <asp:Label runat="server" Id="datum" Text='<%# Eval("Datum_umrti", "{0:MM/dd/yyyy}") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:TextBox ID="TextDatum_umrti" runat="server" Text='<%# Bind("Datum_umrti", "{0:MM/dd/yyyy}") %>' />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TextDatum_umrti" CssClass="error">*</asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
 
@@ -163,7 +163,20 @@
                     </asp:DropDownList>
                 </EditItemTemplate>
             </asp:TemplateField>
+
+            <asp:TemplateField ShowHeader="False">
+                <ItemTemplate>
+                    <asp:LinkButton ID="btnUpravit" runat="server" CausesValidation="False" 
+                        CommandName="Upravit" Text="Upravit" OnClick="btnUpravit_Click"></asp:LinkButton>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:LinkButton ID="btnUpravit" runat="server" CausesValidation="True" 
+                        CommandName="Aktualizovat" Text="Aktualizovat" OnClick="btnAktualizovat_Click"></asp:LinkButton>
+                    &nbsp;<asp:LinkButton ID="btnStorno" runat="server" CausesValidation="False" 
+                        CommandName="Storno" Text="Storno" OnClick="btnStorno_Click"></asp:LinkButton>
+                </EditItemTemplate>
+            </asp:TemplateField>
         </Fields>
     </asp:DetailsView>
-    <br />
-    </asp:Content>
+<br />
+</asp:Content>

@@ -10,14 +10,20 @@ using EZV.DAOFactory;
 
 namespace SystemEvidenceZpusobuVytapeni.Form
 {
-    public partial class Vlastnici : System.Web.UI.Page
+    public partial class Vlastnici : BasePage
     {
         IVlastnik vlastnik;
         Vlastnik konkretniVlastnik = new Vlastnik();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            vlastnik = (IVlastnik) DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
+            //vlastnik = (IVlastnik) this.GetFactory(DecisionMaker.Items.Vlastnik);
+            this.GetFactory();
+            vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
+
+            CalendarDatumNarozeni.SelectedDate = CalendarDatumNarozeni.TodaysDate;
+
+            //vlastnik = (IVlastnik) DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
 
             //IVlastnikFactory vlastnikFactory = DecisionMaker.NewSQLFactory();
             //vlastnik = vlastnikFactory.CreateVlastnik();
@@ -28,8 +34,7 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             Id.Text = string.Empty;
             Jmeno.Text = string.Empty;
             Prijmeni.Text = string.Empty;
-            Datum_narozeni.Text = string.Empty;
-            Datum_umrti.Text = string.Empty;
+            CalendarDatumNarozeni.SelectedDate = CalendarDatumNarozeni.TodaysDate;
             Rodne_cislo.Text = string.Empty;
             Pohlavi.Text = string.Empty;
             Ulice.Text = string.Empty;
@@ -42,12 +47,11 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             konkretniVlastnik.Id_vlastnika = vlastnik.Sequence();
             Id.Text = konkretniVlastnik.Id_vlastnika.ToString();
             Id.ReadOnly = true;
-            Datum_umrti.ReadOnly = true;
         }
 
         protected void Změna_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Form/Seznam_vlastniku.aspx");
+            Response.Redirect("~/Form/Zmena_vlastnika.aspx");
         }
 
         protected void Uložení_Click(object sender, EventArgs e)
@@ -57,9 +61,8 @@ namespace SystemEvidenceZpusobuVytapeni.Form
                 konkretniVlastnik.Id_vlastnika = int.Parse(Id.Text);
                 konkretniVlastnik.Jmeno = Jmeno.Text.ToString();
                 konkretniVlastnik.Prijmeni = Prijmeni.Text.ToString();
-                konkretniVlastnik.Datum_narozeni = DateTime.Parse(Datum_narozeni.Text);
-                if (Datum_umrti.Text != string.Empty)
-                    konkretniVlastnik.Datum_umrti = DateTime.Parse(Datum_umrti.Text);
+                konkretniVlastnik.Datum_narozeni = CalendarDatumNarozeni.SelectedDate;
+                konkretniVlastnik.Datum_umrti = null;
                 konkretniVlastnik.Rodne_cislo = Rodne_cislo.Text.ToString();
                 if (Pohlavi.Text == "muž")
                     konkretniVlastnik.Pohlavi = "M";
@@ -78,19 +81,19 @@ namespace SystemEvidenceZpusobuVytapeni.Form
                     konkretniVlastnik.Aktualni_vlastnik = "N";
                 }
 
-                vlastnik.Insert(konkretniVlastnik); ;
+                vlastnik.Insert(konkretniVlastnik);
+                
                 Uspesnost.Text = "Úspěšné vložení vlastníka!";
             }
-            catch
+            catch (Exception exception)
             {
-                Uspesnost.Text = "Nepovedlo se úspěšně vložit vlastníka!";
+                Uspesnost.Text = "Nepovedlo se úspěšně vložit vlastníka - zkontrolujte rodné číslo!";
             }
 
             Id.Text = string.Empty;
             Jmeno.Text = string.Empty;
             Prijmeni.Text = string.Empty;
-            Datum_narozeni.Text = string.Empty;
-            Datum_umrti.Text = string.Empty;
+            CalendarDatumNarozeni.SelectedDate = CalendarDatumNarozeni.TodaysDate;
             Rodne_cislo.Text = string.Empty;
             Pohlavi.Text = string.Empty;
             Ulice.Text = string.Empty;

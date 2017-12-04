@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
-using System.Xml;
 using EZV.DAOFactory;
 using EZV.DTO;
 
@@ -39,7 +38,7 @@ namespace EZV.XML.Gateway
             XElement result = new XElement("Dotace",
                 new XAttribute("Id_dotace", dotace_EU.Id_dotace),
                 new XAttribute("Vyse_dotace", dotace_EU.Vyse_dotace),
-                new XAttribute("Datum_prideleni", dotace_EU.Datum_prideleni),
+                new XAttribute("Datum_prideleni", dotace_EU.Datum_prideleni.ToShortDateString()),
                 new XAttribute("Zpusob_pouziti", dotace_EU.Zpusob_pouziti),
                 new XAttribute("Id_stavby", dotace_EU.Id_stavby));
 
@@ -57,7 +56,7 @@ namespace EZV.XML.Gateway
                     select node;
             q.ToList().ForEach(x => {
                 x.Attribute("Vyse_dotace").Value = dotace_EU.Vyse_dotace.ToString();
-                x.Attribute("Datum_prideleni").Value = dotace_EU.Datum_prideleni.ToString();
+                x.Attribute("Datum_prideleni").Value = dotace_EU.Datum_prideleni.ToShortDateString();
                 x.Attribute("Zpusob_pouziti").Value = dotace_EU.Zpusob_pouziti;
                 x.Attribute("Id_stavby").Value = dotace_EU.Id_stavby.ToString();
             });

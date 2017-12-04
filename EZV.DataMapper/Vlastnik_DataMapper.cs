@@ -264,10 +264,7 @@ namespace EZV.DataMapper
                 {
                     Vlastnik.Datum_umrti = reader.GetDateTime(i);
                 }
-                if (!complete)
-                {
-                    Vlastnik.Rodne_cislo = reader.GetString(++i);
-                }
+                Vlastnik.Rodne_cislo = reader.GetString(++i);
                 Vlastnik.Pohlavi = reader.GetString(++i);
                 if (complete)
                 {

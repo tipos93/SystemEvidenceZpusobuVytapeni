@@ -7,12 +7,54 @@ using System.Xml.Linq;
 using System.Collections.ObjectModel;
 using EZV.DAOFactory;
 using EZV.DTO;
+using System.Globalization;
 
 namespace EZV.XML.Gateway
 {
     public class Vlastnik_Gateway : IVlastnik
     {
         private int hodnotaId = 0;
+
+        private bool kontrolaRodnehoCisla(string pohlavi, string rodneCislo, DateTime datumNarozeni)
+        {
+            string vytvoreneDatumNarozeni;
+            int denNarozeni = int.Parse(datumNarozeni.ToString("dd"));
+            int mesicNarozeni = int.Parse(datumNarozeni.ToString("MM"));
+            int rokNarozeni = int.Parse(datumNarozeni.ToString("yy"));
+
+            if (pohlavi == "Z")
+            {
+                vytvoreneDatumNarozeni = rokNarozeni.ToString() + (mesicNarozeni + 50).ToString() + denNarozeni.ToString();
+            }
+            else
+            {
+                vytvoreneDatumNarozeni = rokNarozeni.ToString() + mesicNarozeni.ToString() + denNarozeni.ToString();
+            }
+
+            if (vytvoreneDatumNarozeni != rodneCislo.Substring(0, 6))
+                return false;
+
+            int lichySoucet = 0;
+            int sudySoucet = 0;
+            for (int i = 0; i < rodneCislo.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    lichySoucet = lichySoucet + int.Parse(rodneCislo[i].ToString());
+                }
+                else
+                {
+                    sudySoucet = sudySoucet + int.Parse(rodneCislo[i].ToString());
+                }
+            }
+
+            int rozdil = lichySoucet - sudySoucet;
+
+            if (rozdil % 11 != 0)
+                return false;
+
+            return true;
+        }
 
         public int Sequence()
         {
@@ -46,14 +88,17 @@ namespace EZV.XML.Gateway
 
         public void Insert(Vlastnik vlastnik)
         {
+            if (this.kontrolaRodnehoCisla(vlastnik.Pohlavi, vlastnik.Rodne_cislo, vlastnik.Datum_narozeni) == false)
+                throw new Exception();
+
             XDocument xDoc = XDocument.Load(Constants.FilePath);
 
             XElement result = new XElement("Vlastnik",
                 new XAttribute("Id_vlastnika", vlastnik.Id_vlastnika),
                 new XAttribute("Jmeno", vlastnik.Jmeno),
                 new XAttribute("Prijmeni", vlastnik.Prijmeni),
-                new XAttribute("Datum_narozeni", vlastnik.Datum_narozeni),
-                new XAttribute("Datum_umrti", vlastnik.Datum_umrti == null ? DBNull.Value : (object)vlastnik.Datum_umrti),
+                new XAttribute("Datum_narozeni", vlastnik.Datum_narozeni.ToShortDateString()),
+                new XAttribute("Datum_umrti", vlastnik.Datum_umrti == null ? DBNull.Value : (object)vlastnik.Datum_umrti.ToString()),
                 new XAttribute("Rodne_cislo", vlastnik.Rodne_cislo),
                 new XAttribute("Pohlavi", vlastnik.Pohlavi),
                 new XAttribute("Trvale_bydliste_ulice", vlastnik.Trvale_bydliste_ulice),
@@ -93,7 +138,7 @@ namespace EZV.XML.Gateway
             q.ToList().ForEach(x => {
                 x.Attribute("Jmeno").Value = vlastnik.Jmeno;
                 x.Attribute("Prijmeni").Value = vlastnik.Prijmeni;
-                x.Attribute("Datum_narozeni").Value = vlastnik.Datum_narozeni.ToString();
+                x.Attribute("Datum_narozeni").Value = vlastnik.Datum_narozeni.ToShortDateString();
                 x.Attribute("Datum_umrti").Value = vlastnik.Datum_umrti.ToString();
                 x.Attribute("Rodne_cislo").Value = vlastnik.Rodne_cislo;
                 x.Attribute("Pohlavi").Value = vlastnik.Pohlavi;

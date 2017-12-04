@@ -65,31 +65,46 @@
                 <br />
         
             </td>
-            <td align="right" class="auto-style2">Datum kolaudace:</td>
-            <td class="auto-style2"><asp:TextBox ID="Datum_kolaudace" runat="server" ></asp:TextBox>
+            <td align="right" class="auto-style2">&nbsp;</td>
+            <td rowspan="9">
+                <asp:Calendar ID="CalendarDatumKolaudace" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="126px" Width="213px">
+                    <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
+                    <NextPrevStyle VerticalAlign="Bottom" />
+                    <OtherMonthDayStyle ForeColor="#808080" />
+                    <SelectedDayStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
+                    <SelectorStyle BackColor="#CCCCCC" />
+                    <TitleStyle BackColor="#999999" BorderColor="Black" Font-Bold="True" />
+                    <TodayDayStyle BackColor="#CCCCCC" ForeColor="Black" />
+                    <WeekendDayStyle BackColor="#FFFFCC" />
+                </asp:Calendar>
             </td>
         </tr>
 
         <tr>
-            <td> &nbsp;</td>
-            <td> 
+            <td align="right" class="auto-style2">&nbsp;</td>
+            <td class="auto-style2">
                 <asp:CompareValidator ID="CompareUlice" runat="server" ErrorMessage="Není řetězec!" ControlToValidate="Ulice" Operator="DataTypeCheck"></asp:CompareValidator>
+        
+            </td>
+            <td align="right" class="auto-style2">Datum kolaudace:</td>
+        </tr>
+
+        <tr>
+            <td align="right">Číslo popisné:</td>
+            <td> 
+                <asp:TextBox ID="Cislo_popisne" runat="server"></asp:TextBox>
         
                 </td>
             <td> &nbsp;</td>
-            <td> 
-                <asp:CompareValidator ID="CompareDatum" runat="server" ControlToValidate="Datum_kolaudace" ErrorMessage="Není správné datum!" Operator="DataTypeCheck" Type="Date"></asp:CompareValidator>
-            </td>
         </tr>
 
         <tr>
-            <td align="right" class="auto-style2">Číslo popisné:</td>
-            <td class="auto-style13"><asp:TextBox ID="Cislo_popisne" runat="server"></asp:TextBox>
+            <td align="right" class="auto-style2">&nbsp;</td>
+            <td class="auto-style13"> 
+                <asp:CompareValidator ID="CompareCisloPopisne" runat="server" ErrorMessage="Není číslo!" ControlToValidate="Cislo_popisne" Operator="DataTypeCheck" Type="Integer"></asp:CompareValidator>
                 <br />
             </td>
             <td align="right" class="auto-style13"></td>
-            <td class="auto-style13">
-                &nbsp;</td>
         </tr>
 
         <tr>
@@ -97,10 +112,40 @@
                 <asp:Label ID="Uspesnost" runat="server"></asp:Label>
             </td>
             <td> 
-                <asp:CompareValidator ID="CompareCisloPopisne" runat="server" ErrorMessage="Není číslo!" ControlToValidate="Cislo_popisne" Operator="DataTypeCheck" Type="Integer"></asp:CompareValidator>
-                </td>
-            <td>&nbsp;</td>
-            <td> &nbsp;</td>
+                &nbsp;</td>
+            <td align="right" class="auto-style13"></td>
+        </tr>
+
+        <tr>
+            <td> 
+                &nbsp;</td>
+            <td> 
+                &nbsp;</td>
+            <td align="right" class="auto-style13">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td> 
+                &nbsp;</td>
+            <td> 
+                &nbsp;</td>
+            <td align="right" class="auto-style13">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td> 
+                &nbsp;</td>
+            <td> 
+                &nbsp;</td>
+            <td align="right" class="auto-style13">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td> 
+                &nbsp;</td>
+            <td> 
+                &nbsp;</td>
+            <td align="right" class="auto-style13">&nbsp;</td>
         </tr>
     </table>
      
@@ -233,32 +278,35 @@
 
     <table style="width:100%; table-layout: fixed;">        
         <tr>
-            <td class="auto-style1" align="right">
+            <td class="auto-style33" align="right">
                 Vložení způsobu vytápění</td>
-            <td class="auto-style1">
+            <td class="auto-style31">
             </td>
+            <td></td>
         </tr>
 
         <tr>
-            <td class="auto-style1" align="right">
+            <td class="auto-style33" align="right">
                 Stavba:</td>
-            <td class="auto-style1">
+            <td class="auto-style31">
                 <asp:DropDownList ID="Stavba_zpusob" runat="server" CssClass="dropDown5">
                 </asp:DropDownList>
             </td>
+            <td></td>
         </tr>
 
         <tr>
-            <td class="auto-style1">
+            <td class="auto-style33">
                 &nbsp;</td>
-            <td class="auto-style1">
+            <td class="auto-style31">
             </td>
+            <td></td>
         </tr>
 
         <tr>
-            <td class="auto-style1" align="right">
+            <td class="auto-style33" align="right">
                 Způsob vytápění:</td>
-            <td class="auto-style1">
+            <td class="auto-style31">
                 <asp:ListBox ID="Zpusob_vytapeni_vlozeni" runat="server" EnableViewState="False" Rows="1" Width="171px">
                     <asp:ListItem></asp:ListItem>
                     <asp:ListItem>elektrika</asp:ListItem>
@@ -267,68 +315,56 @@
                     <asp:ListItem>tepelné čerpadlo</asp:ListItem>
                 </asp:ListBox>
             </td>
+            <td></td>
         </tr>
 
         <tr>
-            <td class="auto-style1">
+            <td class="auto-style33">
                 &nbsp;</td>
-            <td class="auto-style1">
+            <td class="auto-style31">
             </td>
+            <td></td>
         </tr>
 
         <tr>
-            <td class="auto-style1" align="right">
+            <td class="auto-style33" align="right">
                 Platnost od:</td>
-            <td class="auto-style1">
-                <asp:TextBox ID="Platnost_od_v" runat="server"></asp:TextBox>
+            <td class="auto-style31">
+                <asp:Calendar ID="CalendarPlatnostOd" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="126px" Width="213px">
+                    <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
+                    <NextPrevStyle VerticalAlign="Bottom" />
+                    <OtherMonthDayStyle ForeColor="#808080" />
+                    <SelectedDayStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
+                    <SelectorStyle BackColor="#CCCCCC" />
+                    <TitleStyle BackColor="#999999" BorderColor="Black" Font-Bold="True" />
+                    <TodayDayStyle BackColor="#CCCCCC" ForeColor="Black" />
+                    <WeekendDayStyle BackColor="#FFFFCC" />
+                </asp:Calendar>
             </td>
+            <td></td>
         </tr>
 
         <tr>
-            <td class="auto-style1">
+            <td class="auto-style33">
                 <asp:Label ID="Uspesne_vlozeni_zpusobu" runat="server"></asp:Label>
                     </td>
-            <td class="auto-style1">
-                <asp:CompareValidator ID="ComparePlatnostOd" runat="server" ControlToValidate="Platnost_od_v" ErrorMessage="Není správné datum!" Operator="DataTypeCheck" Type="Date"></asp:CompareValidator>
-            </td>
+            <td class="auto-style31">
+                &nbsp;</td>
         </tr>
 
         <tr>
-            <td align="center">
-    <asp:Button ID="Potvrzeni_vlozeni_zpusobu" runat="server" Text="Vložit způsob" OnClick="Potvrzeni_vlozeni_zpusobu_Click" Height="30px" Width="115px" />
-                </td>
-            <td align="center">
+            <td align="center" class="auto-style34">
+                <asp:Button ID="Potvrzeni_vlozeni_zpusobu" runat="server" Text="Vložit způsob" OnClick="Potvrzeni_vlozeni_zpusobu_Click" Height="30px" Width="115px" />
+            </td>
+            <td align="center" class="auto-style32">
                 <asp:Button ID="Zmena_zpusobu" runat="server" Height="30px" OnClick="Zmena_zpusobu_Click" Text="Změnit způsob" Width="115px" />
             </td>
-        </tr>
-
-        <tr>
-            <td>
-    
-                &nbsp;</td>
-            <td>
-    
-                &nbsp;</td>
-        </tr>
-    </table>
-    
-    <br />
-
-    <table style="width:100%;">
-        <tr>
-            <td>
-                <asp:Button ID="Stavby_kontroly" runat="server" OnClick="Stavby_kontroly_Click" Text="Stavby neprošly kontrolami" Width="241px" />
-            </td>
-            <td>&nbsp;</td>
-            <td>
-                <asp:Button ID="Stavby_topi" runat="server" OnClick="Stavby_topi_Click" Text="Stavby topí tuhými palivy" Width="241px" />
-            </td>
-            <td>&nbsp;</td>
-            <td>
+            <td align="center">
                 <asp:Button ID="seznam_zpusobu" runat="server" OnClick="seznam_zpusobu_Click" Text="Seznam způsobů vytápění" Width="241px" />
             </td>
         </tr>
-    </table>
+
+        </table>
     <br />
 
     </asp:Content>
@@ -392,9 +428,20 @@
             width: 257px;
         }
         .auto-style31 {
-            margin-top: 0px;
+            height: 33px;
+            width: 310px;
         }
-    </style>
+        .auto-style32 {
+            width: 310px;
+        }
+        .auto-style33 {
+            height: 33px;
+            width: 370px;
+        }
+        .auto-style34 {
+            width: 370px;
+        }
+        </style>
 </asp:Content>
 
 

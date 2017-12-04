@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StavbaVlastnik_Gateway.cs" />
     <Compile Include="Stavba_Gateway.cs" />
+    <Compile Include="Uzivatele_Gateway.cs" />
     <Compile Include="Vlastnik_Gateway.cs" />
     <Compile Include="Vysledek_kontroly_Gateway.cs" />
     <Compile Include="Zpusob_vytapeni_Gateway.cs" />

@@ -42,8 +42,8 @@ namespace EZV.XML.Gateway
             new XAttribute("Cislo_popisne", historie_stavby.Cislo_popisne),
             new XAttribute("Cislo_stavby_na_KU", historie_stavby.Cislo_stavby_na_KU),
             new XAttribute("Nazev_KU", historie_stavby.Nazev_KU),
-            new XAttribute("Datum_kolaudace", historie_stavby.Datum_kolaudace),
-            new XAttribute("Casovy_okamzik_zmeny", historie_stavby.Casovy_okamzik_zmeny),
+            new XAttribute("Datum_kolaudace", historie_stavby.Datum_kolaudace.ToShortDateString()),
+            new XAttribute("Casovy_okamzik_zmeny", historie_stavby.Casovy_okamzik_zmeny.ToShortDateString()),
             new XAttribute("Id_vlastnika", historie_stavby.Id_vlastnika),
             new XAttribute("Id_stavby", historie_stavby.Id_stavby));
 

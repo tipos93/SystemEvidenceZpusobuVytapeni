@@ -75,9 +75,18 @@
             </td>
         </tr>
         <tr>
-            <td align="right" class="auto-style1">Datum narození:</td>
-            <td class="auto-style1">
-                <asp:TextBox ID="Datum_narozeni" runat="server"></asp:TextBox>
+            <td align="right" class="auto-style1">&nbsp;</td>
+            <td class="auto-style1" rowspan="6">
+                <asp:Calendar ID="CalendarDatumNarozeni" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px">
+                    <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
+                    <NextPrevStyle VerticalAlign="Bottom" />
+                    <OtherMonthDayStyle ForeColor="#808080" />
+                    <SelectedDayStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
+                    <SelectorStyle BackColor="#CCCCCC" />
+                    <TitleStyle BackColor="#999999" BorderColor="Black" Font-Bold="True" />
+                    <TodayDayStyle BackColor="#CCCCCC" ForeColor="Black" />
+                    <WeekendDayStyle BackColor="#FFFFCC" />
+                </asp:Calendar>
             </td>
             <td align="right" class="auto-style1">Město:</td>
             <td class="auto-style1">
@@ -85,39 +94,41 @@
             </td>
         </tr>
         <tr>
-            <td>
-                &nbsp;</td>
-            <td>
-                <asp:CompareValidator ID="CompareDatumNarozeni" runat="server" ErrorMessage="Není datum!" ControlToValidate="Datum_narozeni" Operator="DataTypeCheck" Type="Date"></asp:CompareValidator>
-            </td>
-            <td>&nbsp;</td>
-            <td>
+            <td align="right" class="auto-style1">Datum narození:</td>
+            <td align="right" class="auto-style1">&nbsp;</td>
+            <td class="auto-style1">
                 <asp:CompareValidator ID="CompareMesto" runat="server" ErrorMessage="Není řetězec!" ControlToValidate="Mesto" Operator="DataTypeCheck"></asp:CompareValidator>
             </td>
         </tr>
-
         <tr>
-            <td align="right">
-                Datum úmrtí:</td>
-            <td>
-                <asp:TextBox ID="Datum_umrti" runat="server"></asp:TextBox>
-            </td>
-            <td align="right">PSČ:</td>
-            <td>
+            <td align="right" class="auto-style1">&nbsp;</td>
+            <td align="right" class="auto-style1">PSČ:</td>
+            <td class="auto-style1">
                 <asp:TextBox ID="PSC" runat="server"></asp:TextBox>
             </td>
         </tr>
-
         <tr>
-            <td align="right">
-                &nbsp;</td>
-            <td>
-                <asp:CompareValidator ID="CompareDatumUmrti" runat="server" ErrorMessage="Není datum!" ControlToValidate="Datum_umrti" Operator="DataTypeCheck" Type="Date"></asp:CompareValidator>
-            </td>
-            <td>&nbsp;</td>
-            <td>
+            <td align="right" class="auto-style1" rowspan="2">&nbsp;</td>
+            <td align="right" class="auto-style1">&nbsp;</td>
+            <td class="auto-style1">
                 <asp:CompareValidator ID="ComparePSC" runat="server" ErrorMessage="Není řetězec!" ControlToValidate="PSC" Operator="DataTypeCheck"></asp:CompareValidator>
             </td>
+        </tr>
+        <tr>
+            <td align="right" class="auto-style1">Aktuální vlastník:</td>
+            <td class="auto-style1">
+                <asp:ListBox ID="AktualniVlastnik" runat="server" EnableViewState="False"  Rows="1" Width="166px">
+                    <asp:ListItem></asp:ListItem>
+                    <asp:ListItem>ne</asp:ListItem>
+                    <asp:ListItem>ano</asp:ListItem>
+                </asp:ListBox>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="auto-style1">&nbsp;</td>
+            <td align="right" class="auto-style1">&nbsp;</td>
+            <td class="auto-style1">
+                &nbsp;</td>
         </tr>
 
         <tr>
@@ -126,37 +137,43 @@
             <td>
                 <asp:TextBox ID="Rodne_cislo" runat="server"></asp:TextBox>
             </td>
-            <td align="right">Aktuální vlastník:</td>
+            <td align="right">&nbsp;</td>
             <td>
-                <asp:ListBox ID="AktualniVlastnik" runat="server" EnableViewState="False"  Rows="1" Width="166px">
-                    <asp:ListItem></asp:ListItem>
-                    <asp:ListItem>ne</asp:ListItem>
-                    <asp:ListItem>ano</asp:ListItem>
-                </asp:ListBox>
-            </td>
+                &nbsp;</td>
         </tr>
 
         <tr>
-            <td align="right" class="auto-style3"></td>
-            <td class="auto-style3">
+            <td align="right">
+                &nbsp;</td>
+            <td>
                 <asp:CompareValidator ID="CompareRodneCislo" runat="server" ErrorMessage="Není řetězec!" ControlToValidate="Rodne_cislo" Operator="DataTypeCheck"></asp:CompareValidator>
             </td>
-            <td class="auto-style3"></td>
-            <td class="auto-style3"></td>
+            <td>&nbsp;</td>
+            <td>
+                &nbsp;</td>
         </tr>
 
         <tr>
-            <td align="right" class="auto-style1">
+            <td align="right">
                 Pohlaví:</td>
-            <td class="auto-style1">
+            <td>
                 <asp:ListBox ID="Pohlavi" runat="server" EnableViewState="False" Rows="1" Width="164px">
                     <asp:ListItem></asp:ListItem>
                     <asp:ListItem>muž</asp:ListItem>
                     <asp:ListItem>žena</asp:ListItem>
                 </asp:ListBox>
             </td>
-            <td class="auto-style2"></td>
-            <td class="auto-style2"></td>
+            <td align="right">&nbsp;</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+
+        <tr>
+            <td align="right" class="auto-style3"></td>
+            <td class="auto-style3">
+                &nbsp;</td>
+            <td class="auto-style3"></td>
+            <td class="auto-style3"></td>
         </tr>
 
         <tr>

@@ -46,6 +46,7 @@
     <Compile Include="IKontrola_kvality_spalovaniFactory.cs" />
     <Compile Include="IStavbaFactory.cs" />
     <Compile Include="IStavbaVlastnikFactory.cs" />
+    <Compile Include="IUzivateleFactory.cs" />
     <Compile Include="IVlastnikFactory.cs" />
     <Compile Include="IVysledek_kontrolyFactory.cs" />
     <Compile Include="IZpusob_vytapeniFactory.cs" />

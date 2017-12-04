@@ -85,13 +85,13 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.TextBox Ulice;
         
         /// <summary>
-        /// Datum_kolaudace control.
+        /// CalendarDatumKolaudace control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Datum_kolaudace;
+        protected global::System.Web.UI.WebControls.Calendar CalendarDatumKolaudace;
         
         /// <summary>
         /// CompareUlice control.
@@ -103,15 +103,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.CompareValidator CompareUlice;
         
         /// <summary>
-        /// CompareDatum control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareDatum;
-        
-        /// <summary>
         /// Cislo_popisne control.
         /// </summary>
         /// <remarks>
@@ -121,15 +112,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.TextBox Cislo_popisne;
         
         /// <summary>
-        /// Uspesnost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Uspesnost;
-        
-        /// <summary>
         /// CompareCisloPopisne control.
         /// </summary>
         /// <remarks>
@@ -137,6 +119,15 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CompareValidator CompareCisloPopisne;
+        
+        /// <summary>
+        /// Uspesnost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Uspesnost;
         
         /// <summary>
         /// Vložení control.
@@ -283,13 +274,13 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         protected global::System.Web.UI.WebControls.ListBox Zpusob_vytapeni_vlozeni;
         
         /// <summary>
-        /// Platnost_od_v control.
+        /// CalendarPlatnostOd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Platnost_od_v;
+        protected global::System.Web.UI.WebControls.Calendar CalendarPlatnostOd;
         
         /// <summary>
         /// Uspesne_vlozeni_zpusobu control.
@@ -299,15 +290,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Uspesne_vlozeni_zpusobu;
-        
-        /// <summary>
-        /// ComparePlatnostOd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator ComparePlatnostOd;
         
         /// <summary>
         /// Potvrzeni_vlozeni_zpusobu control.
@@ -326,24 +308,6 @@ namespace SystemEvidenceZpusobuVytapeni.Form {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Zmena_zpusobu;
-        
-        /// <summary>
-        /// Stavby_kontroly control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Stavby_kontroly;
-        
-        /// <summary>
-        /// Stavby_topi control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Stavby_topi;
         
         /// <summary>
         /// seznam_zpusobu control.
