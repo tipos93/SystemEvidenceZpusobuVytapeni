@@ -17,24 +17,17 @@
                     Informační systém evidence způsobů vytápění v obci
                 </h1>
             </div>
-            <div class="loginDisplay">
-                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
-                    <AnonymousTemplate>
-                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Přihlášení</a> ]
-                    </AnonymousTemplate>
-                    <LoggedInTemplate>
-                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
-                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
-                    </LoggedInTemplate>
-                </asp:LoginView>
-            </div>
             <div class="clear hideSkiplink">
                 <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
                     <Items>
-                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Domů"/>
-                        <asp:MenuItem NavigateUrl="Form/Stavby.aspx" Text="Stavby"/>
-                        <asp:MenuItem NavigateUrl="Form/Vlastnici.aspx" Text="Vlastníci"/>
-                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="O systému"/>
+                        <asp:MenuItem Value="0" NavigateUrl="~/Default.aspx" Text="Domů"/>
+                        <asp:MenuItem Value="3" Text="Sestavy">
+                            <asp:MenuItem Value="4" NavigateUrl="Form/Seznam_staveb.aspx" Text="Seznam staveb"></asp:MenuItem>
+                            <asp:MenuItem Value="5" NavigateUrl="Form/Seznam_vytapeni.aspx" Text="Seznam způsobů vytápění"></asp:MenuItem>
+                            <asp:MenuItem Value="6" NavigateUrl="Form/Seznam_vlastniku.aspx" Text="Seznam vlastníků"></asp:MenuItem>
+                            <asp:MenuItem Value="7" NavigateUrl="Form/Seznam_stavby_vlastnici.aspx" Text="Seznam staveb a jejich vlastníků"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Value="8" NavigateUrl="~/About.aspx" Text="O systému"/>
                     </Items>
                 </asp:Menu>
             </div>

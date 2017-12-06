@@ -26,6 +26,7 @@ namespace EZV.DataDecisionMaker
         public static IVlastnikFactory Vlastnik { get; set; }
         public static IVysledek_kontrolyFactory VysledekKontroly { get; set; }
         public static IZpusob_vytapeniFactory Zpusob { get; set; }
+        public static IUzivateleFactory Uzivatele { get; set; }
 
         public DecisionMaker(string typ)
         {
@@ -40,6 +41,7 @@ namespace EZV.DataDecisionMaker
                 Vlastnik = NewSQLFactory();
                 VysledekKontroly = NewSQLFactory();
                 Zpusob = NewSQLFactory();
+                Uzivatele = NewSQLFactory();
             }
             if(typ == "xml")
             {
@@ -52,6 +54,7 @@ namespace EZV.DataDecisionMaker
                 Vlastnik = NewXMLFactory();
                 VysledekKontroly = NewXMLFactory();
                 Zpusob = NewXMLFactory();
+                Uzivatele = NewXMLFactory();
             }
         }
 
