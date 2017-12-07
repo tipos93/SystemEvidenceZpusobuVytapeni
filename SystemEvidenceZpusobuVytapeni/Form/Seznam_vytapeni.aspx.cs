@@ -12,23 +12,56 @@ namespace SystemEvidenceZpusobuVytapeni.Form
     {
         IZpusob_vytapeni zpusob;
         IStavba stavba;
+        IStavbaVlastnik stavbaVlastnik;
         Collection<Zpusob_vytapeni> zpusoby;
 
         Zpusob_vytapeni konkretniZpusob = new Zpusob_vytapeni();
         Stavba konkretniStavba = new Stavba();
+        Collection<StavbaVlastnik> konkretniStavbyVlastnici = new Collection<StavbaVlastnik>();
         int stavbaId;
         string zpusobTyp;
         List<object> stavbyZpusoby = new List<object>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.ShowUser();
+            this.ControlMenuItems();
+            this.GetFactory();
+
+            if (Session["login"] == null)
+            {
+                Response.Redirect("~/Form/Login.aspx");
+            }
+
+            stavba = DecisionMaker.Stavba.CreateStavba();
             //zpusob = (IZpusob_vytapeni)this.GetFactory(DecisionMaker.Items.Zpusob);
             //stavba = (IStavba)this.GetFactory(DecisionMaker.Items.Stavba);
-            this.GetFactory();
             zpusob = DecisionMaker.Zpusob.CreateZpusob();
             stavba = DecisionMaker.Stavba.CreateStavba();
 
             zpusoby = zpusob.Select();
+
+            if (Session["postaveni"].Equals("vlastnik"))
+            {
+                stavbaVlastnik = DecisionMaker.StavbaVlastnik.CreateStavbaVlastnik();
+                konkretniStavbyVlastnici = stavbaVlastnik.Select();
+                int idVlastnika = int.Parse(Session["id_vlastnika"].ToString());
+                Collection<Zpusob_vytapeni> zpusobyVlastnik = new Collection<Zpusob_vytapeni>();
+
+                foreach (StavbaVlastnik sv in konkretniStavbyVlastnici)
+                {
+                    if (sv.Id_vlastnika == idVlastnika)
+                    {
+                        foreach(Zpusob_vytapeni zp in zpusoby)
+                        {
+                            if(zp.Id_stavby == sv.Id_stavby)
+                                zpusobyVlastnik.Add(zp);
+                        }
+                    }
+                }
+                zpusoby.Clear();
+                zpusoby = zpusobyVlastnik;
+            }
 
             this.nactiStavbyZpusoby();
 

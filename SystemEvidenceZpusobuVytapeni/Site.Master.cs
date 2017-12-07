@@ -13,5 +13,11 @@ namespace SystemEvidenceZpusobuVytapeni
         {
 
         }
+
+        protected void Odhlaseni_Click(object sender, EventArgs e)
+        {
+            Session.RemoveAll();
+            Response.Redirect("~/Form/Login.aspx");
+        }
     }
 }

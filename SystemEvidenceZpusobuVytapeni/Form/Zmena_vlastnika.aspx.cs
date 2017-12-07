@@ -20,13 +20,28 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //vlastnik = (IVlastnik)this.GetFactory(DecisionMaker.Items.Vlastnik);
-            this.GetFactory();
-            vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
-            vlastnici = vlastnik.Select();
+            this.ShowUser();
+            this.ControlMenuItems();
 
-            GridViewVlastnici.DataSource = vlastnici;
-            GridViewVlastnici.DataBind();
+            if (Session["login"] == null)
+            {
+                Response.Redirect("~/Form/Login.aspx");
+            }
+
+            if (!Session["postaveni"].Equals("obec"))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                //vlastnik = (IVlastnik)this.GetFactory(DecisionMaker.Items.Vlastnik);
+                this.GetFactory();
+                vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
+                vlastnici = vlastnik.Select();
+
+                GridViewVlastnici.DataSource = vlastnici;
+                GridViewVlastnici.DataBind();
+            }
         }
 
         protected void OnPaging(object sender, GridViewPageEventArgs e)

@@ -298,10 +298,6 @@
       <Project>{f5ad39d4-ddd4-4929-af9a-0bbd0510a776}</Project>
       <Name>EZV.DataDecisionMaker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EZV.DataMapper\EZV.DataMapper.csproj">
-      <Project>{826f3a72-626f-4bdf-985a-0a56150d0dba}</Project>
-      <Name>EZV.DataMapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EZV.DTO\EZV.DTO.csproj">
       <Project>{AEFA5C84-948F-4B63-BB2E-86F1EB9E35C7}</Project>
       <Name>EZV.DTO</Name>

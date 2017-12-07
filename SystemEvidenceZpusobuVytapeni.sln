@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZV.DTO", "EZV.DTO\EZV.DTO.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZV.DataDecisionMaker", "EZV.DataDecisionMaker\EZV.DataDecisionMaker.csproj", "{F5AD39D4-DDD4-4929-AF9A-0BBD0510A776}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZV.DesktopProject", "EZV.DesktopProject\EZV.DesktopProject.csproj", "{E51C5B35-C981-435D-BAE7-E0DAB4F9D30E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{F5AD39D4-DDD4-4929-AF9A-0BBD0510A776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5AD39D4-DDD4-4929-AF9A-0BBD0510A776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5AD39D4-DDD4-4929-AF9A-0BBD0510A776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E51C5B35-C981-435D-BAE7-E0DAB4F9D30E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E51C5B35-C981-435D-BAE7-E0DAB4F9D30E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E51C5B35-C981-435D-BAE7-E0DAB4F9D30E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E51C5B35-C981-435D-BAE7-E0DAB4F9D30E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

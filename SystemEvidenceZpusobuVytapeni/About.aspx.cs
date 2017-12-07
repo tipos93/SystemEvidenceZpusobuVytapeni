@@ -7,11 +7,17 @@ using System.Web.UI.WebControls;
 
 namespace SystemEvidenceZpusobuVytapeni
 {
-    public partial class About : System.Web.UI.Page
+    public partial class About : Form.BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.ShowUser();
+            this.ControlMenuItems();
 
+            if (Session["login"] == null)
+            {
+                Response.Redirect("~/Form/Login.aspx");
+            }
         }
     }
 }

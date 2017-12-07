@@ -19,14 +19,29 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
-            this.GetFactory();
-            stavba = DecisionMaker.Stavba.CreateStavba();
+            this.ShowUser();
+            this.ControlMenuItems();
 
-            stavby = stavba.Select();
+            if (Session["login"] == null)
+            {
+                Response.Redirect("~/Form/Login.aspx");
+            }
 
-            GridViewStavby.DataSource = stavby;
-            GridViewStavby.DataBind();
+            if (!Session["postaveni"].Equals("obec"))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
+                this.GetFactory();
+                stavba = DecisionMaker.Stavba.CreateStavba();
+
+                stavby = stavba.Select();
+
+                GridViewStavby.DataSource = stavby;
+                GridViewStavby.DataBind();
+            }
         }
 
         private void nahraniDetailsView()

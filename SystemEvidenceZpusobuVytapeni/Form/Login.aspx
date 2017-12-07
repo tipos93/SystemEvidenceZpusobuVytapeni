@@ -9,11 +9,11 @@
                     <td>
                         <table cellpadding="0">
                             <tr>
-                                <td align="center" colspan="2">Log In</td>
+                                <td align="center" colspan="2">Přihlášení</td>
                             </tr>
                             <tr>
                                 <td align="right">
-                                    <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name:</asp:Label>
+                                    <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">Jméno:</asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
@@ -22,7 +22,7 @@
                             </tr>
                             <tr>
                                 <td align="right">
-                                    <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password:</asp:Label>
+                                    <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Heslo:</asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>

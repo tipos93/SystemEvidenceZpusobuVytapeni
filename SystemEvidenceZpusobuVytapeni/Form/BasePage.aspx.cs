@@ -18,8 +18,16 @@ namespace SystemEvidenceZpusobuVytapeni.Form
             DecisionMaker.getInstances();
         }
 
+        protected virtual void ShowUser()
+        {
+            Label label = (Label)Master.FindControl("Prihlaseny");
+            label.Text = Session["login"].ToString();
+        }
+
         protected virtual void ControlMenuItems()
         {
+            if (Session["postaveni"].Equals("obec"))
+            {
                 mn = (Menu)Master.FindControl("NavigationMenu");
 
                 MenuItem miStavby = new MenuItem();
@@ -33,6 +41,14 @@ namespace SystemEvidenceZpusobuVytapeni.Form
                 miVlastnici.Text = "Vlastníci";
                 miVlastnici.NavigateUrl = "Form/Vlastnici.aspx";
                 mn.Items.AddAt(2, miVlastnici);
+
+                MenuItem miStavbyVlastnici = new MenuItem();
+                miStavbyVlastnici.Value = "7";
+                miStavbyVlastnici.Text = "Seznam staveb a jejich vlastníků";
+                miStavbyVlastnici.NavigateUrl = "Form/Seznam_stavby_vlastnici.aspx";
+
+                mn.FindItem("3").ChildItems.AddAt(3, miStavbyVlastnici);
+            }
         }
     }
 }

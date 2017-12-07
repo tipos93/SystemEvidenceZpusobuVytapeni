@@ -10,16 +10,45 @@ namespace SystemEvidenceZpusobuVytapeni.Form
     public partial class Seznam : BasePage
     {
         IStavba stavba;
-        Collection<Stavba> stavby;
+        IStavbaVlastnik stavbaVlastnik;
+        Collection<Stavba> stavby = new Collection<Stavba>();
         Stavba konkretniStavba = new Stavba();
+        Collection<StavbaVlastnik> konkretniStavbyVlastnici;
         int stavbaId;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
+            this.ShowUser();
+            this.ControlMenuItems();
             this.GetFactory();
+
+            if (Session["login"] == null)
+            {
+                Response.Redirect("~/Form/Login.aspx");
+            }
+
             stavba = DecisionMaker.Stavba.CreateStavba();
-            stavby = stavba.Select();
+
+            if (Session["postaveni"].Equals("vlastnik"))
+            {
+                stavbaVlastnik = DecisionMaker.StavbaVlastnik.CreateStavbaVlastnik();
+                konkretniStavbyVlastnici = stavbaVlastnik.Select();
+                int idVlastnika = int.Parse(Session["id_vlastnika"].ToString());
+
+                foreach (StavbaVlastnik sv in konkretniStavbyVlastnici)
+                {
+                    if (sv.Id_vlastnika == idVlastnika)
+                    {
+                        stavby.Add(stavba.Select_id(sv.Id_stavby));
+                    }
+                }
+            }
+            else
+            {
+                stavby = stavba.Select();
+            }
+
+            //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
 
             GridViewStavby.DataSource = stavby;
             GridViewStavby.DataBind();

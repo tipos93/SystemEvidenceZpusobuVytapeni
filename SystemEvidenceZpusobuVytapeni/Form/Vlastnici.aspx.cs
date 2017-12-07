@@ -17,16 +17,31 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //vlastnik = (IVlastnik) this.GetFactory(DecisionMaker.Items.Vlastnik);
-            this.GetFactory();
-            vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
+            this.ShowUser();
+            this.ControlMenuItems();
 
-            CalendarDatumNarozeni.SelectedDate = CalendarDatumNarozeni.TodaysDate;
+            if (Session["login"] == null)
+            {
+                Response.Redirect("~/Form/Login.aspx");
+            }
 
-            //vlastnik = (IVlastnik) DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
+            if (!Session["postaveni"].Equals("obec"))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                //vlastnik = (IVlastnik) this.GetFactory(DecisionMaker.Items.Vlastnik);
+                this.GetFactory();
+                vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
 
-            //IVlastnikFactory vlastnikFactory = DecisionMaker.NewSQLFactory();
-            //vlastnik = vlastnikFactory.CreateVlastnik();
+                CalendarDatumNarozeni.SelectedDate = CalendarDatumNarozeni.TodaysDate;
+
+                //vlastnik = (IVlastnik) DecisionMaker.DecideSQL(DecisionMaker.Items.Vlastnik);
+
+                //IVlastnikFactory vlastnikFactory = DecisionMaker.NewSQLFactory();
+                //vlastnik = vlastnikFactory.CreateVlastnik();
+            }
         }
 
         protected void Vložení_Click(object sender, EventArgs e)

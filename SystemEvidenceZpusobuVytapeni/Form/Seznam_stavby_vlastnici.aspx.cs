@@ -25,11 +25,19 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.ShowUser();
+            this.ControlMenuItems();
+            this.GetFactory();
+
+            if (Session["login"] == null)
+            {
+                Response.Redirect("~/Form/Login.aspx");
+            }
+
             //stavbaVlastnik = (IStavbaVlastnik) this.GetFactory(DecisionMaker.Items.StavbaVlastnik);
             //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
             //vlastnik = (IVlastnik) this.GetFactory(DecisionMaker.Items.Vlastnik);
 
-            this.GetFactory();
             stavbaVlastnik = DecisionMaker.StavbaVlastnik.CreateStavbaVlastnik();
             stavba = DecisionMaker.Stavba.CreateStavba();
             vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();

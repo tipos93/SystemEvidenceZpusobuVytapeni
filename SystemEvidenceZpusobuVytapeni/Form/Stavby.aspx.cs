@@ -26,26 +26,41 @@ namespace SystemEvidenceZpusobuVytapeni.Form
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
-            this.GetFactory();
-            stavba = DecisionMaker.Stavba.CreateStavba();
-            stavby = stavba.Select();
+            this.ShowUser();
+            this.ControlMenuItems();
 
-            //vlastnik = (IVlastnik) this.GetFactory(DecisionMaker.Items.Vlastnik);
-            vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
-            vlastnici = vlastnik.Select();
-
-            //stavbaVlastnik = (IStavbaVlastnik) this.GetFactory(DecisionMaker.Items.StavbaVlastnik);
-            //zpusobVytapeni = (IZpusob_vytapeni)this.GetFactory(DecisionMaker.Items.Zpusob);
-            stavbaVlastnik = DecisionMaker.StavbaVlastnik.CreateStavbaVlastnik();
-            zpusobVytapeni = DecisionMaker.Zpusob.CreateZpusob();
-
-            CalendarDatumKolaudace.SelectedDate = CalendarDatumKolaudace.TodaysDate;
-            CalendarPlatnostOd.SelectedDate = CalendarPlatnostOd.TodaysDate;
-
-            if (!IsPostBack)
+            if(Session["login"] == null)
             {
-                NacitaniDropDownListu();
+                Response.Redirect("~/Form/Login.aspx");
+            }
+
+            if (!Session["postaveni"].Equals("obec"))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                //stavba = (IStavba) this.GetFactory(DecisionMaker.Items.Stavba);
+                this.GetFactory();
+                stavba = DecisionMaker.Stavba.CreateStavba();
+                stavby = stavba.Select();
+
+                //vlastnik = (IVlastnik) this.GetFactory(DecisionMaker.Items.Vlastnik);
+                vlastnik = DecisionMaker.Vlastnik.CreateVlastnik();
+                vlastnici = vlastnik.Select();
+
+                //stavbaVlastnik = (IStavbaVlastnik) this.GetFactory(DecisionMaker.Items.StavbaVlastnik);
+                //zpusobVytapeni = (IZpusob_vytapeni)this.GetFactory(DecisionMaker.Items.Zpusob);
+                stavbaVlastnik = DecisionMaker.StavbaVlastnik.CreateStavbaVlastnik();
+                zpusobVytapeni = DecisionMaker.Zpusob.CreateZpusob();
+
+                CalendarDatumKolaudace.SelectedDate = CalendarDatumKolaudace.TodaysDate;
+                CalendarPlatnostOd.SelectedDate = CalendarPlatnostOd.TodaysDate;
+
+                if (!IsPostBack)
+                {
+                    NacitaniDropDownListu();
+                }
             }
         }
 
