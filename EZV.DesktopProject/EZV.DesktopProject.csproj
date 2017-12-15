@@ -69,6 +69,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Pridani_uzivatele.resx">
+      <DependentUpon>Pridani_uzivatele.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Prihlaseni.resx">
       <DependentUpon>Prihlaseni.cs</DependentUpon>
     </EmbeddedResource>

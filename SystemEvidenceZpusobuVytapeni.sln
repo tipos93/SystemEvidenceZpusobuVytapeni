@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemEvidenceZpusobuVytapeni", "SystemEvidenceZpusobuVytapeni\SystemEvidenceZpusobuVytapeni.csproj", "{7768B6AF-E377-4924-8458-EE348E2B768C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZV.BusinessObjects", "EZV.BusinessObjects\EZV.BusinessObjects.csproj", "{D7418194-7090-4BF3-86B7-B8026773B8CD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZV.DataMapper", "EZV.DataMapper\EZV.DataMapper.csproj", "{826F3A72-626F-4BDF-985A-0A56150D0DBA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZV.Utils", "EZV.Utils\EZV.Utils.csproj", "{5198CD49-D8F7-49FC-8B81-495BC63F017E}"
@@ -33,10 +31,6 @@ Global
 		{7768B6AF-E377-4924-8458-EE348E2B768C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7768B6AF-E377-4924-8458-EE348E2B768C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7768B6AF-E377-4924-8458-EE348E2B768C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7418194-7090-4BF3-86B7-B8026773B8CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7418194-7090-4BF3-86B7-B8026773B8CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7418194-7090-4BF3-86B7-B8026773B8CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7418194-7090-4BF3-86B7-B8026773B8CD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{826F3A72-626F-4BDF-985A-0A56150D0DBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{826F3A72-626F-4BDF-985A-0A56150D0DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{826F3A72-626F-4BDF-985A-0A56150D0DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU

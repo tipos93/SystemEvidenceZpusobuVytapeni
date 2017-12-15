@@ -30,11 +30,11 @@
         {
             this.PrihlaseniButton = new System.Windows.Forms.Button();
             this.JmenoText = new System.Windows.Forms.TextBox();
-            this.HesloText = new System.Windows.Forms.TextBox();
             this.jmeno = new System.Windows.Forms.Label();
             this.heslo = new System.Windows.Forms.Label();
             this.Neuspech = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.HesloText = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // PrihlaseniButton
@@ -53,13 +53,6 @@
             this.JmenoText.Name = "JmenoText";
             this.JmenoText.Size = new System.Drawing.Size(100, 22);
             this.JmenoText.TabIndex = 1;
-            // 
-            // HesloText
-            // 
-            this.HesloText.Location = new System.Drawing.Point(173, 136);
-            this.HesloText.Name = "HesloText";
-            this.HesloText.Size = new System.Drawing.Size(100, 22);
-            this.HesloText.TabIndex = 2;
             // 
             // jmeno
             // 
@@ -98,16 +91,24 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Přihlášení";
             // 
+            // HesloText
+            // 
+            this.HesloText.Location = new System.Drawing.Point(173, 136);
+            this.HesloText.Name = "HesloText";
+            this.HesloText.PasswordChar = '*';
+            this.HesloText.Size = new System.Drawing.Size(100, 22);
+            this.HesloText.TabIndex = 7;
+            // 
             // Prihlaseni
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(781, 465);
+            this.Controls.Add(this.HesloText);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Neuspech);
             this.Controls.Add(this.heslo);
             this.Controls.Add(this.jmeno);
-            this.Controls.Add(this.HesloText);
             this.Controls.Add(this.JmenoText);
             this.Controls.Add(this.PrihlaseniButton);
             this.Name = "Prihlaseni";
@@ -121,11 +122,11 @@
 
         private System.Windows.Forms.Button PrihlaseniButton;
         private System.Windows.Forms.TextBox JmenoText;
-        private System.Windows.Forms.TextBox HesloText;
         private System.Windows.Forms.Label jmeno;
         private System.Windows.Forms.Label heslo;
         private System.Windows.Forms.Label Neuspech;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MaskedTextBox HesloText;
     }
 }
 
