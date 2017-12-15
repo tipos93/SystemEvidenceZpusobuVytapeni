@@ -8,11 +8,11 @@ using System.Collections.Generic;
 
 namespace EZV.XML.Gateway
 {
-    public class Uzivatele_Gateway : IUzivatele
+    public class Uzivatele_XmlMapper : IUzivatele
     {
         public void Delete(Uzivatele uzivatele)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Uzivatele").Descendants("Uzivatel")
                     let attr = node.Attribute("Login")
@@ -20,12 +20,12 @@ namespace EZV.XML.Gateway
                     select node;
             q.ToList().ForEach(x => x.Attribute("Aktualnost").Value = uzivatele.Aktualnost);
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public void Insert(Uzivatele uzivatele)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Uzivatel",
                 new XAttribute("Login", uzivatele.Login),
@@ -35,12 +35,12 @@ namespace EZV.XML.Gateway
                 new XAttribute("Id_vlastnika", uzivatele.Id_vlastnika));
 
             xDoc.Root.Element("Uzivatele").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Collection<Uzivatele> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Uzivatele").Descendants("Uzivatel").ToList();
 
@@ -84,7 +84,7 @@ namespace EZV.XML.Gateway
 
         public void Update(Uzivatele uzivatele)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Uzivatele").Descendants("Uzivatel")
                     let attr = node.Attribute("Login")
@@ -97,7 +97,7 @@ namespace EZV.XML.Gateway
                 x.Attribute("Id_vlastnika").Value = uzivatele.Id_vlastnika.ToString();
             });
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
     }
 }

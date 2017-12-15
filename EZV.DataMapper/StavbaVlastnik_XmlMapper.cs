@@ -10,18 +10,18 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class StavbaVlastnik_Gateway : IStavbaVlastnik
+    public class StavbaVlastnik_XmlMapper : IStavbaVlastnik
     {
         public void Insert(StavbaVlastnik stavbaVlastnik)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("StavbaVlastnik",
                 new XAttribute("Id_stavby", stavbaVlastnik.Id_stavby),
                 new XAttribute("Id_vlastnika", stavbaVlastnik.Id_vlastnika));
 
             xDoc.Root.Element("StavbyVlastnici").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public void Update(StavbaVlastnik stavbaVlastnik)
@@ -35,9 +35,9 @@ namespace EZV.XML.Gateway
             Vlastnik vlastnikProUpravu = new Vlastnik();
 
             //pristup k jinym tridam
-            Stavba_Gateway stavbaGateway = new Stavba_Gateway();
-            Historie_stavby_Gateway historieStavbyGateway = new Historie_stavby_Gateway();
-            Vlastnik_Gateway vlastnikGateway = new Vlastnik_Gateway();
+            Stavba_XmlMapper stavbaGateway = new Stavba_XmlMapper();
+            Historie_stavby_XmlMapper historieStavbyGateway = new Historie_stavby_XmlMapper();
+            Vlastnik_XmlMapper vlastnikGateway = new Vlastnik_XmlMapper();
 
             //nahrani vsech informaci o stavbe, ktera je aktualizovana
             vybranaStavba = stavbaGateway.Select_id(stavbaVlastnik.Id_stavby);
@@ -50,14 +50,14 @@ namespace EZV.XML.Gateway
                 if(vlastnik.Id_stavby == stavbaVlastnik.Id_stavby)
                 {
                     //nacitani z xml a hledani polozky s id upravovane stavby a id vlastniku, kteri ji vlastni, pro mozne smazani
-                    XDocument xDoc = XDocument.Load(Constants.FilePath);
+                    XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
                     var q = from node in xDoc.Descendants("StavbyVlastnici").Descendants("StavbaVlastnik")
                             let attr = node.Attribute("Id_stavby")
                             let attr1 = node.Attribute("Id_vlastnika")
                             where (attr != null && attr.Value == stavbaVlastnik.Id_stavby.ToString()) && (attr1 != null && attr1.Value == vlastnik.Id_vlastnika.ToString())
                             select node;
                     q.ToList().ForEach(x => x.Remove());
-                    xDoc.Save(Constants.FilePath);
+                    xDoc.Save(ConstantsXml.FilePath);
 
                     Historie_stavby historieStavby = new Historie_stavby();
 
@@ -109,7 +109,7 @@ namespace EZV.XML.Gateway
 
         public Collection<StavbaVlastnik> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("StavbyVlastnici").Descendants("StavbaVlastnik").ToList();
 

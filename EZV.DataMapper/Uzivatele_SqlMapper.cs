@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EZV.DataMapper
 {
-    public class Uzivatele_DataMapper : IUzivatele
+    public class Uzivatele_SqlMapper : IUzivatele
     {
         public static String SQL_SELECT = "SELECT * FROM Uzivatele";
         public static String SQL_SELECT_ID = "SELECT * FROM Uzivatele WHERE login=:login";

@@ -7,7 +7,7 @@ using EZV.DTO;
 
 namespace EZV.DataMapper
 {
-    public class Historie_vysledku_kontroly_DataMapper : IHistorie_vysledku_kontroly
+    public class Historie_vysledku_kontroly_SqlMapper : IHistorie_vysledku_kontroly
     {
 
         public static String SQL_SELECT = "SELECT id_zmeny, vysledek_kontroly, id_vysledku FROM Historie_vysledku_kontroly";

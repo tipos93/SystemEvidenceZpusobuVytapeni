@@ -10,13 +10,13 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class Historie_vysledku_kontroly_Gateway : IHistorie_vysledku_kontroly
+    public class Historie_vysledku_kontroly_XmlMapper : IHistorie_vysledku_kontroly
     {
         private int hodnotaId = 0;
 
         public int Sequence()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Historie_vysledku_kontrol").Descendants("Historie_vysledku_kontroly").ToList();
 
@@ -49,7 +49,7 @@ namespace EZV.XML.Gateway
 
         public Collection<Historie_vysledku_kontroly> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Historie_vysledku_kontrol").Descendants("Historie_vysledku_kontroly").ToList();
 

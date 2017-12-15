@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace EZV.XML.Gateway
 {
-    public class Vlastnik_Gateway : IVlastnik
+    public class Vlastnik_XmlMapper : IVlastnik
     {
         private int hodnotaId = 0;
 
@@ -58,7 +58,7 @@ namespace EZV.XML.Gateway
 
         public int Sequence()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Vlastnici").Descendants("Vlastnik").ToList();
 
@@ -75,7 +75,7 @@ namespace EZV.XML.Gateway
 
         public void Delete(Vlastnik vlastnik)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Vlastnici").Descendants("Vlastnik")
                     let attr = node.Attribute("Id_vlastnika")
@@ -83,7 +83,7 @@ namespace EZV.XML.Gateway
                     select node;
             q.ToList().ForEach(x => x.Attribute("Aktualni_vlastnik").Value = vlastnik.Aktualni_vlastnik);
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public void Insert(Vlastnik vlastnik)
@@ -91,7 +91,7 @@ namespace EZV.XML.Gateway
             if (this.kontrolaRodnehoCisla(vlastnik.Pohlavi, vlastnik.Rodne_cislo, vlastnik.Datum_narozeni) == false)
                 throw new Exception();
 
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Vlastnik",
                 new XAttribute("Id_vlastnika", vlastnik.Id_vlastnika),
@@ -108,7 +108,7 @@ namespace EZV.XML.Gateway
                 new XAttribute("Aktualni_vlastnik", vlastnik.Aktualni_vlastnik));
 
             xDoc.Root.Element("Vlastnici").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Vlastnik Select_id(int idVlastnik)
@@ -129,7 +129,7 @@ namespace EZV.XML.Gateway
 
         public void Update(Vlastnik vlastnik)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Vlastnici").Descendants("Vlastnik")
                     let attr = node.Attribute("Id_vlastnika")
@@ -149,12 +149,12 @@ namespace EZV.XML.Gateway
                 x.Attribute("Aktualni_vlastnik").Value = vlastnik.Aktualni_vlastnik;
             });
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Collection<Vlastnik> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Vlastnici").Descendants("Vlastnik").ToList();
 

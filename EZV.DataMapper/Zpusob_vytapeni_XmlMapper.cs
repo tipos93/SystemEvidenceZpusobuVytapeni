@@ -10,11 +10,11 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class Zpusob_vytapeni_Gateway : IZpusob_vytapeni
+    public class Zpusob_vytapeni_XmlMapper : IZpusob_vytapeni
     {
         public void Delete(Zpusob_vytapeni zpusob_vytapeni)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Zpusoby_vytapeni").Descendants("Zpusob_vytapeni")
                     let attr = node.Attribute("Typ_vytapeni")
@@ -23,12 +23,12 @@ namespace EZV.XML.Gateway
                     select node;
             q.ToList().ForEach(x => x.Attribute("Platnost_do").Value = zpusob_vytapeni.Platnost_do.ToString());
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public void Insert(Zpusob_vytapeni zpusob_vytapeni)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Zpusob_vytapeni",
                 new XAttribute("Typ_vytapeni", zpusob_vytapeni.Typ_vytapeni),
@@ -37,7 +37,7 @@ namespace EZV.XML.Gateway
                 new XAttribute("Id_stavby", zpusob_vytapeni.Id_stavby));
 
             xDoc.Root.Element("Zpusoby_vytapeni").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Zpusob_vytapeni Select_id(int idStavba, string zpusobVytapeni)
@@ -58,7 +58,7 @@ namespace EZV.XML.Gateway
 
         public void Update(Zpusob_vytapeni zpusob_vytapeni)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Zpusoby_vytapeni").Descendants("Zpusob_vytapeni")
                     let attr = node.Attribute("Typ_vytapeni")
@@ -70,12 +70,12 @@ namespace EZV.XML.Gateway
                 x.Attribute("Platnost_do").Value = zpusob_vytapeni.Platnost_do.ToString();
             });
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Collection<Zpusob_vytapeni> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Zpusoby_vytapeni").Descendants("Zpusob_vytapeni").ToList();
 

@@ -10,13 +10,13 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class Stavba_Gateway : IStavba
+    public class Stavba_XmlMapper : IStavba
     {
         private int hodnotaId = 0;
 
         public int Sequence()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Stavby").Descendants("Stavba").ToList();
 
@@ -33,7 +33,7 @@ namespace EZV.XML.Gateway
 
         public void Insert(Stavba stavba)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Stavba",
                 new XAttribute("Id_stavby", stavba.Id_stavby),
@@ -45,12 +45,12 @@ namespace EZV.XML.Gateway
                 new XAttribute("Datum_kolaudace", stavba.Datum_kolaudace.ToShortDateString()));
 
             xDoc.Root.Element("Stavby").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Stavba Select_id(int idStavba)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Stavby").Descendants("Stavba").ToList();
 
@@ -90,7 +90,7 @@ namespace EZV.XML.Gateway
 
         public void Update(Stavba stavba)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Stavby").Descendants("Stavba")
                     let attr = node.Attribute("Id_stavby")
@@ -105,12 +105,12 @@ namespace EZV.XML.Gateway
                 x.Attribute("Datum_kolaudace").Value = stavba.Datum_kolaudace.ToShortDateString();
             });
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Collection<Stavba> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Stavby").Descendants("Stavba").ToList();
 

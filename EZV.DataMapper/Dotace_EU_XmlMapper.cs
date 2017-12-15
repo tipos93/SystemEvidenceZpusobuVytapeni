@@ -10,13 +10,13 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class Dotace_EU_Gateway : IDotace_EU
+    public class Dotace_EU_XmlMapper : IDotace_EU
     {
         private int hodnotaId = 0;
 
         public int Sequence()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Dotace_EU").Descendants("Dotace").ToList();
 
@@ -33,7 +33,7 @@ namespace EZV.XML.Gateway
 
         public void Insert(Dotace_EU dotace_EU)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Dotace",
                 new XAttribute("Id_dotace", dotace_EU.Id_dotace),
@@ -43,12 +43,12 @@ namespace EZV.XML.Gateway
                 new XAttribute("Id_stavby", dotace_EU.Id_stavby));
 
             xDoc.Root.Element("Dotace_EU").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public void Update(Dotace_EU dotace_EU)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Dotace_EU").Descendants("Dotace")
                     let attr = node.Attribute("Id_dotace")
@@ -61,7 +61,7 @@ namespace EZV.XML.Gateway
                 x.Attribute("Id_stavby").Value = dotace_EU.Id_stavby.ToString();
             });
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Dotace_EU Select_id(int idDotace)
@@ -82,7 +82,7 @@ namespace EZV.XML.Gateway
 
         public Collection<Dotace_EU> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Dotace_EU").Descendants("Dotace").ToList();
 

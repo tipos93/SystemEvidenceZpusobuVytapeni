@@ -10,13 +10,13 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class Kontrola_kvality_spalovani_Gateway : IKontrola_kvality_spalovani
+    public class Kontrola_kvality_spalovani_XmlMapper : IKontrola_kvality_spalovani
     {
         private int hodnotaId = 0;
 
         public int Sequence()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Kontroly_kvality_spalovani").Descendants("Kontrola_kvality_spalovani").ToList();
 
@@ -33,7 +33,7 @@ namespace EZV.XML.Gateway
 
         public void Insert(Kontrola_kvality_spalovani kontrola)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Kontrola_kvality_spalovani",
             new XAttribute("Id_kontroly", kontrola.Id_kontroly),
@@ -42,7 +42,7 @@ namespace EZV.XML.Gateway
             new XAttribute("Id_stavby", kontrola.Id_stavby));
 
             xDoc.Root.Element("Kontroly_kvality_spalovani").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Kontrola_kvality_spalovani Select_id(int idKontroly)
@@ -63,7 +63,7 @@ namespace EZV.XML.Gateway
 
         public void Update(Kontrola_kvality_spalovani kontrola)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Kontroly_kvality_spalovani").Descendants("Kontrola_kvality_spalovani")
                     let attr = node.Attribute("Id_kontroly")
@@ -75,12 +75,12 @@ namespace EZV.XML.Gateway
                 x.Attribute("Id_stavby").Value = kontrola.Id_stavby.ToString();
             });
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Collection<Kontrola_kvality_spalovani> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Kontroly_kvality_spalovani").Descendants("Kontrola_kvality_spalovani").ToList();
 

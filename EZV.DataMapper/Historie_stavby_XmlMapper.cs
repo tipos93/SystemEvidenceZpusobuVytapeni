@@ -10,13 +10,13 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class Historie_stavby_Gateway : IHistorie_stavby
+    public class Historie_stavby_XmlMapper : IHistorie_stavby
     {
         private int hodnotaId = 0;
 
         public int Sequence()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Historie_staveb").Descendants("Historie_stavby").ToList();
 
@@ -33,7 +33,7 @@ namespace EZV.XML.Gateway
 
         public void Insert(Historie_stavby historie_stavby)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Historie_stavby",
             new XAttribute("Id_zmeny", historie_stavby.Id_zmeny),
@@ -48,7 +48,7 @@ namespace EZV.XML.Gateway
             new XAttribute("Id_stavby", historie_stavby.Id_stavby));
 
             xDoc.Root.Element("Historie_staveb").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Historie_stavby Select_id(int idZmeny)
@@ -69,7 +69,7 @@ namespace EZV.XML.Gateway
 
         public Collection<Historie_stavby> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Historie_staveb").Descendants("Historie_stavby").ToList();
 

@@ -63,10 +63,6 @@
       <Project>{826F3A72-626F-4BDF-985A-0A56150D0DBA}</Project>
       <Name>EZV.DataMapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EZV.XML.Gateway\EZV.XML.Gateway.csproj">
-      <Project>{91CC3409-C216-48BF-8F4E-D0F7213CAB45}</Project>
-      <Name>EZV.XML.Gateway</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,7 +9,7 @@ using EZV.DTO;
 
 namespace EZV.DataMapper
 {
-    public class Zpusob_vytapeni_DataMapper : IZpusob_vytapeni
+    public class Zpusob_vytapeni_SqlMapper : IZpusob_vytapeni
     {
 
         public static String SQL_SELECT = "SELECT zpusob_vytapeni, id_stavby FROM Zpusob_vytapeni";

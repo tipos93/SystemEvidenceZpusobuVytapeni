@@ -5,7 +5,7 @@ using System.Data;
 
 namespace EZV.DataMapper
 {
-    public class Funkce_DataMapper
+    public class Funkce_SqlMapper
     {
 
         public static String SQL_SELECT1 = @"SELECT s.typ_stavby, s.ulice, s.cislo_popisne, k.duvod_kontroly, v.vysledek_kontroly, v.prijata_opatreni, vl.jmeno, vl.prijmeni, vl.trvale_bydliste_ulice, vl.trvale_bydliste_cislo_popisne, vl.trvale_bydliste_mesto, vl.trvale_bydliste_PSC 

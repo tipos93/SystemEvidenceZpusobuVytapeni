@@ -7,7 +7,7 @@ using EZV.DTO;
 
 namespace EZV.DataMapper
 {
-    public class Vlastnik_DataMapper : IVlastnik
+    public class Vlastnik_SqlMapper : IVlastnik
     {
 
         public static String SQL_SELECT = "SELECT id_vlastnika, jmeno, prijmeni, datum_narozeni, datum_umrti, rodne_cislo, pohlavi, aktualni_vlastnik FROM Vlastnik";

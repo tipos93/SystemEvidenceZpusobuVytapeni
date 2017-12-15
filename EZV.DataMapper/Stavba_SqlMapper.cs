@@ -7,7 +7,7 @@ using EZV.DTO;
 
 namespace EZV.DataMapper
 {
-    public class Stavba_DataMapper : IStavba
+    public class Stavba_SqlMapper : IStavba
     {
 
         public static String SQL_SELECT = "SELECT id_stavby, typ_stavby, ulice, cislo_popisne FROM Stavba";

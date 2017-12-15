@@ -7,16 +7,16 @@ using EZV.DTO;
 
 namespace EZV.DataMapper
 {
-    public class Vysledek_kontroly_DataMapper : IVysledek_kontroly
+    public class Dotace_EU_SqlMapper : IDotace_EU
     {
 
-        public static String SQL_SELECT = "SELECT id_vysledku, vysledek_kontroly, id_kontroly FROM Vysledek_kontroly";
-        public static String SQL_SELECT_ID = "SELECT * FROM Vysledek_kontroly WHERE id_vysledku=:id";
-        public static String SQL_INSERT = "INSERT INTO Vysledek_kontroly (id_vysledku, vysledek_kontroly, prijata_opatreni, id_kontroly, datum_kontroly) "
-            + " VALUES (:id, :vysledek_kontroly, :prijata_opatreni, :id_kontroly, :datum_kontroly)";
-        public static String SQL_UPDATE = "UPDATE Vysledek_kontroly SET vysledek_kontroly=:vysledek_kontroly, prijata_opatreni=:prijata_opatreni, id_kontroly=:id_kontroly," +
-            "datum_kontroly=:datum_kontroly WHERE id_vysledku=:id";
-        public static String SQL_SEQUENCE = "SELECT Vysledek_kontroly_seq.NEXTVAL FROM DUAL";
+        public static String SQL_SELECT = "SELECT id_dotace, vyse_dotace, id_stavby FROM Dotace_EU";
+        public static String SQL_SELECT_ID = "SELECT * FROM Dotace_EU WHERE id_dotace=:id";
+        public static String SQL_INSERT = "INSERT INTO Dotace_EU (id_dotace, vyse_dotace, datum_prideleni, zpusob_pouziti, id_stavby) "
+            + " VALUES (:id, :vyse, :datum_prideleni, :zpusob_pouziti, :id_stavby)";
+        public static String SQL_UPDATE = "UPDATE Dotace_EU SET vyse_dotace=:vyse, datum_prideleni=:datum_prideleni, zpusob_pouziti=:zpusob_pouziti, " +
+            "id_stavby=:id_stavby WHERE id_dotace=:id";
+        public static String SQL_SEQUENCE = "SELECT Dotace_EU_seq.NEXTVAL FROM DUAL";
 
 
         public int Sequence()
@@ -41,27 +41,27 @@ namespace EZV.DataMapper
             return hodnota;
         }
 
-        public void Insert(Vysledek_kontroly vysledek)
+        public void Insert(Dotace_EU dotace_EU)
         {
             Database db = new Database();
             db.Connect();
             OracleCommand command = db.CreateCommand(SQL_INSERT);
-            PrepareCommand(command, vysledek);
+            PrepareCommand(command, dotace_EU);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
         }
 
-        public void Update(Vysledek_kontroly vysledek)
+        public void Update(Dotace_EU dotace_EU)
         {
             Database db = new Database();
             db.Connect();
             OracleCommand command = db.CreateCommand(SQL_UPDATE);
-            PrepareCommand(command, vysledek);
+            PrepareCommand(command, dotace_EU);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
         }
 
-        public Collection<Vysledek_kontroly> Select()
+        public Collection<Dotace_EU> Select()
         {
             Database db;
             db = new Database();
@@ -70,35 +70,34 @@ namespace EZV.DataMapper
             OracleCommand command = db.CreateCommand(SQL_SELECT);
             OracleDataReader reader = db.Select(command);
 
-            Collection<Vysledek_kontroly> Vysledky = Read(reader, false);
+            Collection<Dotace_EU> VsechnyDotace = Read(reader, false);
             reader.Close();
 
             db.Close();
 
-            return Vysledky;
+            return VsechnyDotace;
         }
 
-        public Vysledek_kontroly Select_id(int idVysledku)
+        public Dotace_EU Select_id(int idDotace)
         {
             Database db = new Database();
             db.Connect();
+
             OracleCommand command = db.CreateCommand(SQL_SELECT_ID);
 
-            command.Parameters.AddWithValue(":id", idVysledku);
+            command.Parameters.AddWithValue(":id", idDotace);
             OracleDataReader reader = db.Select(command);
 
-            Collection<Vysledek_kontroly> vysledky = Read(reader, true);
-            Vysledek_kontroly vysledek = null;
-
-            if (vysledky.Count == 1)
+            Collection<Dotace_EU> vsechnyDotace = Read(reader, true);
+            Dotace_EU dotace_EU = null;
+            if (vsechnyDotace.Count == 1)
             {
-                vysledek = vysledky[0];
+                dotace_EU = vsechnyDotace[0];
             }
-
+            
             reader.Close();
             db.Close();
-
-            return vysledek;
+            return dotace_EU;
         }
 
         /*
@@ -135,31 +134,31 @@ namespace EZV.DataMapper
         }*/
 
         /*
-        public static int Insert(Vysledek_kontroly vysledek)
+        public static int Insert(Dotace_EU dotace_EU)
         {
             Database db = new Database();
             db.Connect();
             OracleCommand command = db.CreateCommand(SQL_INSERT);
-            PrepareCommand(command, vysledek);
+            PrepareCommand(command, dotace_EU);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
             return ret;
         }*/
 
         /*
-        public static int Update(Vysledek_kontroly vysledek)
+        public static int Update(Dotace_EU dotace_EU)
         {
             Database db = new Database();
             db.Connect();
             OracleCommand command = db.CreateCommand(SQL_UPDATE);
-            PrepareCommand(command, vysledek);
+            PrepareCommand(command, dotace_EU);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
             return ret;
         }*/
 
         /*
-        public static Collection<Vysledek_kontroly> Select(Database Db = null)
+        public static Collection<Dotace_EU> Select(Database Db = null)
         {
             Database db;
             if (Db == null)
@@ -175,7 +174,7 @@ namespace EZV.DataMapper
             OracleCommand command = db.CreateCommand(SQL_SELECT);
             OracleDataReader reader = db.Select(command);
 
-            Collection<Vysledek_kontroly> Vysledky = Read(reader, false);
+            Collection<Dotace_EU> VsechnyDotace = Read(reader, false);
             reader.Close();
 
             if (Db == null)
@@ -183,65 +182,60 @@ namespace EZV.DataMapper
                 db.Close();
             }
 
-            return Vysledky;
+            return VsechnyDotace;
         }*/
 
         /*
-        public static Vysledek_kontroly Select_id(int idVysledku, Database Db = null)
+        public static Dotace_EU Select_id(int idDotace, Database Db = null)
         {
             Database db = new Database();
             db.Connect();
             OracleCommand command = db.CreateCommand(SQL_SELECT_ID);
 
-            command.Parameters.AddWithValue(":id", idVysledku);
+            command.Parameters.AddWithValue(":id", idDotace);
             OracleDataReader reader = db.Select(command);
 
-            Collection<Vysledek_kontroly> vysledky = Read(reader, true);
-            Vysledek_kontroly vysledek = null;
-            if (vysledky.Count == 1)
+            Collection<Dotace_EU> vsechnyDotace = Read(reader, true);
+            Dotace_EU dotace_EU = null;
+            if (vsechnyDotace.Count == 1)
             {
-                vysledek = vysledky[0];
+                dotace_EU = vsechnyDotace[0];
             }
             reader.Close();
             db.Close();
-            return vysledek;
+            return dotace_EU;
         }*/
 
-        private static void PrepareCommand(OracleCommand command, Vysledek_kontroly Vysledek)
+        private static void PrepareCommand(OracleCommand command, Dotace_EU Dotace_EU)
         {
             command.BindByName = true;
-            command.Parameters.AddWithValue(":id", Vysledek.Id_vysledku);
-            command.Parameters.AddWithValue(":vysledek_kontroly", Vysledek.Ohodnoceni_kontroly);
-            command.Parameters.AddWithValue(":prijata_opatreni", Vysledek.Prijata_opatreni == null ? DBNull.Value : (object)Vysledek.Prijata_opatreni);
-            command.Parameters.AddWithValue(":id_kontroly", Vysledek.Id_kontroly);
-            command.Parameters.AddWithValue(":datum_kontroly", Vysledek.Datum_kontroly);
+            command.Parameters.AddWithValue(":id", Dotace_EU.Id_dotace);
+            command.Parameters.AddWithValue(":vyse", Dotace_EU.Vyse_dotace);
+            command.Parameters.AddWithValue(":datum_prideleni", Dotace_EU.Datum_prideleni);
+            command.Parameters.AddWithValue(":zpusob_pouziti", Dotace_EU.Zpusob_pouziti);
+            command.Parameters.AddWithValue(":id_stavby", Dotace_EU.Id_stavby);
         }
 
-        private static Collection<Vysledek_kontroly> Read(OracleDataReader reader, bool complete)
+        private static Collection<Dotace_EU> Read(OracleDataReader reader, bool complete)
         {
-            Collection<Vysledek_kontroly> Vysledky = new Collection<Vysledek_kontroly>();
+            Collection<Dotace_EU> VsechnyDotace = new Collection<Dotace_EU>();
 
             while (reader.Read())
             {
                 int i = -1;
-                Vysledek_kontroly Vysledek = new Vysledek_kontroly();
-                Vysledek.Id_vysledku = reader.GetInt32(++i);
-                Vysledek.Ohodnoceni_kontroly = reader.GetString(++i);
+                Dotace_EU Dotace_EU = new Dotace_EU();
+                Dotace_EU.Id_dotace = reader.GetInt32(++i);
+                Dotace_EU.Vyse_dotace = reader.GetInt32(++i);
                 if (complete)
                 {
-                    if (!reader.IsDBNull(++i))
-                    {
-                        Vysledek.Prijata_opatreni = reader.GetString(i);
-                    }
+                    Dotace_EU.Datum_prideleni = reader.GetDateTime(++i);
+                    Dotace_EU.Zpusob_pouziti = reader.GetString(++i);
                 }
-                Vysledek.Id_kontroly = reader.GetInt32(++i);
-                if (complete)
-                {
-                    Vysledek.Datum_kontroly = reader.GetDateTime(++i);
-                }
-                Vysledky.Add(Vysledek);
+                Dotace_EU.Id_stavby = reader.GetInt32(++i);
+
+                VsechnyDotace.Add(Dotace_EU);
             }
-            return Vysledky;
+            return VsechnyDotace;
         }
     }
 }

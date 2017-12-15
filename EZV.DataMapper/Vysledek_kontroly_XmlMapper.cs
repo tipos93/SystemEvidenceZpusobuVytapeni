@@ -10,13 +10,13 @@ using EZV.DTO;
 
 namespace EZV.XML.Gateway
 {
-    public class Vysledek_kontroly_Gateway : IVysledek_kontroly
+    public class Vysledek_kontroly_XmlMapper : IVysledek_kontroly
     {
         private int hodnotaId = 0;
 
         public int Sequence()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Vysledky_kontrol").Descendants("Vysledek_kontroly").ToList();
 
@@ -33,7 +33,7 @@ namespace EZV.XML.Gateway
 
         public void Insert(Vysledek_kontroly vysledek)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             XElement result = new XElement("Vysledek_kontroly",
                 new XAttribute("Id_vysledku", vysledek.Id_vysledku),
@@ -43,7 +43,7 @@ namespace EZV.XML.Gateway
                 new XAttribute("Datum_kontroly", vysledek.Datum_kontroly.ToShortDateString()));
 
             xDoc.Root.Element("Vysledky_kontrol").Add(result);
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Vysledek_kontroly Select_id(int idVysledku)
@@ -64,7 +64,7 @@ namespace EZV.XML.Gateway
 
         public void Update(Vysledek_kontroly vysledek)
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             var q = from node in xDoc.Descendants("Vysledky_kontrol").Descendants("Vysledek_kontroly")
                     let attr = node.Attribute("Id_vysledku")
@@ -77,12 +77,12 @@ namespace EZV.XML.Gateway
                 x.Attribute("Datum_kontroly").Value = vysledek.Datum_kontroly.ToShortDateString();
             });
 
-            xDoc.Save(Constants.FilePath);
+            xDoc.Save(ConstantsXml.FilePath);
         }
 
         public Collection<Vysledek_kontroly> Select()
         {
-            XDocument xDoc = XDocument.Load(Constants.FilePath);
+            XDocument xDoc = XDocument.Load(ConstantsXml.FilePath);
 
             List<XElement> elementy = xDoc.Descendants("Vysledky_kontrol").Descendants("Vysledek_kontroly").ToList();
 
